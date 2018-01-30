@@ -1,0 +1,286 @@
+﻿@model IEnumerable<TransporteCarga.Models.Envio>
+
+@{
+    ViewBag.Title = "IndexAccounting";
+}
+
+
+<h2>Envíos pendientes de Pago</h2>
+
+
+
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Todas las Ordenes de Compras y Servicios. Use el Filtro de Búsqueda</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+
+                <div class="ibox-content">
+
+
+                    <div class="row">
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label" for="status">Proveedor</label>
+                                @Html.DropDownList("col3_filter", (IEnumerable<SelectListItem>)ViewBag.proveedorId, "Todos", new { @class = "form-control column_filter", @data_column = "3" })
+
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label" for="quantity">Envío</label>
+                                <input type="text" id="col2_filter" name="col2_filter" data-column="2" value="" placeholder="Orden" class="form-control column_filter">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label" for="status">Estado</label>
+                                @Html.DropDownList("col1_filter", (IEnumerable<SelectListItem>)ViewBag.estadoEnvioId, "Todos", new { @class = "form-control column_filter", @data_column = "1" })
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <table class="table table-stripped table-bordered table-hover dataTables-example " data-page-size="10">
+
+                        <thead>
+                            <tr>
+
+                                <th data-toggle="true" hidden="hidden">Envio Id</th>
+                                <th>Estado</th>
+                                <th>Envío</th>
+                                <th>Proveedor</th>
+                                <th>Fecha</th>
+                                <th hidden="hidden">Total</th>
+                                <th>Total Envío</th>
+                                <th>Nro Pagos</th>
+                                <th>Pagado</th>
+                                <th>Pendiente Pagos</th>
+                                <th></th>
+                                <th></th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+
+
+                                <tr class="gradeX">
+                                    <td hidden="hidden">@Html.DisplayFor(modelItem => item.envioId)</td>
+                                    @*<td class="client-status"><span class="label label-warning">@Html.DisplayFor(modelItem => item.EstadoOrden.nombre) </span></td>*@
+                                    <td class="client-status">
+
+                                        <button type="button" class="btn btn-default btn-xs">
+                                            @Html.DisplayFor(modelItem => item.EstadoEnvio.nombre)
+                                        </button>
+
+                                    </td>
+                                    <td>@Html.DisplayFor(modelItem => item.envioId)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Proveedor.razonSocial)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.fechaCreacion)</td>
+                                    <td hidden="hidden">@item.Total</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Total)</td>
+
+
+
+                                    @if (item.Pagos.Count > 0)
+                                    {
+                                        <td>@Html.DisplayFor(modelItem => item.Pagos.Count)</td>
+
+                                        decimal sum = (decimal)item.Pagos.Sum(a => a.pagoMonto);
+                                        decimal diferencia = (decimal)(item.Total) - sum;
+
+
+                                        <td>@string.Format("{0:0.00}", sum)</td>
+                                        <td>@string.Format("{0:0.00}", diferencia)</td>
+
+                                        if (Math.Round(diferencia, 2) > 0)
+                                        {
+                                            <td><a href="~/Pago/Create/@Html.DisplayFor(modelItem => item.envioId)" class="btn btn-primary btn-sm"><i class="fa fa-money"></i> Crear Pago </a></td>
+
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td><a href="~/Pago/Create/@Html.DisplayFor(modelItem => item.envioId)" class="btn btn-primary btn-sm"><i class="fa fa-money"></i> Crear Pago </a></td>
+                                    }
+
+                                   
+                                    <td>
+                                       <a href="~/OrdenCompra/Document/@Html.DisplayFor(modelItem => item.envioId)" target="_blank" class="btn btn-white btn-sm"><i class="fa fa-print"></i>  </a>
+                                    </td>
+                                </tr>
+
+
+
+                            }
+
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+
+                                <th data-toggle="true" hidden="hidden">Envio Id</th>
+                                <th>Estado</th>
+                                <th>Envío</th>
+                                <th>Proveedor</th>
+                                <th>Fecha</th>
+                                <th hidden="hidden">Total</th>
+                                <th>Total Envío</th>
+                                <th>Nro Pagos</th>
+                                <th>Pagado</th>
+                                <th>Pendiente Pagos</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal inmodal" id="myModalTracking" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-body">
+
+            <div class="modal-content">
+
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar!</button>
+        </div>
+
+    </div>
+</div>
+
+@section Styles {
+
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/footableStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/plugins/jeditable")
+    @Scripts.Render("~/plugins/footable")
+    @Scripts.Render("~/plugins/iCheck")
+    @Scripts.Render("~/plugins/chosen")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.dataTables-example').DataTable({
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'ExampleFile' },
+                    { extend: 'pdf', title: 'ExampleFile' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                        }
+                    }
+                ],
+                "order": [[0, "desc"]],
+                "pageLength": 25,
+                "scrollX": true
+
+            });
+
+
+            $('.footable').footable();
+
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+
+            // Eventos de filtros
+
+            $('input.column_filter').on('keyup click', function () {
+                filterColumn($(this).attr('data-column'));
+            });
+
+            $('select.column_filter').on('onchange click', function () {
+                filterColumn($(this).attr('data-column'));
+            });
+
+            //Filtro de Chosen-select
+            var config = {
+                '.chosen-select': {},
+                '.chosen-select-deselect': { allow_single_deselect: true },
+                '.chosen-select-no-single': { disable_search_threshold: 10 },
+                '.chosen-select-no-results': { no_results_text: 'Oops, no encontrado!' },
+                '.chosen-select-width': { width: "200%" }
+                //
+            }
+            for (var selector in config) {
+                $(selector).chosen(config[selector]);
+            }
+
+            //Tracking Modal
+
+            $("a[data-target=#myModalTracking]").click(function (ev) {
+                ev.preventDefault();
+                var target = $(this).attr("href");
+
+                // load the url and show modal on success
+                $("#myModalTracking .modal-body").load(target, function () {
+                    $("#myModalTracking").modal("show");
+                });
+            });
+
+
+        });
+
+        function filterColumn(i) {
+            $('.dataTables-example').DataTable().column(i).search(
+                $('#col' + i + '_filter').val()
+            ).draw();
+        }
+
+    </script>
+}
+
+

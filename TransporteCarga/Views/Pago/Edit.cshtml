@@ -1,0 +1,338 @@
+﻿@model TransporteCarga.Models.Pago
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Pago de Envios</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="index.html">Home</a>
+            </li>
+            <li>
+                <a href="~/OrdenCompra/IndexAccounting">Envios </a>
+            </li>
+            <li class="active">
+                <strong>Pagos</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.envioId)
+        @Html.HiddenFor(model => model.pagoId)
+
+        
+
+        <div class="row">
+
+            <div class="col-lg-12">
+
+                <div class="ibox">
+                    <div class="ibox-title">
+                        @*Payment method*@
+                    </div>
+                    <div class="ibox-content">
+
+                        <div class="panel-group payments-method" id="accordion">
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <div class="pull-right">
+                                        <i class="fa fa-cc-amex text-success"></i>
+                                        <i class="fa fa-cc-mastercard text-warning"></i>
+                                        <i class="fa fa-cc-discover text-danger"></i>
+                                    </div>
+                                    <h5 class="panel-title">
+                                        @*<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Credit Card</a>*@
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Ingrese datos de Pago</a>
+
+                                    </h5>
+                                </div>
+                                <div id="collapseTwo" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <h2>Resumen</h2>
+                                                <strong># Envío:</strong> @Html.DisplayFor(model => model.Envio.envioId) <br />
+                                                <strong>Sub Total:</strong> <span class="text-navy">S/. @Html.DisplayFor(model => model.Envio.subTotal)</span><br />
+                                                <strong>IGV:</strong> <span class="text-navy">S/. @Html.DisplayFor(model => model.Envio.igv)</span><br />
+                                                <strong>Total:</strong> <span class="text-navy"> S/. @Html.DisplayFor(model => model.Envio.Total)</span><br />
+                                                <p>
+                                                    <strong>Proveedor:</strong> <span class="text-warning">@Html.DisplayFor(model => model.Envio.Proveedor.razonSocial)</span><br />
+                                                </p>
+
+                                                @{
+    if (Model.Envio.Pagos.Count() > 0)
+    {
+        var sum = Model.Envio.Pagos.Sum(a => a.pagoMonto);
+        var diferencia = Model.Envio.Total - sum;
+        <strong>Pendiente por Pagar:</strong> <span class="text-danger"> S/. @string.Format("{0:0.00}", diferencia)</span><br />
+    }
+    else
+    {
+        <strong>Pendiente por Pagar:</strong> <span class="text-danger"> S/. @Html.DisplayFor(model => model.Envio.Total)</span><br />
+
+    }
+                                                }
+
+
+
+                                                <p class="m-t">
+                                                    <a href="~/OrdenCompra/Document/@Html.DisplayFor(model => model.envioId)" target="_blank" class="btn btn-white"><i class="fa fa-file-pdf-o"></i> Ver Envio </a>
+                                                </p>
+
+
+                                                <h2>Pagos</h2>
+                                                @foreach (var item in Model.Envio.Pagos)
+                                                {
+                                                    <strong>Fecha Pago:</strong> <span class="text-navy">@Html.DisplayFor(model => item.fechaPagoReal)</span><br />
+                                                    <strong>Monto: S/.</strong>  @Html.DisplayFor(model => item.pagoMonto) <br />
+                                                    <strong>Detracción:</strong> <span class="text-navy">S/. @Html.DisplayFor(model => item.pagoDetraccion)</span><br />
+                                                    <strong>Estado:</strong> <span class="text-navy">@Html.DisplayFor(model => item.EstadoPago.nombre)</span><br />
+                                                    <strong>Nro Documento:</strong> <span class="text-navy">@Html.DisplayFor(model => item.numero)</span><br />
+                                                    <br />
+                                                }
+
+
+                                            </div>
+                                            <div class="col-md-8">
+
+                                                <form role="form" id="payment-form">
+                                                    <div class="row">
+                                                        <div class="col-xs-4">
+                                                            <div class="form-group">
+                                                                <label>TIPO DE DOCUMENTO</label>
+                                                                <div class="input-group">
+                                                                    @*@Html.DropDownList("tipoDocumentoId", (IEnumerable<SelectListItem>)ViewBag.tipoDocumentoId, new { @class = "form-control" })
+                                                                    @Html.ValidationMessageFor(model => model.tipoDocumentoId)*@
+                                                                    @Html.DropDownList("tipoDocumentoId", String.Empty)
+                                                                    @Html.ValidationMessageFor(model => model.tipoDocumentoId)
+
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-4">
+                                                            <div class="form-group">
+                                                                <label>NÚMERO DOCUMENTO</label>
+                                                                <div class="input-group">
+                                                                    @*<input type="text" class="form-control" name="numero" id="numero" placeholder="Número de Documento" required />
+                                                                    <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>*@
+
+                                                                    @Html.EditorFor(model => model.numero)
+                                                                    @Html.ValidationMessageFor(model => model.numero)
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-4">
+                                                            <div class="form-group">
+                                                                <label>MONTO DE PAGO</label>
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control" name="pagoMonto" id="pagoMonto" placeholder="Monto de Pago" required value="@Model.pagoMonto" />
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-4">
+                                                            <div class="form-group">
+                                                                <label>FECHA DOCUMENTO DE PAGO</label>
+                                                                <div class="input-group">
+                                                                    @*@Html.EditorFor(model => model.fechaFactura)
+                                                                    @Html.ValidationMessageFor(model => model.fechaFactura)*@
+                                                                    @Html.TextBoxFor(m => m.fechaFactura, "{0:yyyy-MM-dd}", new { @type = "date" })
+                                                                    @Html.ValidationMessageFor(model => model.fechaFactura)
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-4">
+                                                            <div class="form-group">
+                                                                <label>ESTADO PAGO</label>
+                                                                <div class="input-group">
+                                                                    @Html.DropDownList("estadoPagoId", String.Empty)
+                                                                    @Html.ValidationMessageFor(model => model.estadoPagoId)
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-4">
+                                                            <div class="form-group">
+                                                                <label>FECHA PROGRAMADO DE PAGO</label>
+                                                                <div class="input-group">
+                                                                    @Html.TextBoxFor(m => m.fechaPagoProg, "{0:yyyy-MM-dd}", new { @type = "date" })
+                                                                    @Html.ValidationMessageFor(model => model.fechaPagoProg)
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-4">
+                                                            <div class="form-group">
+                                                                <label>FECHA REAL DE PAGO</label>
+                                                                <div class="input-group">
+                
+                                                                    @Html.TextBoxFor(m => m.fechaPagoReal, "{0:yyyy-MM-dd}", new { @type = "date" })
+                                                                    @Html.ValidationMessageFor(model => model.fechaPagoReal)
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-4">
+                                                            <div class="form-group">
+                                                                <label>¿PAGO TOTAL?</label>
+                                                                <div class="input-group">
+                                                                    @*<input type="checkbox" id="preguntaPagoTotal" name="preguntaPagoTotal" class="js-switch" />*@
+                                                                
+
+                                                                    @Html.EditorFor(model => model.preguntaPagoTotal)
+                                                                    @Html.ValidationMessageFor(model => model.preguntaPagoTotal)
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @*<div class="row">
+                                                            <div class="col-xs-7 col-md-7">
+                                                                <div class="form-group">
+                                                                    <label>EXPIRATION DATE</label>
+                                                                    <input type="text" class="form-control" name="Expiry" placeholder="MM / YY" required />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xs-5 col-md-5 pull-right">
+                                                                <div class="form-group">
+                                                                    <label>CV CODE</label>
+                                                                    <input type="text" class="form-control" name="CVC" placeholder="CVC" required />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <div class="form-group">
+                                                                    <label>NAME OF CARD</label>
+                                                                    <input type="text" class="form-control" name="nameCard" placeholder="NAME AND SURNAME" />
+                                                                </div>
+                                                            </div>
+                                                        </div>*@
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <button class="btn btn-primary" type="submit">Guardar Pago!</button>
+                                                            @*<button class="ladda-button ladda-button-demo btn btn-primary btn-lg" id="BtnGuardar"><i class="fa fa-save"></i> Guardar!</button>*@
+
+                                                        </div>
+                                                    </div>
+                                                </form>
+
+                                            </div>
+
+                                        </div>
+
+
+
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+}
+
+<div>
+    @Html.ActionLink("Volver al Listado", "Index")
+</div>
+
+@section Styles {
+
+    @Styles.Render("~/plugins/switcheryStyles")
+    @Styles.Render("~/plugins/laddaStyles")
+}
+
+
+@section Scripts {
+    @*    @Scripts.Render("~/bundles/jqueryui")*@
+    @Scripts.Render("~/plugins/validate")
+    @Scripts.Render("~/plugins/switchery")
+    @Scripts.Render("~/plugins/ladda")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#form").validate({
+                rules: {
+                    password: {
+                        required: true,
+                        minlength: 3
+                    },
+                    url: {
+                        required: true,
+                        url: true
+                    },
+                    number: {
+                        required: true,
+                        number: true
+                    },
+                    min: {
+                        required: true,
+                        minlength: 6
+                    },
+                    max: {
+                        required: true,
+                        maxlength: 4
+                    }
+                }
+            });
+
+            var elem = document.querySelector('.js-switch');
+            var switchery = new Switchery(elem, { color: '#1AB394' });
+
+
+            //Procesar botón hasta que termine el proceso
+            var l = $('.ladda-button-demo').ladda();
+            var form = $('payment-form')[0];
+
+            l.click(function () {
+
+                //if ($("form").validate())
+                //{
+                // Start loading
+                l.ladda('start');
+                // Do something in backend and then stop ladda
+                // setTimeout() is only for demo purpose
+
+                $("form").submit();
+                //}
+                //l.ladda('stop');
+            });
+
+        });
+    </script>
+}

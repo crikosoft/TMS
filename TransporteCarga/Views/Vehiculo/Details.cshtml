@@ -1,0 +1,154 @@
+﻿@model TransporteCarga.Models.Vehiculo
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>Details</h2>
+        <ol class="breadcrumb">
+            <li>
+                @Html.ActionLink("Lista", "Index")
+            </li>
+            <li class="active">
+                <strong>Details</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+
+
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Details Vehiculo</h5>
+                </div>
+                <div class="ibox-content">
+
+
+				    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Proveedor.razonSocial)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Proveedor.razonSocial)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.placaUnidad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.placaUnidad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.placaCarretera)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.placaCarretera)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.configuracionVehicular)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.configuracionVehicular)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.certificadoInscripcion1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.certificadoInscripcion1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.certificadoInscripcion2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.certificadoInscripcion2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Marca)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Marca)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Modelo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Modelo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuarioCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuarioCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuarioModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuarioModificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaModificacion)
+        </dd>
+
+    </dl>
+
+
+	    @Html.ActionLink("Editar", "Edit", new { id = Model.vehiculoId }, new { @class = "btn btn-primary"})
+    @Html.ActionLink("Volver al Listado", "Index", null, new { @class = "btn btn-white"})
+
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,277 @@
+﻿@model TransporteCarga.Models.Envio
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>Editar</h2>
+        <ol class="breadcrumb">
+            <li>
+                @Html.ActionLink("Lista", "Index")
+            </li>
+            <li class="active">
+                <strong>Editar</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-sm-8">
+        <div class="title-action">
+			@Html.ActionLink("Volver al Listado", "Index", null, new { @class = "btn btn-primary"})
+        </div>
+    </div>
+</div>
+
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Editar Envio</h5>
+                </div>
+                <div class="ibox-content">
+
+				@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.envioId)
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Proveedor</label>
+            <div class="col-md-10">
+                @Html.DropDownList("proveedorId", String.Empty)
+                @Html.ValidationMessageFor(model => model.proveedorId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Chofer</label>
+            <div class="col-md-10">
+                @Html.DropDownList("choferId", String.Empty)
+                @Html.ValidationMessageFor(model => model.choferId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.vehiculoId, "vehiculoId", new { @class = "control-label col-md-2" })*@
+            <label class="control-label col-md-2">Vehículo</label>
+            <div class="col-md-10">
+                @Html.DropDownList("vehiculoId", String.Empty)
+                @Html.ValidationMessageFor(model => model.vehiculoId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.fechaTraslado, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.fechaTraslado)*@
+                @Html.TextBoxFor(model => model.fechaTraslado, "{0:yyyy-MM-dd}", new { @type = "date" })
+                @Html.ValidationMessageFor(model => model.fechaTraslado)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.subTotal, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.subTotal)
+                @Html.ValidationMessageFor(model => model.subTotal)
+            </div>
+        </div>
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.igv, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.igv)
+                @Html.ValidationMessageFor(model => model.igv)
+            </div>
+        </div>*@
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.Total, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Total)
+                @Html.ValidationMessageFor(model => model.Total)
+            </div>
+        </div>*@
+
+        <div class="form-group">
+            <label class="control-label col-md-2"> Forma Pago</label>
+
+            <div class="col-md-10">
+                @Html.DropDownList("formaPagoId", String.Empty)
+                @Html.ValidationMessageFor(model => model.formaPagoId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.fechaPago, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.fechaPago)*@
+                @Html.TextBoxFor(model => model.fechaPago, "{0:yyyy-MM-dd}", new { @type = "date" })
+                @Html.ValidationMessageFor(model => model.fechaPago)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.comentario, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.comentario)
+                @Html.ValidationMessageFor(model => model.comentario)
+            </div>
+        </div>
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.usuarioCreacion, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.usuarioCreacion)
+                @Html.ValidationMessageFor(model => model.usuarioCreacion)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.usuarioModificacion, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.usuarioModificacion)
+                @Html.ValidationMessageFor(model => model.usuarioModificacion)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.fechaCreacion, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.fechaCreacion)
+                @Html.ValidationMessageFor(model => model.fechaCreacion)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.fechaModificacion, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.fechaModificacion)
+                @Html.ValidationMessageFor(model => model.fechaModificacion)
+            </div>
+        </div>*@
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.TeacherIds, "Teachers")*@
+            Guias
+            <ul>
+                @*@foreach (TransporteCarga.Models.Orden orden in Model.Ordenes.OrderBy(a=>a.ordenId))
+                {
+                    <li>
+                        <input type="checkbox" name="OrdenIds" value="@orden.ordenId" class="i-checks" checked="checked" />
+                        @orden.ordenId  @orden.ClientePago.razonSocial @orden.DireccionOrigen.descripcion @orden.DireccionDestino.descripcion
+                    </li>
+                }*@
+
+
+                @foreach (TransporteCarga.Models.Orden orden in ViewBag.Ordenes)
+                {
+                    if (Model.Ordenes.Where(a => a.ordenId == orden.ordenId).Count()> 0 )
+                    { 
+                        <li>
+                            <input type="checkbox" name="OrdenIds" value="@orden.ordenId" class="i-checks" checked="checked" />
+                            @orden.ordenId  @orden.ClientePago.razonSocial @orden.DireccionOrigen.descripcion @orden.DireccionDestino.descripcion
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <input type="checkbox" name="OrdenIds" value="@orden.ordenId" class="i-checks" />
+                            @orden.ordenId  @orden.ClientePago.razonSocial @orden.DireccionOrigen.descripcion @orden.DireccionDestino.descripcion
+                        </li>
+                    }
+                }
+
+
+                
+                @Html.ValidationMessageFor(model => model.OrdenIds)
+            </ul>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+				@Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-white"})
+            </div>
+        </div>
+    </div>
+}
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
+
+
+@section Styles {
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/footableStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+}
+
+@section Scripts {
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/plugins/jeditable")
+    @Scripts.Render("~/plugins/footable")
+    @Scripts.Render("~/plugins/iCheck")
+    @Scripts.Render("~/plugins/chosen")
+    <script type="text/javascript">
+            $(document).ready(function () {
+
+                $("#proveedorId").change(function () {
+                    $.ajax({
+                        url: "@Url.Action("GetChoferes", "Envio")",
+                        data: { id: $("#proveedorId").val() },
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        $("#choferId").empty();
+                        for (var i = 0; i < data.length; i++) {
+                            $("#choferId").append("<option value=" + data[i].choferId + ">" + data[i].nombres + "</option>");
+                        }
+
+                    },
+                    error: function () {
+
+                    }
+                    });
+                    //Vehiculo
+                    $.ajax({
+                        url: "@Url.Action("GetVehiculos", "Envio")",
+                        data: { id: $("#proveedorId").val() },
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        $("#vehiculoId").empty();
+                        for (var i = 0; i < data.length; i++) {
+                            $("#vehiculoId").append("<option value=" + data[i].vehiculoId + ">" + data[i].placaUnidad + "</option>");
+                        }
+
+                    },
+                    error: function () {
+
+                    }
+                });
+
+
+                });
+
+                $('.i-checks').iCheck({
+                    checkboxClass: 'icheckbox_square-green',
+                    radioClass: 'iradio_square-green',
+                });
+            })
+
+    </script>
+}

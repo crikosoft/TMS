@@ -1,0 +1,192 @@
+﻿@model IEnumerable<TransporteCarga.Models.Producto>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>Lista</h2>
+        <ol class="breadcrumb">
+            <li class="active">
+                <strong>Producto</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Lista de Productos</h5>
+                    <div class="ibox-tools">
+                        @Html.ActionLink("Crear Nuevo", "Create", null, new { @class = "btn btn-primary btn-xs" })
+                    </div>
+                </div>
+                <div class="ibox-content">
+
+
+
+                    <table class="table table-stripped table-bordered table-hover dataTables-example " data-page-size="10">
+
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.nombre)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.UnidadMedida.nombre)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.descripcion)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Categoria.nombre)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.nombre)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.UnidadMedida.nombre)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.descripcion)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Categoria.nombre)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Detalle", "Details", new { id = item.productoId }, new { @class = "btn btn-primary btn-sm" })
+                                        @Html.ActionLink("Editar", "Edit", new { id = item.productoId }, new { @class = "btn btn-white btn-sm" })
+                                        @Html.ActionLink("Eliminar", "Delete", new { id = item.productoId }, new { @class = "btn btn-white btn-sm" })
+                                    </td>
+                                </tr>
+                            }
+
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.nombre)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.UnidadMedida.nombre)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.descripcion)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Categoria.nombre)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Styles {
+
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/footableStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/plugins/jeditable")
+    @Scripts.Render("~/plugins/footable")
+    @Scripts.Render("~/plugins/iCheck")
+    @Scripts.Render("~/plugins/chosen")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.dataTables-example').DataTable({
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'ExampleFile' },
+                    { extend: 'pdf', title: 'ExampleFile' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                        }
+                    }
+                ],
+                "order": [[0, "asc"]],
+                "pageLength": 25
+
+            });
+
+
+            $('.footable').footable();
+
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+
+            // Eventos de filtros
+
+            $('input.column_filter').on('keyup click', function () {
+                filterColumn($(this).attr('data-column'));
+            });
+
+            $('select.column_filter').on('onchange click', function () {
+                filterColumn($(this).attr('data-column'));
+            });
+
+            //Filtro de Chosen-select
+            var config = {
+                '.chosen-select': {},
+                '.chosen-select-deselect': { allow_single_deselect: true },
+                '.chosen-select-no-single': { disable_search_threshold: 10 },
+                '.chosen-select-no-results': { no_results_text: 'Oops, no encontrado!' },
+                '.chosen-select-width': { width: "200%" }
+                //
+            }
+            for (var selector in config) {
+                $(selector).chosen(config[selector]);
+            }
+
+
+        });
+
+        function filterColumn(i) {
+            $('.dataTables-example').DataTable().column(i).search(
+                $('#col' + i + '_filter').val()
+            ).draw();
+        }
+
+    </script>
+}

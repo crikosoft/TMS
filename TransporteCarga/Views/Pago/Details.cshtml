@@ -1,0 +1,186 @@
+﻿@model TransporteCarga.Models.Pago
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>Details</h2>
+        <ol class="breadcrumb">
+            <li>
+                @Html.ActionLink("Lista", "Index")
+            </li>
+            <li class="active">
+                <strong>Details</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+
+
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Details Pago</h5>
+                </div>
+                <div class="ibox-content">
+
+
+				    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Envio.comentario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Envio.comentario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EstadoPago.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EstadoPago.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoDocumento.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoDocumento.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.numero)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.numero)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaPagoProg)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaPagoProg)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaPagoReal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaPagoReal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pagoMonto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pagoMonto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pagoDetraccion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pagoDetraccion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.asientoContable)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.asientoContable)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaContable)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaContable)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaFactura)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaFactura)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuarioCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuarioCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuarioModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuarioModificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaModificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaModificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.preguntaPagoTotal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.preguntaPagoTotal)
+        </dd>
+
+    </dl>
+
+
+	    @Html.ActionLink("Editar", "Edit", new { id = Model.pagoId }, new { @class = "btn btn-primary"})
+    @Html.ActionLink("Volver al Listado", "Index", null, new { @class = "btn btn-white"})
+
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,400 @@
+﻿@model IEnumerable<TransporteCarga.Models.Pedido>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<h2>Cancelar  Ventas</h2>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Todas los Ventas a Crédito. Use el Filtro de Búsqueda</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+
+                <div class="ibox-content">
+
+
+
+
+                    <div class="row">
+
+                        @*<div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label" for="status">Cliente</label>
+                                @Html.DropDownList("col2_filter", (IEnumerable<SelectListItem>)ViewBag.clienteId, "Todos", new { @class = "form-control column_filter", @data_column = "2" })
+
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label" for="status">Producto</label>
+                                @Html.DropDownList("col6_filter", (IEnumerable<SelectListItem>)ViewBag.productoId, "Todos", new { @class = "form-control column_filter", @data_column = "6" })
+
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label" for="status">Estado Venta</label>
+                                @Html.DropDownList("col1_filter", (IEnumerable<SelectListItem>)ViewBag.estadoVentaId, "Todos", new { @class = "form-control column_filter", @data_column = "1" })
+
+                            </div>
+                        </div>*@
+                        <div class="text-right">
+                                @*<div class="form-group">*@
+                                    <button class="ladda-button ladda-button-demo btn btn-primary" id="BtnCancelar"><i class="fa fa-money"></i> Cancelar!</button>
+                                @*</div>*@
+                        </div>
+
+                    </div>
+
+
+                    <table class="table table-stripped table-bordered table-hover dataTables-example " data-page-size="10" id="tablaItems">
+
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>
+                                    Pedido
+                                </th>
+                                <th>
+                                    Estado
+                                </th>
+                                <th>
+                                    Cliente
+                                </th>
+                                <th>
+                                    Total
+                                </th>
+                                <th>
+                                    Forma Pago
+                                </th>
+                                <th>
+                                    Tipo Documento Venta
+                                <th>
+                                    Serie y Número
+                                </th>
+
+                                <th>
+                                    Fecha Documento
+                                </th>
+                                <th>
+                                    Fecha Vencimiento
+                                </th>
+                                <th>
+                                    Serie y Número Guía
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+
+
+                            @foreach (var item in Model)
+                            {
+
+                                <tr>
+                                    <td><input type="checkbox" class="i-checks" id=@Html.DisplayFor(modelItem => item.pedidoId) name="input[]"></td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.pedidoId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.EstadoPedido.nombre)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Cliente.razonSocial)
+                                    </td>
+                                    <td>
+                                        S/. @Html.DisplayFor(modelItem => item.Total)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Ventas[0].FormaPago.nombre)
+                                    </td>
+                                    <td>
+
+                                        @{
+                                var tipoDocumento = "";
+                                if (item.Ventas.Count() > 0)
+                                {
+
+                                    tipoDocumento = item.Ventas.FirstOrDefault().TipoDocumento.nombre;
+                                }
+
+                                        }
+
+                                        @tipoDocumento
+                                    </td>
+
+                                    <td>
+                                        @{
+                                var documento = "";
+                                if (item.Ventas.Count() > 0)
+                                {
+
+                                    documento = item.Ventas.FirstOrDefault().serie + " - " + item.Ventas.FirstOrDefault().numero;
+                                }
+
+                                        }
+
+                                        @documento
+                                    </td>
+
+                                    <td>
+                                        @if (item.Ventas.Count() > 0)
+                                        {
+                                        @Html.DisplayFor(modelItem => item.Ventas.FirstOrDefault().fecha)
+                                        }
+                                        
+                                    </td>
+
+                                    <td>
+                                        @if (item.Ventas.Count() > 0)
+                                        {
+                                            if (item.Ventas.FirstOrDefault().fechaPago >  DateTime.UtcNow)
+                                            { 
+                                            @Html.DisplayFor(modelItem => item.Ventas.FirstOrDefault().fechaPago)
+                                            }
+                                            else
+                                            { 
+                                            <span class="label label-danger">@Html.DisplayFor(modelItem => item.Ventas.FirstOrDefault().fechaPago, new { @class = "label label-danger" })</span>
+                                            }
+                                        }
+
+                                    </td>
+                                    <td>
+                                        @{
+                                var guia = "";
+                                if (item.GuiasSalida.Count() > 0)
+                                {
+
+                                    guia = item.GuiasSalida.FirstOrDefault().serie + " - " + item.GuiasSalida.FirstOrDefault().numero;
+                                }
+
+                                        }
+
+                                        @guia
+                                    </td>
+                                </tr>
+                            }
+
+
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th>
+                                    Pedido
+                                </th>
+                                <th>
+                                    Estado
+                                </th>
+                                <th>
+                                    Cliente
+                                </th>
+                                <th>
+                                    Total
+                                </th>
+                                <th>
+                                    Forma Pago
+                                </th>
+                                <th>
+                                    Tipo Documento Venta
+                                <th>
+                                    Serie y Número
+                                </th>
+
+                                <th>
+                                    Fecha Documento
+                                </th>
+                                <th>
+                                    Fecha Vencimiento
+                                </th>
+                                <th>
+                                    Serie y Número Guía
+                                </th>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Styles {
+
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/footableStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+
+
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/plugins/jeditable")
+    @Scripts.Render("~/plugins/footable")
+    @Scripts.Render("~/plugins/iCheck")
+    @Scripts.Render("~/plugins/chosen")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.dataTables-example').DataTable({
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'ExampleFile' },
+                    { extend: 'pdf', title: 'ExampleFile' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                        }
+                    }
+                ],
+                "order": [[0, "desc"]],
+                "pageLength": 50
+
+            });
+
+
+
+
+
+
+
+            $('.footable').footable();
+
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+
+            // Eventos de filtros
+
+            $('input.column_filter').on('keyup click', function () {
+                filterColumn($(this).attr('data-column'));
+            });
+
+            $('select.column_filter').on('onchange click', function () {
+                filterColumn($(this).attr('data-column'));
+            });
+
+            //Filtro de Chosen-select
+            var config = {
+                '.chosen-select': {},
+                '.chosen-select-deselect': { allow_single_deselect: true },
+                '.chosen-select-no-single': { disable_search_threshold: 10 },
+                '.chosen-select-no-results': { no_results_text: 'Oops, no encontrado!' },
+                '.chosen-select-width': { width: "200%" }
+                //
+            }
+            for (var selector in config) {
+                $(selector).chosen(config[selector]);
+            }
+
+
+            $("#BtnCancelar").click(function () {
+
+                var cells = [];
+
+                $('#tablaItems tr').each(function () {
+                    if ($(this).find("td:eq(0) input[type='checkbox']").is(":checked")) {
+                        cells.push({
+
+                            pedidoId: $(this).find("td:eq(0) input[type='checkbox']").attr("id")
+
+                        });
+                    }
+
+
+                });
+
+
+                if (cells.length == 0) {
+                    alert("Seleccione al menos un Item");
+                    return;
+                }
+
+                var Pedidos = [];
+
+                for (var i = 0; i < cells.length; i++) {
+                    var pedido = new Object();
+
+                    pedido.pedidoId = cells[i].pedidoId;
+                    Pedidos.push(pedido);
+
+                    //alert(requerimientoDetalle.requerimientoDetalleId);
+                    //alert(pedido.pedidoId);
+
+
+                }
+
+                //return;
+
+
+                //var requerimiento = new Object();
+
+                //requerimiento.requerimientoId = $("#requerimientoId").val();
+                //requerimiento.Detalles = Detalles;
+
+                PedidosFinal = JSON.stringify({ 'pedidos': Pedidos });
+
+
+                $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    type: 'POST',
+                    url: '@Url.Action("CancelarMasivo")',
+                    data: PedidosFinal,
+                    success: function (data) {
+                        window.location = '@Url.Action("IndexCancelar")';
+                    },
+                    error: function (result) {
+                        alert(result.statusText)
+                        alert('No se pudo realizar la acción solicitada');
+
+                    }
+                });
+            });
+
+
+        });
+
+        function filterColumn(i) {
+            $('#dataTables-example').DataTable().column(i).search(
+                $('#col' + i + '_filter').val()
+            ).draw();
+        }
+
+
+    </script>
+}
+
+

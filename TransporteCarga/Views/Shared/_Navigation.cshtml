@@ -1,0 +1,109 @@
+﻿@using Microsoft.AspNet.Identity
+
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav" id="side-menu">
+            
+            <li class="nav-header">
+                <div class="dropdown profile-element">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <span class="clear">
+                            <img alt="image" class="img-circle" src="~/img/profile_small.jpg">
+                            <span class="block m-t-xs">
+                                <strong class="font-bold">@User.Identity.GetUserName()</strong>
+                            </span><span class="text-muted text-xs block">  <b class="caret"></b></span>
+                            @*</span><span class="text-muted text-xs block">Aqui va el Rol <b class="caret"></b></span>*@
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
+
+                        <li><a href="#">Salir</a></li>
+                    </ul>
+                </div>
+                <div class="logo-element">
+                    IN+
+                </div>
+            </li>
+
+            <li class="@Html.IsSelected(action: "Index")">
+                <a href="@Url.Action("Index", "Home")"><i class="fa fa-laptop"></i> <span class="nav-label">Principal</span> </a>
+            </li>
+
+@if (Request.IsAuthenticated)
+{
+            <li class="@Html.IsSelected(controller: "")">
+                <a href="#"><i class="fa fa-desktop"></i><span class="nav-label" data-i18n="nav.empresa">Mantenimiento</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "", cssClass: "in")">
+                    
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Proveedor")">Proveedores<span class="label label-warning pull-right">Nuevo</span></a></li>
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Vehiculo")">Vehiculos<span class="label label-warning pull-right">Nuevo</span></a></li>
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Chofer")">Choferes<span class="label label-warning pull-right">Nuevo</span></a></li>
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Direccion")">Direcciones<span class="label label-warning pull-right">Nuevo</span></a></li>
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Cliente")">Clientes<span class="label label-warning pull-right">Nuevo</span></a></li>
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "ClienteDireccion")">Cliente-Dirección<span class="label label-warning pull-right">Nuevo</span></a></li>
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Producto")">Productos<span class="label label-warning pull-right">Nuevo</span></a></li>
+                    @*<li class="@Html.IsSelected(action: "")"><a href="@Url.Action("Index", "EmpresaAdministradora")">Empresas Administradoras</a></li>*@
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "UnidadMedida")">Unidad Medidas<span class="label label-warning pull-right">Nuevo</span></a></li>
+                    @*<li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Categoria")">Categorias</a></li>*@
+
+                </ul>
+            </li>
+            <li class="@Html.IsSelected(controller: "")">
+                <a href="#"><i class="fa fa-money"></i><span class="nav-label" data-i18n="nav.empresa">Guías</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Orden")">Ingreso Guías<span class="label label-warning pull-right">Nuevo</span></a></li>
+                    @*<li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Orden")">Pagos Recibidos<span class="label label-danger pull-right">Nuevo</span></a></li>*@
+                    @*<li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("IndexCancelar", "Pedido")">Cancelar Ventas Crédito</a></li>*@
+                    
+                    
+                </ul>
+            </li> 
+               <li class="@Html.IsSelected(controller: "")">
+                <a href="#"><i class="fa fa-truck"></i><span class="nav-label" data-i18n="nav.empresa">Envios</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Envio")">Envios<span class="label label-warning pull-right">Nuevo</span></a></li>
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Pago")">Pagos Realizados<span class="label label-warning pull-right">Nuevo</span></a></li>
+                    @*<li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("IndexCancelar", "Pedido")">Cancelar Ventas Crédito</a></li>*@
+                    
+                    
+                </ul>
+            </li>  
+            @*<li class="@Html.IsSelected(controller: "")">
+                <a href="#"><i class="fa fa-shopping-cart"></i><span class="nav-label" data-i18n="nav.empresa">Compras</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Compra")">Ingreso Compras</a></li>
+                    
+                </ul>
+            </li>*@ 
+    
+            @*<li class="@Html.IsSelected(controller: "")">
+                <a href="#"><i class="fa fa-building"></i><span class="nav-label" data-i18n="nav.empresa">Almacén</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Home")">Inventario<span class="label label-warning pull-right">Pendiente</span></a></li>
+                    
+                </ul>
+            </li>*@      
+            <li class="@Html.IsSelected(controller: "")">
+                <a href="#"><i class="fa fa-file-excel-o"></i><span class="nav-label" data-i18n="nav.empresa">Reportes</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    @*<li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("IndexDetails", "Pedido")">Ventas</a></li>
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("IndexDetails", "Compra")">Compras</a></li>
+
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "GuiaSalida")">Guía de Remisión</a></li>*@
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("IndexGuias", "Orden")">Reporte Guias<span class="label label-warning pull-right">Nuevo</span></a></li>
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("IndexFacturas", "Orden")">Reporte Facturas<span class="label label-warning pull-right">Nuevo</span></a></li>
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("IndexRentabilidad", "Envio")">Rentabilidad Envios<span class="label label-warning pull-right">Nuevo</span></a></li>
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("IndexRentabilidad", "Orden")">Rentabilidad Clientes<span class="label label-warning pull-right">Nuevo</span></a></li>
+                    @*<li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("IndexRentabilidad", "Pedido")">Nivel de Servicio<span class="label label-danger pull-right">Pruebas</span></a></li>*@
+                    @*<li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("Index", "Home")">Reporte Detallado<span class="label label-warning pull-right">Pendiente</span></a></li>*@
+                    
+                </ul>
+            </li>          
+}
+        </ul>
+    </div>
+</nav>

@@ -1,0 +1,243 @@
+﻿@model IEnumerable<TransporteCarga.Models.Venta>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<h2>Docuentos de Ventas</h2>
+
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Todas los Documentos de Ventas. Use el Filtro de Búsqueda</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+
+                <div class="ibox-content">
+
+
+                    <div class="row">
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label" for="status">Cliente</label>
+                                @Html.DropDownList("col2_filter", (IEnumerable<SelectListItem>)ViewBag.clienteId, "Todos", new { @class = "form-control column_filter", @data_column = "2" })
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                    <table class="table table-stripped table-bordered table-hover dataTables-example " data-page-size="10">
+
+                        <thead>
+                            <tr>
+
+                                <th>
+                                    Pedido
+                                </th>
+                                <th>
+                                    Estado
+                                </th>
+                                <th>
+                                    Cliente
+                                </th>
+                                <th>
+                                    Total
+                                </th>
+                                <th>
+                                    Tipo Documento Venta
+                                </th>
+                                <th>
+                                    Serie
+                                </th>
+                                <th>
+                                    Número
+                                </th>
+
+                                <th>
+                                    Fecha
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Pedido.pedidoId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.EstadoVenta.nombre)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Pedido.Cliente.razonSocial)
+                                    </td>
+                                    <td>
+                                       S/. @Html.DisplayFor(modelItem => item.Pedido.Total)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TipoDocumento.nombre)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.serie)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.numero)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.fecha)
+                                    </td>
+                                </tr>
+                            }
+
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+
+                                <th>
+                                    Pedido
+                                </th>
+                                <th>
+                                    Estado
+                                </th>
+                                <th>
+                                    Cliente
+                                </th>
+                                <th>
+                                    Total
+                                </th>
+                                <th>
+                                    Tipo Documento Venta
+                                </th>
+                                <th>
+                                    Serie
+                                </th>
+                                <th>
+                                    Número
+                                </th>
+
+                                <th>
+                                    Fecha
+                                </th>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Styles {
+
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/footableStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/plugins/jeditable")
+    @Scripts.Render("~/plugins/footable")
+    @Scripts.Render("~/plugins/iCheck")
+    @Scripts.Render("~/plugins/chosen")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.dataTables-example').DataTable({
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'ExampleFile' },
+                    { extend: 'pdf', title: 'ExampleFile' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                        }
+                    }
+                ],
+                "order": [[0, "desc"]],
+                "pageLength": 25
+
+            });
+
+
+            $('.footable').footable();
+
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+
+            // Eventos de filtros
+
+            $('input.column_filter').on('keyup click', function () {
+                filterColumn($(this).attr('data-column'));
+            });
+
+            $('select.column_filter').on('onchange click', function () {
+                filterColumn($(this).attr('data-column'));
+            });
+
+            //Filtro de Chosen-select
+            var config = {
+                '.chosen-select': {},
+                '.chosen-select-deselect': { allow_single_deselect: true },
+                '.chosen-select-no-single': { disable_search_threshold: 10 },
+                '.chosen-select-no-results': { no_results_text: 'Oops, no encontrado!' },
+                '.chosen-select-width': { width: "200%" }
+                //
+            }
+            for (var selector in config) {
+                $(selector).chosen(config[selector]);
+            }
+
+
+        });
+
+        function filterColumn(i) {
+            $('.dataTables-example').DataTable().column(i).search(
+                $('#col' + i + '_filter').val()
+            ).draw();
+        }
+
+    </script>
+}
+
+

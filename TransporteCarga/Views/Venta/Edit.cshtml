@@ -1,0 +1,202 @@
+﻿@model TransporteCarga.Models.Venta
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>Editar</h2>
+        <ol class="breadcrumb">
+            <li>
+                @Html.ActionLink("Lista", "Index")
+            </li>
+            <li class="active">
+                <strong>Editar</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-sm-8">
+        <div class="title-action">
+			@Html.ActionLink("Volver al Listado", "Index", null, new { @class = "btn btn-primary"})
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Editar Venta</h5>
+                </div>
+                <div class="ibox-content">
+
+				@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.ventaId)
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.tipoDocumentoId, "tipoDocumentoId", new { @class = "control-label col-md-2" })*@
+            <label class="control-label col-md-2"> Tipo Documento</label>
+
+            <div class="col-md-10">
+                @Html.DropDownList("tipoDocumentoId", String.Empty)
+                @Html.ValidationMessageFor(model => model.tipoDocumentoId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.serie, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.serie)
+                @Html.ValidationMessageFor(model => model.serie)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.numero, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.numero)
+                @Html.ValidationMessageFor(model => model.numero)
+            </div>
+        </div>
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.pedidoId, "pedidoId", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("pedidoId", String.Empty)
+                @Html.ValidationMessageFor(model => model.pedidoId)
+            </div>
+        </div>*@
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.fecha, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.fecha)*@
+                @Html.TextBoxFor(model => model.fecha, "{0:yyyy-MM-dd}", new { @type = "date" })
+                @Html.ValidationMessageFor(model => model.fecha)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.formaPagoId, "formaPagoId", new { @class = "control-label col-md-2" })*@
+            <label class="control-label col-md-2"> Forma Pago</label>
+
+            <div class="col-md-10">
+                @Html.DropDownList("formaPagoId", String.Empty)
+                @Html.ValidationMessageFor(model => model.formaPagoId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.fechaPagoProgramado, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.fechaPagoProgramado, "{0:yyyy-MM-dd}", new { @type = "date" })
+                @Html.ValidationMessageFor(model => model.fechaPagoProgramado)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+				@*@Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-white"})*@
+                <a href="~/Pedido/Index/" class="btn btn-white btn-sm">Cancel </a>
+
+            </div>
+        </div>
+    </div>
+}
+
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-sm-4">
+
+            <div class="ibox ">
+                <div class="ibox-content">
+                    <div class="tab-content">
+                        <div id="contact-1" class="tab-pane active">
+
+                            <div class="client-detail">
+                                <div class="full-height-scroll">
+                                    <strong>Información Relevante</strong>
+                                    <div id="vertical-timeline" class="vertical-container dark-timeline">
+                                        <div class="vertical-timeline-block">
+                                            <div class="vertical-timeline-icon navy-bg">
+                                                <i class="fa fa-warning"></i>
+                                            </div>
+                                            <div class="vertical-timeline-content">
+                                                <p>
+                                                    Cliente: @Model.Orden.ClientePago.razonSocial<br />
+                                                    RUC: @Model.Orden.ClientePago.ruc
+                                                </p>
+                                                <span class="vertical-date small text-muted"> </span>
+                                            </div>
+                                        </div>
+                                        <div class="vertical-timeline-block">
+                                            <div class="vertical-timeline-icon navy-bg">
+                                                <i class="fa fa-warning"></i>
+                                            </div>
+                                            <div class="vertical-timeline-content">
+                                                <p>
+                                                    Moto Total: S/. @Html.DisplayFor(modelItem => modelItem.Orden.Total)
+                                                </p>
+                                                <span class="vertical-date small text-muted"> </span>
+                                            </div>
+                                        </div>
+                                        <div class="vertical-timeline-block">
+                                            <div class="vertical-timeline-icon navy-bg">
+                                                <i class="fa fa-warning"></i>
+                                            </div>
+                                            <div class="vertical-timeline-content">
+                                                <p>
+                                                    Nro Guía: @Html.DisplayFor(modelItem => modelItem.Orden.GuiasSalida.SingleOrDefault().serie) - @Html.DisplayFor(modelItem => modelItem.Orden.GuiasSalida.SingleOrDefault().numero)
+                                                </p>
+                                                @*<span class="vertical-date small text-muted"> @Html.DisplayFor(modelItem => modelItem.Orden.GuiasSalida.SingleOrDefault()) </span>*@
+                                            </div>
+                                        </div>
+                                        <div class="vertical-timeline-block">
+                                            <div class="vertical-timeline-icon navy-bg">
+                                                <i class="fa fa-warning"></i>
+                                            </div>
+                                            <div class="vertical-timeline-content">
+                                                <p>
+                                                    Nro Guía: @Html.DisplayFor(modelItem => modelItem.Orden.GuiasSalida.SingleOrDefault().serie) - @Html.DisplayFor(modelItem => modelItem.Orden.GuiasSalida.SingleOrDefault().numero)
+                                                </p>
+                                                @*<span class="vertical-date small text-muted"> @Html.DisplayFor(modelItem => modelItem.Orden.GuiasSalida.SingleOrDefault()) </span>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+ </div>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

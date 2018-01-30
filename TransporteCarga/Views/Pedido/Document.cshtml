@@ -1,0 +1,151 @@
+﻿
+@model TransporteCarga.Models.Pedido
+
+@{
+    ViewBag.Title = "Document";
+}
+
+
+
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-8">
+
+        <h2>Cotización</h2>
+
+
+        <ol class="breadcrumb">
+
+        </ol>
+    </div>
+    <div class="col-lg-4">
+        <div class="title-action">
+
+
+
+            @*<a href="#" class="btn btn-white"><i class="fa fa-check "></i> Guardar </a>*@
+
+            <a href="~/Pedido/DocumentPrint/@Html.DisplayFor(model => model.pedidoId)" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Imprimir </a>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+
+        @* Copiar desde aqui para print*@
+        <div class="wrapper wrapper-content animated fadeInRight">
+
+            <div class="ibox-content p-xl">
+                <div class="row">
+                    <div class="col-sm-2">
+                        @*<h5>From:</h5>*@
+                        <img src="~/img/logokk.jpg" alt="..." class="img-thumbnail" width="190" height="150">
+                    </div>
+                    <div class="col-sm-4 text-left">
+                        <address>
+                            Dirección: Jr. Las Turquesas 448 <br>
+                            Urb. Balconcillo<br>
+                            Lima - Lima - La Victoria<br>
+                            <abbr title="Teléfono">T: 471-3058 / 471-2630 / (99) 834*1310 / (98)131*2839 / 981000285</abbr>
+                        </address>
+                    </div>
+
+                    <div class="col-sm-6 text-right">
+                        <h3>Cotización</h3>
+                        
+
+                        <span>Cliente:</span>
+                        <address>
+                            <strong>@Html.DisplayFor(model => model.Cliente.razonSocial)</strong><br>
+                            RUC: @Html.DisplayFor(model => model.Cliente.ruc)<br>
+                            Cuenta Corriente: <br><br>
+                            Dirección: @Html.DisplayFor(model => model.Cliente.direccion)<br>
+                            Lima, Perú<br>
+                            <abbr title="Teléfono">T:</abbr> @Html.DisplayFor(model => model.Cliente.telefono)<br />
+                            Atención: @Html.DisplayFor(model => model.Cliente.contacto)<br />
+                            No.Contacto: @Html.DisplayFor(model => model.Cliente.telefono)<br />
+                            Email: @Html.DisplayFor(model => model.Cliente.email)
+                        </address>
+                        <p>
+                            <span><strong>Fecha Emisión:</strong> @Html.DisplayFor(model => model.fechaCreacion)</span><br />
+                        </p>
+                    </div>
+                </div>
+
+                <div class="table-responsive m-t">
+                    <table class="table invoice-table">
+                        <thead>
+                            <tr>
+                                <th>Items</th>
+                                <th>Cantidad</th>
+                                <th>UND.</th>
+                                <th>Precio Unitario</th>
+                                <th>Precio Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+
+                            @foreach (var item in Model.PedidoDetalles.OrderBy(a => a.Producto.nombre))
+                            {
+                                <tr>
+                                    <td>
+                                        <div><strong>@Html.DisplayFor(modelItem => item.Producto.nombre)</strong></div>
+                                        <small>@Html.DisplayFor(modelItem => item.Producto.Presentacion.nombre)</small>
+                                    </td>
+                                    <td>@Html.DisplayFor(modelItem => item.cantidad)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Producto.Presentacion.nombre)</td>
+                                    <td>S/. @Html.DisplayFor(modelItem => item.precioUnitario)</td>
+                                    <td>S/. @Html.DisplayFor(modelItem => item.precioTotal)</td>
+
+                                    @*<td>@Html.DisplayFor(modelItem => item.OrdenCompra.Moneda.simbolo) @Html.DisplayFor(modelItem => item.precioUnitario)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.OrdenCompra.Moneda.simbolo) @Html.DisplayFor(modelItem => item.precioTotal)</td>*@
+                                </tr>
+                            }
+
+
+
+
+                        </tbody>
+                    </table>
+                </div><!-- /table-responsive -->
+
+                <table class="table invoice-total">
+                    <tbody>
+                        <tr>
+                            <td><strong>Sub Total :</strong></td>
+                            <td>S/.  @Html.DisplayFor(model => model.subTotal)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>IGV :</strong></td>
+                            <td>S/.  @Html.DisplayFor(model => model.igv)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>TOTAL :</strong></td>
+                            <td>S/.  @Html.DisplayFor(model => model.Total)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="well m-t">
+                    <strong>Comentario</strong>
+                    @Html.DisplayFor(model => model.comentario)
+                </div>
+
+            </div>
+        
+        </div>
+
+    </div>
+</div>
+
+@* Copiar hasta aqui para print*@
+
+
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.pedidoId }) |
+    @Html.ActionLink("Volver al Listado", "Index")
+</p>

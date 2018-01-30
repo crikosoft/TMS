@@ -1,0 +1,353 @@
+﻿@model IEnumerable<TransporteCarga.Models.Orden>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>Lista</h2>
+        <ol class="breadcrumb">
+            <li class="active">
+                <strong>Guía</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Lista de Guias</h5>
+                </div>
+                <div class="ibox-content">
+
+                        <div class="row">
+
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label class="control-label" for="status">Cliente</label>
+                                    @Html.DropDownList("col2_filter", (IEnumerable<SelectListItem>)ViewBag.clienteId, "Todos", new { @class = "form-control column_filter", @data_column = "2" })
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <a href="~/OrdenViewModel/Create/" class="btn btn-primary btn-lg"> Crear Nueva Guía</a>
+
+                    <table class="table table-stripped table-bordered table-hover dataTables-example " data-page-size="10">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.EstadoOrden.nombre)
+                                </th>
+                                <th>
+                                   Guía Id
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ClientePago.razonSocial)
+                                </th>
+
+                                @*<th>
+                    @Html.DisplayNameFor(model => model.numero)
+                </th>*@
+                                <th>
+                                   Sub Total
+                                </th>
+                                <th>
+                                    IGV
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Total)
+                                </th>
+                                <th>
+                                    Fecha Creación
+                                </th>
+                                @*<th>
+                                    @Html.DisplayNameFor(model => model.fechaEntrega)
+                                </th>*@
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    @if (item.EstadoOrden.nombre == "Creado")
+                                    {
+                                        <td class="client-status"><span class="label label-danger">@Html.DisplayFor(modelItem => item.EstadoOrden.nombre)</span></td>
+                                    } 
+                                    else if (item.EstadoOrden.nombre == "Con Guía")
+                                    {
+                                        <td class="client-status"><span class="label label-warning">@Html.DisplayFor(modelItem => item.EstadoOrden.nombre)</span></td>
+                                    }
+                                    else
+                                    {
+                                        <td class="client-status"><span class="label label-primary">@Html.DisplayFor(modelItem => item.EstadoOrden.nombre)</span></td>
+                                    } 
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ordenId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ClientePago.razonSocial)
+                                    </td>
+
+                                    @*<td>
+                        @Html.DisplayFor(modelItem => item.numero)
+                    </td>*@
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.subTotal)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.igv)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Total)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.fechaCreacion)
+                                    </td>
+                                    @*<td>
+                                        @Html.DisplayFor(modelItem => item.fechaEntrega)
+                                    </td>*@
+                                    <td>
+                                        @Html.ActionLink("Detalle", "Details", new { id = item.ordenId }, new { @class = "btn btn-primary btn-sm" })
+                                        <a href="~/OrdenViewModel/Edit/@item.ordenId" class="btn btn-white btn-sm"> Editar </a>                                    
+                                        @*@Html.ActionLink("Editar", "Edit", new { id = item.ordenId }, new { @class = "btn btn-white btn-sm" })
+                                        @Html.ActionLink("Eliminar", "Delete", new { id = item.ordenId }, new { @class = "btn btn-white btn-sm" })*@
+                                        
+                                    </td>
+
+                                    <td>
+                                        @if (item.Envios.Count == 0)
+                                        {
+                                            @*<a href="~/Envio/Create/@Html.DisplayFor(modelItem =>item.ordenId )" class="btn btn-danger btn-sm"><i class="fa fa-truck"></i> Envío </a>*@
+                                            @*<a href="" class=""><i class="fa fa-truck"></i> Envío </a>*@
+                                            <span class="btn btn-danger btn-sm" data-container="body" data-toggle="popover" data-placement="left" data-content="Registre en el envío desde el Menú Envíos"><i class="fa fa-truck"></i> Envío </span>
+
+                                        }
+                                        else
+                                        {
+                                            @*<a href="~/Envio/Create/@Html.DisplayFor(modelItem =>item.ordenId )" class="btn btn-primary btn-sm"><i class="fa fa-truck"></i> Envío </a>*@
+                                            @*<a href="" class="btn btn- btn-sm"><i class="fa fa-truck"></i> Envío </a>*@
+                                            <span class="btn btn-primary btn-sm" data-container="body" data-toggle="popover"><i class="fa fa-truck"></i> Envío @Html.DisplayFor(modelItem => item.Envios.FirstOrDefault().envioId)</span>
+
+                                        }
+
+                                    </td>
+
+                                    <td>
+                                        @if (item.GuiasSalida.Count == 0)
+                                        {
+                                            <a href="~/GuiaSalida/Create/@Html.DisplayFor(modelItem =>item.ordenId )" class="btn btn-danger btn-sm"><i class="fa fa-archive"></i> Guia Remisión </a>
+
+
+                                        }
+                                        else if (item.Estados.Where(a => a.EstadoOrden.nombre == "Con Guía").Count() == 0)
+                                        {
+                                            <a href="~/GuiaSalida/Edit/@Html.DisplayFor(modelItem => item.GuiasSalida[0].guiaSalidaId)" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i> Guia @Html.DisplayFor(modelItem => item.GuiasSalida[0].numero)  </a>
+                                            <a href="~/GuiaSalida/Document/@Html.DisplayFor(modelItem => item.GuiasSalida[0].guiaSalidaId)" class="btn btn-warning btn-sm"><i class="fa fa-print"></i>  </a>
+
+                                        }
+                                        else if (item.Estados.Where(a => a.EstadoOrden.nombre == "Con Guía").Count() > 0)
+                                        {
+                                            <a href="~/GuiaSalida/Edit/@Html.DisplayFor(modelItem => item.GuiasSalida[0].guiaSalidaId)" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Guia @Html.DisplayFor(modelItem => item.GuiasSalida[0].numero)  </a>
+                                            <a href="~/GuiaSalida/Document/@Html.DisplayFor(modelItem => item.GuiasSalida[0].guiaSalidaId)" class="btn btn-primary btn-sm"><i class="fa fa-print"></i>  </a>
+                                            if (item.EstadoOrden.nombre == "Con Guía")
+                                            {
+                                                <a href="~/GuiaSalida/Delete/@Html.DisplayFor(modelItem => item.GuiasSalida[0].guiaSalidaId)" class="btn btn-primary btn-sm"><i class="fa fa-remove"></i>  </a>
+                                            }
+                                        }
+                                    </td>
+
+                                    <td>
+                                        @if (item.subTotal == 0)
+                                        {
+                                            <span class="btn btn-danger btn-sm" data-container="body" data-toggle="popover" data-placement="left" data-content="Debe ingresar Monto a la Guía"><i class="fa fa-money"></i> Documento de Venta  </span>
+                                        }
+                                        else if (item.Ventas.Count == 0)
+                                        {
+                                            <a href="~/Venta/Create/@Html.DisplayFor(modelItem =>item.ordenId )" class="btn btn-danger btn-sm"><i class="fa fa-money"></i> Documento de Venta </a>
+                                        }
+
+                                        @*else if (item.Estados.Where(a => a.EstadoOrden.nombre == "Con Factura").Count() == 0)
+                                        {
+                                            <a href="~/Venta/Edit/@Html.DisplayFor(modelItem => item.Ventas[0].ventaId)" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i> Doc.Venta @Html.DisplayFor(modelItem => item.Ventas[0].numero) </a>
+                                            <a href="~/Venta/Document/@Html.DisplayFor(modelItem => item.Ventas[0].ventaId)" class="btn btn-warning btn-sm"><i class="fa fa-print"></i>  </a>
+
+                                        }*@
+                                        else if (item.Estados.Where(a => a.EstadoOrden.nombre == "Con Factura").Count() > 0)
+                                        {
+                                            <a href="~/Venta/Edit/@Html.DisplayFor(modelItem => item.Ventas[0].ventaId)" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Doc.Venta @Html.DisplayFor(modelItem => item.Ventas[0].numero)</a>
+                                            <a href="~/Venta/Document/@Html.DisplayFor(modelItem => item.Ventas[0].ventaId)" class="btn btn-primary btn-sm"><i class="fa fa-print"></i>  </a>
+                                            <a href="~/Venta/Delete/@Html.DisplayFor(modelItem => item.Ventas[0].ventaId)" class="btn btn-primary btn-sm"><i class="fa fa-remove"></i>  </a>
+
+                                        }
+
+                                    </td>
+                                        
+                                    <td>
+                                        
+                                        @if (item.EstadoOrden.nombre == "Con Factura")
+                                        {
+
+                                            <a href="~/Venta/EditPayment/@Html.DisplayFor(modelItem =>item.Ventas.FirstOrDefault().ventaId )" class="btn btn-danger btn-sm"><i class="fa fa-money"></i> Pend. Pago </a>
+
+                                        }
+                                        else if (item.EstadoOrden.nombre == "Cobrado")
+                                        {
+                                            <a href="~/Venta/EditPayment/@Html.DisplayFor(modelItem => item.Ventas.FirstOrDefault().ventaId)" class="btn btn-primary btn-sm"><i class="fa fa-money"></i> Pagado </a>
+                                        @*<span class="btn btn-danger btn-sm"><i class="fa fa-money"></i> Pago </span>*@
+                                        }
+                                        
+                                    </td>
+
+
+                                </tr>
+                            }
+
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.EstadoOrden.nombre)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ordenId)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ClientePago.razonSocial)
+                                </th>
+
+                                @*<th>
+            @Html.DisplayNameFor(model => model.numero)
+        </th>*@
+                                <th>
+                                    @Html.DisplayNameFor(model => model.subTotal)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.igv)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Total)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.fechaCreacion)
+                                </th>
+                                @*<th>
+                                    @Html.DisplayNameFor(model => model.fechaEntrega)
+                                </th>*@
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+</table>
+
+
+
+                    </div>
+
+            </div>
+        </div>
+    </div>
+ </div>
+
+@section Styles {
+
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/footableStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/plugins/jeditable")
+    @Scripts.Render("~/plugins/footable")
+    @Scripts.Render("~/plugins/iCheck")
+    @Scripts.Render("~/plugins/chosen")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.dataTables-example').DataTable({
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'ExampleFile' },
+                    { extend: 'pdf', title: 'ExampleFile' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                        }
+                    }
+                ],
+                "order": [[1, "desc"]],
+                "pageLength": 25
+
+            });
+
+
+            $('.footable').footable();
+
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+
+            // Eventos de filtros
+
+            $('input.column_filter').on('keyup click', function () {
+                filterColumn($(this).attr('data-column'));
+            });
+
+            $('select.column_filter').on('onchange click', function () {
+                filterColumn($(this).attr('data-column'));
+            });
+
+            //Filtro de Chosen-select
+            var config = {
+                '.chosen-select': {},
+                '.chosen-select-deselect': { allow_single_deselect: true },
+                '.chosen-select-no-single': { disable_search_threshold: 10 },
+                '.chosen-select-no-results': { no_results_text: 'Oops, no encontrado!' },
+                '.chosen-select-width': { width: "200%" }
+                //
+            }
+            for (var selector in config) {
+                $(selector).chosen(config[selector]);
+            }
+
+
+        });
+
+        function filterColumn(i) {
+            $('.dataTables-example').DataTable().column(i).search(
+                $('#col' + i + '_filter').val()
+            ).draw();
+        }
+
+    </script>
+}
+

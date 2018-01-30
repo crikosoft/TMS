@@ -1,0 +1,291 @@
+﻿@model IEnumerable<TransporteCarga.Models.Orden>
+@{
+    ViewBag.Title = "Index Facturas";
+}
+<h2>Facturas</h2>
+<div class="row">
+
+    @using (Html.BeginForm())
+    {
+
+
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label class="control-label col-md-2"> Fecha Inicio:</label>
+                @Html.TextBox("start", "{0:yyyy-MM-dd}", new { @type = "date" })
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label class="control-label col-md-2"> Fecha Fin:</label>
+                @Html.TextBox("end", "{0:yyyy-MM-dd}", new { @type = "date" })
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+                <input type="submit" value="Buscar" class="btn btn-success" /> <span> </span>
+            </div>
+        </div>
+
+
+
+    }
+
+
+</div>
+
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Lista de Facturas</h5>
+                    @*<div class="ibox-tools">
+                            @Html.ActionLink("Crear Nuevo", "Create", null, new { @class = "btn btn-primary btn-xs" })
+                        </div>*@
+                </div>
+                <div class="ibox-content">
+
+
+                    <table class="table table-stripped table-bordered table-hover dataTables-example " data-page-size="10">
+
+                        <thead>
+                            <tr>
+
+                                <th>
+                                    Razon Social
+                                </th>
+                                <th>
+                                    Nro. Factura
+                                </th>
+                                <th>
+                                    Fecha
+                                </th>
+                                <th>
+                                    Serie
+                                </th>
+                                <th>
+                                    Guia
+                                </th>
+                                <th>
+                                    Monto
+                                </th>
+                                <th>
+                                    IGV
+                                </th>
+                                <th>
+                                    Total
+                                </th>
+                                <th>
+                                    F. Presentada
+                                </th>
+                                <th>
+                                    F. Pagada
+                                </th>
+                                <th>
+                                    Detracción
+                                </th>
+                                <th>
+                                    Estado
+                                </th>
+                                <th>
+                                    Clave Sol
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ClientePago.razonSocial)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Ventas.FirstOrDefault().numero)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.fechaCreacion)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.GuiasSalida.FirstOrDefault().serie)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.GuiasSalida.FirstOrDefault().numero)
+                                    </td>
+               
+                                    <td align="right">
+                                        S/. @Html.DisplayFor(modelItem => item.subTotal)
+                                    </td>
+                                    <td align="right">
+                                        S/. @Html.DisplayFor(modelItem => item.igv)
+                                    </td>
+                                    <td align="right">
+                                        S/. @Html.DisplayFor(modelItem => item.Total)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Ventas.FirstOrDefault().fecha)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Ventas.FirstOrDefault().fechaPagoReal)
+                                    </td>
+                                    <td>
+                                        
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.EstadoOrden.nombre)
+                                    </td>
+                                    <td >
+                                        
+
+                                    </td>
+
+                                </tr>
+                            }
+
+
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+
+                                <th>
+                                    Razon Social
+                                </th>
+                                <th>
+                                    Nro. Factura
+                                </th>
+                                <th>
+                                    Fecha
+                                </th>
+                                <th>
+                                    Serie
+                                </th>
+                                <th>
+                                    Guia
+                                </th>
+                                <th>
+                                    Monto
+                                </th>
+                                <th>
+                                    IGV
+                                </th>
+                                <th>
+                                    Total
+                                </th>
+                                <th>
+                                    F. Presentada
+                                </th>
+                                <th>
+                                    F. Pagada
+                                </th>
+                                <th>
+                                    Detracción
+                                </th>
+                                <th>
+                                    Estado
+                                </th>
+                                <th>
+                                    Clave Sol
+                                </th>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Styles {
+
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/footableStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/plugins/jeditable")
+    @Scripts.Render("~/plugins/footable")
+    @Scripts.Render("~/plugins/iCheck")
+    @Scripts.Render("~/plugins/chosen")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.dataTables-example').DataTable({
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'ExampleFile' },
+                    { extend: 'pdf', title: 'ExampleFile' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                        }
+                    }
+                ],
+                "order": [[0, "asc"]],
+                "pageLength": 25
+
+            });
+
+
+            $('.footable').footable();
+
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+
+            // Eventos de filtros
+
+            $('input.column_filter').on('keyup click', function () {
+                filterColumn($(this).attr('data-column'));
+            });
+
+            $('select.column_filter').on('onchange click', function () {
+                filterColumn($(this).attr('data-column'));
+            });
+
+            //Filtro de Chosen-select
+            var config = {
+                '.chosen-select': {},
+                '.chosen-select-deselect': { allow_single_deselect: true },
+                '.chosen-select-no-single': { disable_search_threshold: 10 },
+                '.chosen-select-no-results': { no_results_text: 'Oops, no encontrado!' },
+                '.chosen-select-width': { width: "200%" }
+                //
+            }
+            for (var selector in config) {
+                $(selector).chosen(config[selector]);
+            }
+
+
+        });
+
+        function filterColumn(i) {
+            $('.dataTables-example').DataTable().column(i).search(
+                $('#col' + i + '_filter').val()
+            ).draw();
+        }
+
+    </script>
+}

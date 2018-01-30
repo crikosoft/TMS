@@ -1,0 +1,106 @@
+﻿@model TransporteCarga.Models.Venta
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>Delete</h2>
+        <ol class="breadcrumb">
+            <li>
+                @Html.ActionLink("Lista", "Index")
+            </li>
+            <li class="active">
+                <strong>Delete</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-sm-8">
+        <div class="title-action">
+			@*@Html.ActionLink("Volver al Listado", "Index", null, new { @class = "btn btn-primary"})*@
+            <a href="~/Pedido/Index/" class="btn btn-primary"> Volver a la Lista </a>
+        </div>
+    </div>
+</div>
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Venta</h5>
+                </div>
+                <div class="ibox-content">
+				<h4 class="text-danger">¿Está seguro que desea anular?</h4>
+				 <dl class="dl-horizontal">
+        
+
+        <dt>
+            Pedido
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pedido.pedidoId)
+        </dd>
+
+        <dt>
+            Tipo Documento
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoDocumento.nombre)
+        </dd>
+
+        <dt>
+            Serie
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.serie)
+        </dd>
+
+        <dt>
+            Número
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.numero)
+        </dd>
+
+        <dt>
+            Fecha
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fecha)
+        </dd>
+                 <dt>
+                     Estado
+                 </dt>
+
+                 <dd>
+                     @Html.DisplayFor(model => model.Pedido.EstadoPedido.nombre)
+                 </dd>
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Anular" class="btn btn-primary" />
+            @*@Html.ActionLink("Volver al Listado", "Index", null, new { @class = "btn btn-white"})*@
+            <a href="~/Pedido/Index/" class="btn btn-white"> Volver a la Lista </a>
+        </div>
+    }
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
+
+
