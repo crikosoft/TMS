@@ -81,7 +81,7 @@ namespace KleanKart.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="ventaId,serie,numero,ordenId,tipoDocumentoId,fecha, formaPagoId, fechaPagoProgramado")] Venta venta)
+        public ActionResult Create([Bind(Include="ventaId,serie,numero,ordenId,tipoDocumentoId,fecha, formaPagoId")] Venta venta)
         {
             if (ModelState.IsValid)
             {
@@ -92,6 +92,29 @@ namespace KleanKart.Controllers
                 //Estado Venta
                 var estadoVenta = db.EstadoVentas.Single(p => p.nombre == "Creado");
                 venta.estadoVentaId = estadoVenta.estadoVentaId;
+
+                var formaPago = db.FormaPagos.Find(venta.formaPagoId);
+
+                switch (formaPago.nombre)
+                {
+                    case "Factura a 7 días":
+                        venta.fechaPagoProgramado = cstTime.AddDays(7);
+                        break;
+                    case "Factura a 15 días":
+                        venta.fechaPagoProgramado = cstTime.AddDays(15);
+                        break;
+                    case "Factura a 30 días":
+                        venta.fechaPagoProgramado = cstTime.AddDays(30);
+                        break;
+                    case "Factura a 90 días":
+                        venta.fechaPagoProgramado = cstTime.AddDays(90);
+                        break;
+                    default:
+                        venta.fechaPagoProgramado = cstTime;
+                        break;
+                }
+
+
 
                 //Actualiza estados de Ordenes
                 var estadoFactura = db.EstadosOrden.Single(p => p.nombre == "Con Factura");
@@ -152,13 +175,37 @@ namespace KleanKart.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ventaId,serie,numero,tipoDocumentoId,fecha, formaPagoId, fechaPagoProgramado")] Venta venta)
+        public ActionResult Edit([Bind(Include = "ventaId,serie,numero,tipoDocumentoId,fecha, formaPagoId")] Venta venta)
         {
             if (ModelState.IsValid)
             {
+               
+                var formaPago = db.FormaPagos.Find(venta.formaPagoId);
+
+                switch (formaPago.nombre)
+                {
+                    case "Factura a 7 días":
+                        venta.fechaPagoProgramado = venta.fecha.AddDays(7);
+                        break;
+                    case "Factura a 15 días":
+                        venta.fechaPagoProgramado = venta.fecha.AddDays(15);
+                        break;
+                    case "Factura a 30 días":
+                        venta.fechaPagoProgramado = venta.fecha.AddDays(30);
+                        break;
+                    case "Factura a 90 días":
+                        venta.fechaPagoProgramado = venta.fecha.AddDays(90);
+                        break;
+                    default:
+                        venta.fechaPagoProgramado = venta.fecha;
+                        break;
+                }
+
+
                 db.Entry(venta).State = EntityState.Modified;
                 db.Entry(venta).Property(x => x.ordenId).IsModified = false;
                 db.Entry(venta).Property(x => x.estadoVentaId).IsModified = false;
+
 
 
                 db.SaveChanges();
@@ -213,17 +260,17 @@ namespace KleanKart.Controllers
                     TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
                     DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
 
-                    //Actualiza estados de Ventas
-                    var estadoFactura = db.EstadosOrden.Single(p => p.nombre == "Cobrado");
-                    var orden = db.Ordenes.Find(venta.ordenId);
-                    orden.estadoOrdenId = estadoFactura.estadoOrdenId;
-                    venta.Orden = orden;
+                    //1. Actualiza estados de Pedido
+                    var estadoOrden = db.EstadosOrden.Single(p => p.nombre == "Cobrado");
+                    var ordenOriginal = db.Ordenes.Find(venta.ordenId);
+                    ordenOriginal.estadoOrdenId = estadoOrden.estadoOrdenId;
+                    venta.Orden = ordenOriginal;
 
                     //2. Grabar Estado de Pedido
                     var ordenEstadoOrden = new OrdenEstadoOrden();
 
                     ordenEstadoOrden.ordenId = venta.ordenId;
-                    ordenEstadoOrden.estadoOrdenId = estadoFactura.estadoOrdenId;
+                    ordenEstadoOrden.estadoOrdenId = estadoOrden.estadoOrdenId;
                     ordenEstadoOrden.usuarioCreacion = User.Identity.Name;
                     ordenEstadoOrden.fechaCreacion = cstTime;
 

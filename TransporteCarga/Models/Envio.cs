@@ -34,9 +34,9 @@ namespace TransporteCarga.Models
         [DisplayName("Forma de Pago")]
         public int? formaPagoId { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
-        [DisplayName("Fecha Pago")]
+        [DisplayName("Fecha Pago Programado")]
         [DataType(DataType.Date)]
-        public DateTime? fechaPago { get; set; }
+        public DateTime? fechaPagoProgramado { get; set; }
 
         [Required(ErrorMessage = "Fecha Inicio de Traslado es requerido")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]

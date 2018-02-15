@@ -13,7 +13,7 @@ namespace KleanKart.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201801301516460_db-update"; }
+            get { return "201802131307169_db-update"; }
         }
         
         string IMigrationMetadata.Source

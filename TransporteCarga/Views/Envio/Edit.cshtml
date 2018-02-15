@@ -30,7 +30,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Editar Envio</h5>
+                    <h5>Editar Asignación de Chofer a Guías</h5>
                 </div>
                 <div class="ibox-content">
 
@@ -110,14 +110,13 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.fechaPago, new { @class = "control-label col-md-2" })
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.fechaPagoProgramado, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @*@Html.EditorFor(model => model.fechaPago)*@
-                @Html.TextBoxFor(model => model.fechaPago, "{0:yyyy-MM-dd}", new { @type = "date" })
-                @Html.ValidationMessageFor(model => model.fechaPago)
+                @Html.TextBoxFor(model => model.fechaPagoProgramado, "{0:yyyy-MM-dd}", new { @type = "date" })
+                @Html.ValidationMessageFor(model => model.fechaPagoProgramado)
             </div>
-        </div>
+        </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.comentario, new { @class = "control-label col-md-2" })
@@ -172,7 +171,7 @@
                 }*@
 
 
-                @foreach (TransporteCarga.Models.Orden orden in ViewBag.Ordenes)
+                @*@foreach (TransporteCarga.Models.Orden orden in ViewBag.Ordenes)
                 {
                     if (Model.Ordenes.Where(a => a.ordenId == orden.ordenId).Count()> 0 )
                     { 
@@ -188,12 +187,87 @@
                             @orden.ordenId  @orden.ClientePago.razonSocial @orden.DireccionOrigen.descripcion @orden.DireccionDestino.descripcion
                         </li>
                     }
-                }
+                }*@
 
 
                 
                 @Html.ValidationMessageFor(model => model.OrdenIds)
+
             </ul>
+
+
+
+
+            <table class="table table-stripped table-bordered table-hover dataTables-example " data-page-size="10">
+                <thead>
+                    <tr>
+                        <th>
+                        </th>
+                        <th>
+                            Guia Sistema
+                        </th>
+                        <th>
+                            Nro Guia
+                        </th>
+                        <th>
+                            Cliente
+                        </th>
+                        <th>
+                            Origen
+                        </th>
+                        <th>
+                            Destino
+                        </th>
+                        <th>
+                            Costo (Sin IGV)
+                        </th>
+                        <th>
+                            Fecha Creación
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (TransporteCarga.Models.Orden orden in ViewBag.Ordenes)
+                    {
+                        <tr>
+                            <td>
+                                @if (Model.Ordenes.Where(a => a.ordenId == orden.ordenId).Count() > 0)
+                                {
+                                    <input type="checkbox" name="OrdenIds" value="@orden.ordenId" class="i-checks" checked="checked" />
+                                }
+                                else
+                                {
+                                    <input type="checkbox" name="OrdenIds" value="@orden.ordenId" class="i-checks"  />
+                                }
+
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => orden.ordenId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => orden.GuiasSalida.FirstOrDefault().numero)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => orden.ClientePago.razonSocial)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => orden.DireccionOrigen.descripcion)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => orden.DireccionDestino.descripcion)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => orden.subTotal)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => orden.fechaCreacion)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+
         </div>
 
         <div class="form-group">

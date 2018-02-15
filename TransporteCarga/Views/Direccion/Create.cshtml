@@ -204,6 +204,7 @@
             dataType: "json",
             success: function (data) {
                 $("#provinciaId").empty();
+                $("#ubigeoId").empty();
                 for (var i = 0; i < data.length; i++) {
                     $("#provinciaId").append("<option value=" + data[i].codigo + ">" + data[i].descripcion + "</option>");
                 }
@@ -218,7 +219,7 @@
         $("#provinciaId").change(function () {
             $.ajax({
                 url: "@Url.Action("GetDistritos", "Ubigeo")",
-                data: { codigo: $("#departamentoId").val().substring(0, 4) },
+                data: { codigo: $("#provinciaId").val().substring(0, 4) },
             type: "GET",
             dataType: "json",
             success: function (data) {

@@ -118,7 +118,7 @@ namespace TransporteCarga.Controllers
             ViewBag.proveedorId = new SelectList(db.Proveedores.OrderBy(a=>a.razonSocial), "proveedorId", "razonSocial");
             ViewBag.vehiculoId = new SelectList(db.Vehiculo, "vehiculoId", "placaUnidad");
             ViewBag.formaPagoId = new SelectList(db.FormaPagos, "formaPagoId", "nombre");
-            ViewBag.Ordenes = db.Ordenes.Where(a=> a.Envios.Count()==0).Include(e => e.ClientePago).Include(e => e.DireccionOrigen).Include(e => e.DireccionDestino);
+            ViewBag.Ordenes = db.Ordenes.Where(a=> a.Envios.Count()==0).Include(e => e.ClientePago).Include(e => e.DireccionOrigen).Include(e => e.DireccionDestino).Include(e=>e.GuiasSalida);
             
 
             Envio model = new Envio
@@ -134,7 +134,7 @@ namespace TransporteCarga.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "envioId,proveedorId,choferId,vehiculoId,subTotal,igv,Total,formaPagoId,fechaPago,comentario,usuarioCreacion,usuarioModificacion,fechaCreacion,fechaModificacion,fechaTraslado, OrdenIds")] Envio envio)
+        public ActionResult Create([Bind(Include = "envioId,proveedorId,choferId,vehiculoId,subTotal,igv,Total,formaPagoId,comentario,usuarioCreacion,usuarioModificacion,fechaCreacion,fechaModificacion,fechaTraslado, OrdenIds")] Envio envio)
         {
             if (ModelState.IsValid)
             {
@@ -143,10 +143,40 @@ namespace TransporteCarga.Controllers
                     envio.Ordenes = db.Ordenes.Where(a => envio.OrdenIds.Contains(a.ordenId)).ToList();
                 }
 
+                DateTime timeUtc = DateTime.UtcNow;
+                TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+                DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
+
                 var estadoEnvio = db.EstadoEnvios.Single(p => p.nombre == "Creado");
                 envio.estadoEnvioId = estadoEnvio.estadoEnvioId;
                 envio.igv = envio.subTotal * 0.18;
                 envio.Total = envio.subTotal * 1.18;
+
+                var formaPago = db.FormaPagos.Find(envio.formaPagoId);
+
+                switch (formaPago.nombre)
+                {
+                    case "Factura a 7 días":
+                         envio.fechaPagoProgramado = envio.fechaTraslado.AddDays(7);
+                        break;
+                    case "Factura a 15 días":
+                         envio.fechaPagoProgramado = envio.fechaTraslado.AddDays(15);
+                        break;
+                    case "Factura a 30 días":
+                         envio.fechaPagoProgramado = envio.fechaTraslado.AddDays(30);
+                        break;
+                    case "Factura a 90 días":
+                         envio.fechaPagoProgramado = envio.fechaTraslado.AddDays(90);
+                        break;
+                    default:
+                          envio.fechaPagoProgramado = envio.fechaTraslado;
+                          break;
+                }
+
+                envio.fechaCreacion = cstTime;
+                envio.usuarioCreacion = User.Identity.Name;
+                envio.fechaModificacion = cstTime;
+                envio.usuarioModificacion = User.Identity.Name;
 
                 db.Envios.Add(envio);
                 db.SaveChanges();
@@ -200,7 +230,7 @@ namespace TransporteCarga.Controllers
             //ViewBag.choferId = new SelectList(db.Choferes, "choferId", "nombres", envio.choferId);
             ViewBag.proveedorId = new SelectList(db.Proveedores.OrderBy(a=>a.razonSocial), "proveedorId", "razonSocial", envio.proveedorId);
             ViewBag.vehiculoId = new SelectList(db.Vehiculo, "vehiculoId", "placaUnidad", envio.vehiculoId);
-            ViewBag.Ordenes = db.Ordenes.Where(a => a.Envios.Count() == 0 || a.Envios.Any(b=> b.envioId ==id)).Include(e => e.ClientePago).Include(e => e.DireccionOrigen).Include(e => e.DireccionDestino);
+            ViewBag.Ordenes = db.Ordenes.Where(a => a.Envios.Count() == 0 || a.Envios.Any(b => b.envioId == id)).Include(e => e.ClientePago).Include(e => e.DireccionOrigen).Include(e => e.DireccionDestino).Include(e => e.GuiasSalida); 
             ViewBag.formaPagoId = new SelectList(db.FormaPagos, "formaPagoId", "nombre", envio.formaPagoId);
 
             Envio model = new Envio
@@ -216,7 +246,7 @@ namespace TransporteCarga.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "envioId,proveedorId,choferId,vehiculoId,subTotal,igv,Total,formaPagoId,fechaPago,comentario,usuarioCreacion,usuarioModificacion,fechaCreacion,fechaModificacion,fechaTraslado, OrdenIds")] Envio envio)
+        public ActionResult Edit([Bind(Include = "envioId,proveedorId,choferId,vehiculoId,subTotal,igv,Total,formaPagoId,comentario,usuarioCreacion,usuarioModificacion,fechaCreacion,fechaModificacion,fechaTraslado, OrdenIds")] Envio envio)
         {
             if (ModelState.IsValid)
             {
@@ -252,10 +282,32 @@ namespace TransporteCarga.Controllers
                 envioOriginal.choferId = envio.choferId;
                 envioOriginal.vehiculoId = envio.vehiculoId;
                 envioOriginal.formaPagoId = envio.formaPagoId;
-                envioOriginal.fechaPago = envio.fechaPago;
+                //envioOriginal.fechaPagoProgramado = envio.fechaPagoProgramado;
                 envioOriginal.comentario = envio.comentario;
                 envioOriginal.fechaModificacion =cstTime;
                 envioOriginal.usuarioModificacion = User.Identity.Name;
+
+                var formaPago = db.FormaPagos.Find(envio.formaPagoId);
+
+                switch (formaPago.nombre)
+                {
+                    case "Factura a 7 días":
+                        envioOriginal.fechaPagoProgramado = envio.fechaTraslado.AddDays(7);
+                        break;
+                    case "Factura a 15 días":
+                        envioOriginal.fechaPagoProgramado = envio.fechaTraslado.AddDays(15);
+                        break;
+                    case "Factura a 30 días":
+                        envioOriginal.fechaPagoProgramado = envio.fechaTraslado.AddDays(30);
+                        break;
+                    case "Factura a 90 días":
+                        envioOriginal.fechaPagoProgramado = envio.fechaTraslado.AddDays(90);
+                        break;
+                    default:
+                        envioOriginal.fechaPagoProgramado = envio.fechaTraslado;
+                        break;
+                }
+
 
                 //db.Entry(envio).CurrentValues.SetValues(envio);              
 

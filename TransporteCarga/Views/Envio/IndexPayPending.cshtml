@@ -5,7 +5,7 @@
 }
 
 
-<h2>Envíos pendientes de Pago</h2>
+<h2>Choferes pendientes de Pago</h2>
 
 
 
@@ -16,7 +16,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Todas las Ordenes de Compras y Servicios. Use el Filtro de Búsqueda</h5>
+                    <h5>Todos los Choferes. Use el Filtro de Búsqueda</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -63,7 +63,7 @@
                                 <th>Estado</th>
                                 <th>Envío</th>
                                 <th>Proveedor</th>
-                                <th>Fecha</th>
+                                <th>Fecha Pago Programado</th>
                                 <th hidden="hidden">Total</th>
                                 <th>Total Envío</th>
                                 <th>Nro Pagos</th>
@@ -93,7 +93,7 @@
                                     </td>
                                     <td>@Html.DisplayFor(modelItem => item.envioId)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Proveedor.razonSocial)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.fechaCreacion)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.fechaPagoProgramado)</td>
                                     <td hidden="hidden">@item.Total</td>
                                     <td>@Html.DisplayFor(modelItem => item.Total)</td>
 
@@ -148,7 +148,7 @@
                                 <th>Estado</th>
                                 <th>Envío</th>
                                 <th>Proveedor</th>
-                                <th>Fecha</th>
+                                <th>Fecha Pago Programado</th>
                                 <th hidden="hidden">Total</th>
                                 <th>Total Envío</th>
                                 <th>Nro Pagos</th>

@@ -604,7 +604,7 @@ namespace KleanKart.Migrations
                 new Ubigeo { codigo="200607", descripcion="QUERECOTILLO",},
                 new Ubigeo { codigo="200608", descripcion="SALITRAL",},
                 new Ubigeo { codigo="200700", descripcion="Distrito no ubicable",},
-                new Ubigeo { codigo="200701", descripcion="PARI?AS",},
+                new Ubigeo { codigo="200701", descripcion="PARIÑAS",},
                 new Ubigeo { codigo="200702", descripcion="EL ALTO",},
                 new Ubigeo { codigo="110200", descripcion="Distrito no ubicable",},
                 new Ubigeo { codigo="110201", descripcion="CHINCHA ALTA",},
@@ -954,7 +954,7 @@ namespace KleanKart.Migrations
                 new Ubigeo { codigo="090707", descripcion="HUACHOCOLPA",},
                 new Ubigeo { codigo="090708", descripcion="HUANDO",},
                 new Ubigeo { codigo="090709", descripcion="HUARIBAMBA",},
-                new Ubigeo { codigo="090710", descripcion="?AHUIMPUQUIO",},
+                new Ubigeo { codigo="090710", descripcion="NAHUIMPUQUIO",},
                 new Ubigeo { codigo="090711", descripcion="PAZOS",},
                 new Ubigeo { codigo="090712", descripcion="PACHAMARCA",},
                 new Ubigeo { codigo="090713", descripcion="QUISHUAR",},
@@ -2346,6 +2346,7 @@ namespace KleanKart.Migrations
                 new EstadoOrden { nombre= "Creado", descripcion= "Creado"},
                 new EstadoOrden { nombre= "Con Guía", descripcion= "Con Guía"},
                 new EstadoOrden { nombre= "Con Factura", descripcion= "Con Factura"},
+                new EstadoOrden { nombre= "Guía Retornada", descripcion= "Guía Retornada"},   
                 new EstadoOrden { nombre= "Cobrado", descripcion= "Cobrado"},
                 new EstadoOrden { nombre= "Anulado", descripcion= "Anulado"}
 

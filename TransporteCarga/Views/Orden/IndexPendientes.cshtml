@@ -1,8 +1,8 @@
-﻿@model IEnumerable<TransporteCarga.Models.Envio>
+﻿@model IEnumerable<TransporteCarga.Models.Orden>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Index Guías";
 }
-<h2>Rentabilidad</h2>
+<h2>Guias Pendientes según Estado</h2>
 <div class="row">
 
     @using (Html.BeginForm())
@@ -23,11 +23,21 @@
         </div>
         <div class="col-sm-3">
             <div class="form-group">
+                <label class="control-label" for="status">Estado</label>
+                @Html.DropDownList("estadoOrdenId", (IEnumerable<SelectListItem>)ViewBag.estadoOrdenId, "Todos", new { @class = "form-control column_filter", @data_column = "2" })
+
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group">
                 <input type="submit" value="Buscar" class="btn btn-success" /> <span> </span>
             </div>
         </div>
 
+                                
 
+
+                        
 
     }
 
@@ -41,7 +51,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Rentabilidad por Cliente</h5>
+                    <h5>Lista de Guías en su estado actual</h5>
                     @*<div class="ibox-tools">
                             @Html.ActionLink("Crear Nuevo", "Create", null, new { @class = "btn btn-primary btn-xs" })
                         </div>*@
@@ -53,33 +63,40 @@
 
                         <thead>
                             <tr>
-
                                 <th>
-                                    Envio Id
-                                </th>
-                                <th> 
-                                    Fecha Traslado
+                                    Nro. Guia
                                 </th>
                                 <th>
-                                    Guias
-                                </th>
-                              
-                                <th>
-                                    Documento Venta
+                                    Estado Actual
                                 </th>
                                 <th>
-                                    Moneda
+                                    Fecha Creación
+                                </th>
+                                
+                                <th>
+                                    Nro. Factura
+                                </th>
+                                @*<th>
+                                        Fecha2
+                                    </th>*@
+                                <th>
+                                    Remitente
                                 </th>
                                 <th>
-                                    Ventas
+                                    Destinatario
                                 </th>
                                 <th>
-                                    Costos
+                                    Destino
                                 </th>
                                 <th>
-                                    Rentabilidad
+                                    Chofer
                                 </th>
-
+                                <th>
+                                    Descripcion
+                                </th>
+                                <th>
+                                    Monto
+                                </th>
 
 
                             </tr>
@@ -89,78 +106,59 @@
                             @foreach (var item in Model)
                             {
                                 <tr>
-
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.envioId)
+                                        @Html.DisplayFor(modelItem => item.GuiasSalida.FirstOrDefault().numero)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.fechaTraslado)
+                                        @Html.DisplayFor(modelItem => item.EstadoOrden.nombre)
                                     </td>
                                     <td>
+                                        @Html.DisplayFor(modelItem => item.fechaCreacion)
+                                    </td>
+                                    
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Ventas.FirstOrDefault().numero)
+                                    </td>
+                                    @*<td>
+                                            fecha2
+                                        </td>*@
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ClienteOrigen.razonSocial)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ClienteDestinatario.razonSocial)
+                                    </td>
+                                    <td>
+                                        @{var direccion = "";
 
-                                        @{
-                                var guias = "";
-                                         }
-                                        @foreach (var item2 in item.Ordenes)
-                                        {
-                                            if (item2.GuiasSalida.FirstOrDefault() != null)
-                                            {
-                                                guias = guias + item2.GuiasSalida.FirstOrDefault().numero + ",";
-                                            }
+                                        direccion = item.DireccionDestino.descripcion + ", " + item.DireccionDestino.Ubigeo.descripcion;
                                         }
-                                        @guias
-                                    </td>
-                                    <td>
-                                        @{var facturas = "";
-                                        }           
+                                        @direccion
 
-                                        @foreach (var item2 in item.Ordenes)
-                                        {
-                                            if (item2.Ventas.FirstOrDefault() != null)
-                                            {
-                                                facturas = facturas + item2.Ventas.FirstOrDefault().numero + ",";
-                                            }
-                                        }
-                                        @facturas
 
                                     </td>
                                     <td>
-                                        S/.
+                                        @Html.DisplayFor(modelItem => item.Envios.FirstOrDefault().Chofer.apellidos)
                                     </td>
-                                    <td align="right">
-                                        @{
-                                            double? rentabilidad = 0.0;
-                                            double? ventas = 0.0;
-                                            double? costos = 0.0;
-                                            if (item.Ordenes.Where(a => a.EstadoOrden.nombre != "anulado").Count() > 0)
+                                    <td>
+
+                                        <ul>
+                                            @foreach (var detalle in item.Detalles)
                                             {
-                                                ventas = item.Ordenes.Where(a => a.EstadoOrden.nombre != "anulado").Sum(a => a.Total);
+                                                <li>
+                                                    <label> @detalle.cantidad | @detalle.Producto.nombre </label>
+
+                                                    @*@orden.ordenId  @orden.ClientePago.razonSocial @orden.DireccionOrigen.descripcion @orden.DireccionDestino.descripcion*@
+                                                </li>
                                             }
 
-                                        }
-                                        @string.Format("{0:0.00}", @ventas)
+                                        </ul>
 
                                     </td>
                                     <td align="right">
-                                        @{
-                                           
-                                            costos = item.Total;
-                                           
-                                        }
-                                        @string.Format("{0:0.00}", @costos)
-                                    </td>
-
-                                    <td align="right">
-                                        @{
-                                             rentabilidad = ventas - costos;
-                                        }
-                                        @string.Format("{0:0.00}", @rentabilidad)
+                                        S/. @Html.DisplayFor(modelItem => item.Total)
 
                                     </td>
-
-
-
-
 
                                 </tr>
                             }
@@ -170,30 +168,39 @@
                         </tbody>
                         <tfoot>
                             <tr>
-
                                 <th>
-                                    Razón Social
+                                    Nro. Guia
                                 </th>
                                 <th>
-                                    RUC
+                                    Estado Actual
                                 </th>
                                 <th>
-                                    Nro de Orden
+                                    Fecha
+                                </th>
+                                
+                                <th>
+                                    Nro. Factura
+                                </th>
+                                @*<th>
+                                        Fecha2
+                                    </th>*@
+                                <th>
+                                    Remitente
                                 </th>
                                 <th>
-                                    Documento Venta
+                                    Destinatario
                                 </th>
                                 <th>
-                                    Moneda
+                                    Destino
                                 </th>
                                 <th>
-                                    Ventas
+                                    Chofer
                                 </th>
                                 <th>
-                                    Costos
+                                    Descripcion
                                 </th>
                                 <th>
-                                    Rentabilidad
+                                    Monto
                                 </th>
 
 

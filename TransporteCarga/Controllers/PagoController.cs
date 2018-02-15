@@ -68,7 +68,7 @@ namespace TransporteCarga.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="pagoId,envioId,tipoDocumentoId,numero,fechaPagoProg,fechaPagoReal,estadoPagoId,pagoMonto,pagoDetraccion,asientoContable,fechaContable,fechaFactura,usuarioCreacion,usuarioModificacion,fechaCreacion,fechaModificacion,preguntaPagoTotal")] Pago pago)
+        public ActionResult Create([Bind(Include="pagoId,envioId,tipoDocumentoId,numero,fechaPagoReal,estadoPagoId,pagoMonto,pagoDetraccion,asientoContable,fechaContable,fechaFactura,usuarioCreacion,usuarioModificacion,fechaCreacion,fechaModificacion,preguntaPagoTotal")] Pago pago)
         {
             if (ModelState.IsValid)
             {
@@ -132,7 +132,7 @@ namespace TransporteCarga.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="pagoId,envioId,tipoDocumentoId,numero,fechaPagoProg,fechaPagoReal,estadoPagoId,pagoMonto,pagoDetraccion,asientoContable,fechaContable,fechaFactura,usuarioCreacion,usuarioModificacion,fechaCreacion,fechaModificacion,preguntaPagoTotal")] Pago pago)
+        public ActionResult Edit([Bind(Include="pagoId,envioId,tipoDocumentoId,numero,fechaPagoReal,estadoPagoId,pagoMonto,pagoDetraccion,asientoContable,fechaContable,fechaFactura,usuarioCreacion,usuarioModificacion,fechaCreacion,fechaModificacion,preguntaPagoTotal")] Pago pago)
         {
             if (ModelState.IsValid)
             {

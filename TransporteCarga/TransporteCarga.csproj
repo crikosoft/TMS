@@ -225,9 +225,9 @@
     <Compile Include="Migrations\201801130206516_db-create.Designer.cs">
       <DependentUpon>201801130206516_db-create.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201801301516460_db-update.cs" />
-    <Compile Include="Migrations\201801301516460_db-update.Designer.cs">
-      <DependentUpon>201801301516460_db-update.cs</DependentUpon>
+    <Compile Include="Migrations\201802131307169_db-update.cs" />
+    <Compile Include="Migrations\201802131307169_db-update.Designer.cs">
+      <DependentUpon>201802131307169_db-update.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -386,7 +386,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="img\Logo color.jpg" />
     <Content Include="img\logokk.jpg" />
     <Content Include="img\profile_small.jpg" />
     <Content Include="Scripts\app\inspinia.js" />
@@ -902,7 +901,7 @@
     <Content Include="Scripts\plugins\ladda\ladda.min.js" />
     <Content Include="Scripts\plugins\ladda\spin.min.js" />
     <Content Include="Scripts\plugins\masonary\masonry.pkgd.min.js" />
-    <Content Include="Scripts\plugins\metisMenu\jquery.metisMenu.js" />
+    <Content Include="Scripts\plugins\metisMenu\metisMenu.min.js" />
     <Content Include="Scripts\plugins\morris\morris.js" />
     <Content Include="Scripts\plugins\morris\raphael-2.1.0.min.js" />
     <Content Include="Scripts\plugins\nestable\jquery.nestable.js" />
@@ -1086,6 +1085,8 @@
     <Content Include="Views\Envio\IndexPayPending.cshtml" />
     <Content Include="Views\Venta\EditPayment.cshtml" />
     <Content Include="Views\OrdenViewModel\Edit.cshtml" />
+    <Content Include="Views\Orden\IndexRetorno.cshtml" />
+    <Content Include="Views\Orden\IndexPendientes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1100,8 +1101,8 @@
     <EmbeddedResource Include="Migrations\201801130206516_db-create.resx">
       <DependentUpon>201801130206516_db-create.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801301516460_db-update.resx">
-      <DependentUpon>201801301516460_db-update.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201802131307169_db-update.resx">
+      <DependentUpon>201802131307169_db-update.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Factura.rdlc" />
     <EmbeddedResource Include="Reports\GuiaEmpty.rdlc" />

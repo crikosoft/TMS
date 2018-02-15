@@ -65,14 +65,6 @@ namespace TransporteCarga.Controllers
         {
             if (ModelState.IsValid)
             {
-
-                //Actualiza estados de Ordenes
-                var estadoEnvioGuia = db.EstadosOrden.Single(p => p.nombre == "Con Guía");
-                var orden = db.Ordenes.Find(guiasalida.ordenId);
-                orden.estadoOrdenId = estadoEnvioGuia.estadoOrdenId;
-                guiasalida.Orden = orden;
-               
-
                 db.GuiaSalidas.Add(guiasalida);
                 db.SaveChanges();
                 //return RedirectToAction("Index");
@@ -190,6 +182,36 @@ namespace TransporteCarga.Controllers
             if (id == null)
             {
                 return null;
+            }
+
+
+            if (empty == 1)
+            {
+
+                DateTime timeUtc = DateTime.UtcNow;
+                TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+                DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
+
+                //1. Cambia Estado de Orden
+                var ordenOriginal = db.Ordenes.Find(id);
+                var estadoOrden = db.EstadosOrden.Single(p => p.nombre == "Con Guía");
+
+                ordenOriginal.estadoOrdenId = estadoOrden.estadoOrdenId;
+                ordenOriginal.usuarioModificacion = User.Identity.Name;
+                ordenOriginal.fechaModificacion = cstTime;
+
+                //2. Grabar Estado de Pedido
+                var ordenEstadoOrden = new OrdenEstadoOrden();
+
+                ordenEstadoOrden.ordenId = ordenOriginal.ordenId;
+                ordenEstadoOrden.estadoOrdenId = estadoOrden.estadoOrdenId;
+                ordenEstadoOrden.usuarioCreacion = User.Identity.Name;
+                ordenEstadoOrden.fechaCreacion = cstTime;
+
+                db.OrdenesEstadoOrden.Add(ordenEstadoOrden);
+
+                db.SaveChanges();
+
             }
 
             //List<Venta> venta = db.Ventas.Where(a => a.ventaId == id).ToList();

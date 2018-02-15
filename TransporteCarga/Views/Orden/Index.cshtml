@@ -127,18 +127,18 @@
                                     </td>
 
                                     <td>
-                                        @if (item.Envios.Count == 0)
+                                        @if (item.Envios.Count() == 0)
                                         {
                                             @*<a href="~/Envio/Create/@Html.DisplayFor(modelItem =>item.ordenId )" class="btn btn-danger btn-sm"><i class="fa fa-truck"></i> Envío </a>*@
                                             @*<a href="" class=""><i class="fa fa-truck"></i> Envío </a>*@
-                                            <span class="btn btn-danger btn-sm" data-container="body" data-toggle="popover" data-placement="left" data-content="Registre en el envío desde el Menú Envíos"><i class="fa fa-truck"></i> Envío </span>
+                                            <span class="btn btn-danger btn-sm" data-container="body" data-toggle="popover" data-placement="left" data-content="Registre el Chofer desde el Menú Choferes"><i class="fa fa-truck"></i> Chofer </span>
 
                                         }
                                         else
                                         {
                                             @*<a href="~/Envio/Create/@Html.DisplayFor(modelItem =>item.ordenId )" class="btn btn-primary btn-sm"><i class="fa fa-truck"></i> Envío </a>*@
                                             @*<a href="" class="btn btn- btn-sm"><i class="fa fa-truck"></i> Envío </a>*@
-                                            <span class="btn btn-primary btn-sm" data-container="body" data-toggle="popover"><i class="fa fa-truck"></i> Envío @Html.DisplayFor(modelItem => item.Envios.FirstOrDefault().envioId)</span>
+                                            <span class="btn btn-primary btn-sm" data-container="body" data-toggle="popover"><i class="fa fa-truck"></i> Chofer @Html.DisplayFor(modelItem => item.Envios.FirstOrDefault().envioId)</span>
 
                                         }
 
@@ -154,8 +154,14 @@
                                         else if (item.Estados.Where(a => a.EstadoOrden.nombre == "Con Guía").Count() == 0)
                                         {
                                             <a href="~/GuiaSalida/Edit/@Html.DisplayFor(modelItem => item.GuiasSalida[0].guiaSalidaId)" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i> Guia @Html.DisplayFor(modelItem => item.GuiasSalida[0].numero)  </a>
-                                            <a href="~/GuiaSalida/Document/@Html.DisplayFor(modelItem => item.GuiasSalida[0].guiaSalidaId)" class="btn btn-warning btn-sm"><i class="fa fa-print"></i>  </a>
-
+                                            if (item.Envios.Count == 0)
+                                            {
+                                                <span class="btn btn-warning btn-sm" data-container="body" data-toggle="popover" data-placement="left" data-content="Registre datos de Chofer antes de Imprimir la Guía"><i class="fa fa-print"></i> </span>
+                                            }
+                                            else
+                                            {
+                                                <a href="~/GuiaSalida/Document/@Html.DisplayFor(modelItem => item.GuiasSalida[0].guiaSalidaId)" class="btn btn-warning btn-sm"><i class="fa fa-print"></i>  </a>
+                                            }
                                         }
                                         else if (item.Estados.Where(a => a.EstadoOrden.nombre == "Con Guía").Count() > 0)
                                         {
@@ -196,13 +202,14 @@
                                         
                                     <td>
                                         
-                                        @if (item.EstadoOrden.nombre == "Con Factura")
+                                        @*@if (item.EstadoOrden.nombre == "Con Factura")*@
+                                        @if (item.Estados.Where(a => a.EstadoOrden.nombre == "Con Factura").Count() > 0 && item.Estados.Where(a => a.EstadoOrden.nombre == "Cobrado").Count() == 0) 
                                         {
 
                                             <a href="~/Venta/EditPayment/@Html.DisplayFor(modelItem =>item.Ventas.FirstOrDefault().ventaId )" class="btn btn-danger btn-sm"><i class="fa fa-money"></i> Pend. Pago </a>
 
                                         }
-                                        else if (item.EstadoOrden.nombre == "Cobrado")
+                                        else if (item.Estados.Where(a => a.EstadoOrden.nombre == "Cobrado").Count() > 0)
                                         {
                                             <a href="~/Venta/EditPayment/@Html.DisplayFor(modelItem => item.Ventas.FirstOrDefault().ventaId)" class="btn btn-primary btn-sm"><i class="fa fa-money"></i> Pagado </a>
                                         @*<span class="btn btn-danger btn-sm"><i class="fa fa-money"></i> Pago </span>*@
