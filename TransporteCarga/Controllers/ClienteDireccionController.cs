@@ -40,7 +40,7 @@ namespace TransporteCarga.Controllers
         public ActionResult Create()
         {
             ViewBag.clienteId = new SelectList(db.Clientes.OrderBy(a => a.razonSocial), "clienteid", "razonSocial");
-            ViewBag.direccionId = new SelectList(db.Direcciones, "direccionId", "descripcion");
+            ViewBag.direccionId = new SelectList(db.Direcciones.OrderBy(a => a.orden).OrderBy(a => a.descripcion), "direccionId", "descripcion");
             ViewBag.tipoDireccionId = new SelectList(db.TipoDireccion, "tipoDireccionId", "nombre");
             return View();
         }
@@ -60,7 +60,7 @@ namespace TransporteCarga.Controllers
             }
 
             ViewBag.clienteId = new SelectList(db.Clientes.OrderBy(a => a.razonSocial), "clienteid", "razonSocial", clientedireccion.clienteId);
-            ViewBag.direccionId = new SelectList(db.Direcciones, "direccionId", "descripcion", clientedireccion.direccionId);
+            ViewBag.direccionId = new SelectList(db.Direcciones.OrderBy(a=>a.orden).OrderBy(a=> a.descripcion), "direccionId", "descripcion", clientedireccion.direccionId);
             ViewBag.tipoDireccionId = new SelectList(db.TipoDireccion, "tipoDireccionId", "nombre", clientedireccion.tipoDireccionId);
             return View(clientedireccion);
         }

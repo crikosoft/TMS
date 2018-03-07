@@ -254,6 +254,7 @@ namespace TransporteCarga.Controllers
             dt.Columns.Add("Total");
             dt.Columns.Add("TotalTexto");
             dt.Columns.Add("FechaEmisionF");
+            dt.Columns.Add("Comentario");
 
 
             foreach (var item in guia[0].Orden.Detalles.OrderBy(a => a.Producto.nombre))
@@ -265,8 +266,8 @@ namespace TransporteCarga.Controllers
                 _ravi["FechaTraslado"] = guia[0].Orden.Envios.FirstOrDefault().fechaTraslado.ToShortDateString();
                 _ravi["Remitente"] = guia[0].Orden.ClienteOrigen.razonSocial;
                 _ravi["Destinatario"] = guia[0].Orden.ClienteDestinatario.razonSocial;
-                _ravi["direccionRemitente"] = guia[0].Orden.ClienteOrigen.Direcciones.FirstOrDefault().Direccion.descripcion;
-                _ravi["direccionDestinatario"] = guia[0].Orden.ClienteDestinatario.Direcciones.FirstOrDefault().Direccion.descripcion;
+                _ravi["direccionRemitente"] = guia[0].Orden.ClienteOrigen.Direcciones.Where(a=>a.TipoDireccion.nombre == "Fiscal").FirstOrDefault().Direccion.descripcion;
+                _ravi["direccionDestinatario"] = guia[0].Orden.ClienteDestinatario.Direcciones.Where(a => a.TipoDireccion.nombre == "Fiscal").FirstOrDefault().Direccion.descripcion;
                 _ravi["ciudadRemitente"] = guia[0].Orden.DireccionOrigen.Ubigeo.descripcion;
                 _ravi["ciudadDestinatario"] = guia[0].Orden.DireccionDestino.Ubigeo.descripcion;
                 _ravi["RUCRemitente"] = guia[0].Orden.ClienteOrigen.ruc;
@@ -275,6 +276,7 @@ namespace TransporteCarga.Controllers
                 _ravi["PuntoLlegada"] = guia[0].Orden.DireccionDestino.descripcion;
                 _ravi["Cod"] = item.Producto.productoId;
                 _ravi["Cantidad"] = item.cantidad;
+                _ravi["Comentario"] = item.comentario;
                 _ravi["UnidadMedida"] = item.Producto.UnidadMedida.nombre;
                 _ravi["Descripcion"] = item.Producto.nombre;
                 _ravi["MarcaVehiculo"] = guia[0].Orden.Envios.FirstOrDefault().Vehiculo.Marca;
@@ -419,7 +421,7 @@ namespace TransporteCarga.Controllers
             dt.Columns.Add("TotalTexto");
             dt.Columns.Add("UnidadMedida");
             dt.Columns.Add("MotivoTralado");
-
+            dt.Columns.Add("Comentario");
 
             foreach (var item in guia[0].Orden.Detalles.OrderBy(a => a.Producto.nombre))
             {

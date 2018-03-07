@@ -138,7 +138,7 @@
                                         {
                                             @*<a href="~/Envio/Create/@Html.DisplayFor(modelItem =>item.ordenId )" class="btn btn-primary btn-sm"><i class="fa fa-truck"></i> Envío </a>*@
                                             @*<a href="" class="btn btn- btn-sm"><i class="fa fa-truck"></i> Envío </a>*@
-                                            <span class="btn btn-primary btn-sm" data-container="body" data-toggle="popover"><i class="fa fa-truck"></i> Chofer @Html.DisplayFor(modelItem => item.Envios.FirstOrDefault().envioId)</span>
+                                            <span class="btn btn-primary btn-sm" data-container="body" data-toggle="popover"><i class="fa fa-truck"></i> Chofer @item.Envios.FirstOrDefault().Chofer.iniciales</span>
 
                                         }
 

@@ -7,13 +7,13 @@ namespace KleanKart.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.1-30610")]
-    public sealed partial class dbcreate : IMigrationMetadata
+    public sealed partial class dbupdate : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(dbcreate));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(dbupdate));
         
         string IMigrationMetadata.Id
         {
-            get { return "201801130206516_db-create"; }
+            get { return "201803060505010_db-update"; }
         }
         
         string IMigrationMetadata.Source

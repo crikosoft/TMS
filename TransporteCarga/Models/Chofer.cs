@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -23,7 +24,7 @@ namespace TransporteCarga.Models
         [DisplayName("Documento Identidad")]
         [StringLength(20)]
         public string nroDocumentoIdentidad { get; set; }
-        
+
         [DisplayName("Tipo Documento Identidad")]
         public int? tipoDocumentoIdentodadId { get; set; }
 
@@ -53,5 +54,23 @@ namespace TransporteCarga.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [DataType(DataType.DateTime)]
         public DateTime? fechaModificacion { get; set; }
+
+        [NotMapped]
+        public string iniciales
+        {
+            get
+            {
+                
+                
+               string retorna="";
+               string str = this.nombres + " " + this.apellidos;
+               str.Split(' ').ToList().ForEach(i => retorna = retorna + i[0] + "");
+               return retorna;
+
+            }
+            set
+            {
+            }
+        }
     }
 }

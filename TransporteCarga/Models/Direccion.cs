@@ -18,6 +18,8 @@ namespace TransporteCarga.Models
         
         public int ubigeoId { get; set; }
 
+        public int? orden { get; set; }
+
         [StringLength(100)]
         public string usuarioCreacion { get; set; }
 

@@ -17,6 +17,7 @@ namespace TransporteCarga.Models
         [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
         public double precioTotal { get; set; }
         public int ordenId { get; set; }
+        public string comentario { get; set; }
 
         public virtual Orden Orden { get; set; }
         public virtual Producto Producto{ get; set; }

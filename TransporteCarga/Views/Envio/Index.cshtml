@@ -39,11 +39,12 @@
                                     Envío Id
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Proveedor.razonSocial)
+                                    Chofer
                                 </th>
                                 <th>
-                                   Chofer
+                                    @Html.DisplayNameFor(model => model.Proveedor.razonSocial)
                                 </th>
+                                
 
                                 <th>
                                     @Html.DisplayNameFor(model => model.Vehiculo.placaUnidad)
@@ -87,15 +88,16 @@
                                         @Html.DisplayFor(modelItem => item.envioId)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Proveedor.razonSocial)
-                                    </td>
-                                    <td>
                                         @{
                                     var nombreCompleto = "";
                                     nombreCompleto = item.Chofer.nombres + " " + item.Chofer.apellidos;
                                         }
                                         @nombreCompleto
                                     </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Proveedor.razonSocial)
+                                    </td>
+
 
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Vehiculo.placaUnidad)
@@ -162,22 +164,24 @@
                                     Estado
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.envioId)
+                                    Envío Id
+                                </th>
+                                <th>
+                                    Chofer
                                 </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.Proveedor.razonSocial)
                                 </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Chofer.nombres)
-                                </th>
+
+
                                 <th>
                                     @Html.DisplayNameFor(model => model.Vehiculo.placaUnidad)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.subTotal)
+                                    Sub Total
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.igv)
+                                    IGV
                                 </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.Total)
@@ -188,12 +192,12 @@
                                 <th>
                                     Cant. Guías
                                 </th>
+
                                 <th></th>
                                 <th></th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.fechaPagoProgramado)
                                 </th>
-                            </tr>
                             </tfoot>
 </table>
 

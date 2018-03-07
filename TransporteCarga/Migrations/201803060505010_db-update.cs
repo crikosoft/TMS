@@ -7,12 +7,12 @@ namespace KleanKart.Migrations
     {
         public override void Up()
         {
-            AlterColumn("dbo.Pagoes", "fechaPagoProg", c => c.DateTime());
+            AddColumn("dbo.Direccions", "orden", c => c.Int());
         }
         
         public override void Down()
         {
-            AlterColumn("dbo.Pagoes", "fechaPagoProg", c => c.DateTime(nullable: false));
+            DropColumn("dbo.Direccions", "orden");
         }
     }
 }

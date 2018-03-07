@@ -208,22 +208,17 @@
                                 <div class="form-group"> <input type="text" placeholder="Ingrese precio" class="form-control" name="number" id="txtPrecioModal"></div>
                             </form>
                         </div>
-                        @*<div class="col-lg-6">
-                                <div class="radio radio-info radio-inline">
-                                    <input type="radio" id="inlineRadio1" value="valPrecio1" name="radioInline" checked="">
-                                    <label for="inlineRadio1"> Precio 1 </label>
-                                </div>
-                                <div class="radio radio-info radio-inline">
-                                    <input type="radio" id="inlineRadio2" value="valPrecio2" name="radioInline">
-                                    <label for="inlineRadio2">  Precio 2 </label>
-                                </div>
-                                <div class="radio radio-info radio-inline">
-                                    <input type="radio" id="inlineRadio3" value="valPrecio3" name="radioInline">
-                                    <label for="inlineRadio2">  Precio 3 </label>
-                                </div>
-                            </div>*@
-
                     </div>
+
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <label class="control-label">Comentario de Item:</label>
+                        </div>
+                        <div class="col-lg-10">
+                            <input type="text" placeholder="Ingrese comentario que aparecerá en Item de Guía" class="form-control" name="number" id="txtComentarioModal">
+                        </div>
+                    </div>
+
 
                     <div class="wrapper wrapper-content animated fadeInRight">
                         <div class="row">
@@ -336,6 +331,15 @@
 
                     </div>
 
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <label class="control-label">Comentario de Item:</label>
+                        </div>
+                        <div class="col-lg-10">
+                            <input type="text" placeholder="Ingrese comentario que aparecerá en Item de Guía" class="form-control" name="number" id="txtComentarioModalTotales">
+                        </div>
+                    </div>
+
                     <div class="wrapper wrapper-content animated fadeInRight">
                         <div class="row">
                             <div class="col-lg-12">
@@ -439,6 +443,7 @@
                                                         <th></th>
                                                         <th>Precio</th>
                                                         <th>Sub Total</th>
+                                                        <th>Comentario</th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
@@ -453,6 +458,7 @@
                                                         <td></td>
                                                         <td>@Html.DisplayFor(modelItem => item.precioUnitario)</td>
                                                         <td>@Html.DisplayFor(modelItem => item.precioTotal)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.comentario)</td>
                                                         <td><button type="button" class="btn btn-danger btn-sm btn-block" id="btnEliminar"> Eliminar!!</button></td>
                                                     </tr>
                                                 }
@@ -766,6 +772,7 @@
                 //var precio = cloneRow2.find("td:eq(5)").html();
                 var cantidad = $("#txtCantidadModal").val();
                 var precio = $("#txtPrecioModal").val();
+                var comentario = $("#txtComentarioModal").val();
 
                 //Validación de cantidad y precio
 
@@ -800,9 +807,10 @@
                 else {
                     if (precio == "")
                         precio = 0;
-                    $("#editableMaterial2").append('<tr><td hidden="hidden">' + codigo + '</td><td>' + nombre + '</td><td>' + unidadmedida + '</td><td>' + cantidad + '</td><td></td><td>' + precio + '</td><td>' + precio*cantidad + '</td><td><button type="button" class="btn btn-danger btn-sm btn-block" id="btnEliminar2"> Eliminar!!</button></td></tr>');
+                    $("#editableMaterial2").append('<tr><td hidden="hidden">' + codigo + '</td><td>' + nombre + '</td><td>' + unidadmedida + '</td><td>' + cantidad + '</td><td></td><td>' + precio + '</td><td>' + precio * cantidad + '</td><td>' + comentario + '</td><td><button type="button" class="btn btn-danger btn-sm btn-block" id="btnEliminar2"> Eliminar!!</button></td></tr>');
                     $('#txtCantidadModal').val("");
                     $('#txtPrecioModal').val("");
+                    $('#txtComentarioModal').val("");
                 }
 
 
@@ -854,6 +862,7 @@
                 //var precio = cloneRow2.find("td:eq(5)").html();
                 var cantidad = $("#txtCantidadModalTotales").val();
                 var precio = $("#txtPrecioModal").val();
+                var comentario = $("#txtComentarioModalTotales").val();
 
                 //Validación de cantidad y precio
                 precio = 0;
@@ -883,9 +892,10 @@
 
                     //}
                 else {
-                    $("#editableMaterial2").append('<tr><td hidden="hidden">' + codigo + '</td><td>' + nombre + '</td><td>' + unidadmedida + '</td><td>' + cantidad + '</td><td></td><td>' + precio + '</td><td>' + precio * cantidad + '</td><td><button type="button" class="btn btn-danger btn-sm btn-block" id="btnEliminar2"> Eliminar!!</button></td></tr>');
+                    $("#editableMaterial2").append('<tr><td hidden="hidden">' + codigo + '</td><td>' + nombre + '</td><td>' + unidadmedida + '</td><td>' + cantidad + '</td><td></td><td>' + precio + '</td><td>' + precio * cantidad + '</td><td>' + comentario + '</td><td><button type="button" class="btn btn-danger btn-sm btn-block" id="btnEliminar2"> Eliminar!!</button></td></tr>');
                     $('#txtCantidadModal').val("");
                     $('#txtPrecioModal').val("");
+                    $('#txtComentarioModal').val("");
                 }
 
 
@@ -1019,7 +1029,7 @@
                         cantidad: $(this).find("td").eq(3).html(),
                         productoId: $(this).find("td").eq(0).html(),
                         precio: $(this).find("td").eq(5).html(),
-                        //partidaId: $(this).find("td").eq(4).html()
+                        comentario: $(this).find("td").eq(7).html()
 
 
                     });
@@ -1038,6 +1048,7 @@
                     pedidoDetalle.precioUnitario = cells[i].precio;
                     pedidoDetalle.precioTotal = pedidoDetalle.cantidad * pedidoDetalle.precioUnitario;
                     precioTotal = precioTotal + pedidoDetalle.precioTotal;
+                    pedidoDetalle.comentario = cells[i].comentario;
                     Detalles.push(pedidoDetalle);
                 }
 

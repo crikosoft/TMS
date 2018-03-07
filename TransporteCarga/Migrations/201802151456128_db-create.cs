@@ -274,20 +274,26 @@ namespace KleanKart.Migrations
                         igv = c.Double(),
                         Total = c.Double(),
                         formaPagoId = c.Int(),
-                        fechaPago = c.DateTime(),
+                        fechaPagoProgramado = c.DateTime(),
+                        fechaTraslado = c.DateTime(nullable: false),
                         comentario = c.String(maxLength: 1000),
                         usuarioCreacion = c.String(maxLength: 100),
                         usuarioModificacion = c.String(maxLength: 100),
                         fechaCreacion = c.DateTime(),
                         fechaModificacion = c.DateTime(),
+                        estadoEnvioId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.envioId)
                 .ForeignKey("dbo.Chofers", t => t.choferId)
+                .ForeignKey("dbo.EstadoEnvios", t => t.estadoEnvioId)
+                .ForeignKey("dbo.FormaPagoes", t => t.formaPagoId)
                 .ForeignKey("dbo.Proveedors", t => t.proveedorId)
                 .ForeignKey("dbo.Vehiculoes", t => t.vehiculoId)
                 .Index(t => t.proveedorId)
                 .Index(t => t.choferId)
-                .Index(t => t.vehiculoId);
+                .Index(t => t.vehiculoId)
+                .Index(t => t.formaPagoId)
+                .Index(t => t.estadoEnvioId);
             
             CreateTable(
                 "dbo.Chofers",
@@ -309,6 +315,101 @@ namespace KleanKart.Migrations
                 .PrimaryKey(t => t.choferId)
                 .ForeignKey("dbo.Proveedors", t => t.proveedorId)
                 .Index(t => t.proveedorId);
+            
+            CreateTable(
+                "dbo.EstadoEnvios",
+                c => new
+                    {
+                        estadoEnvioId = c.Int(nullable: false, identity: true),
+                        nombre = c.String(nullable: false, maxLength: 100),
+                        descripcion = c.String(maxLength: 500),
+                    })
+                .PrimaryKey(t => t.estadoEnvioId);
+            
+            CreateTable(
+                "dbo.FormaPagoes",
+                c => new
+                    {
+                        formaPagoId = c.Int(nullable: false, identity: true),
+                        nombre = c.String(nullable: false, maxLength: 100),
+                        descripcion = c.String(maxLength: 500),
+                    })
+                .PrimaryKey(t => t.formaPagoId);
+            
+            CreateTable(
+                "dbo.Ventas",
+                c => new
+                    {
+                        ventaId = c.Int(nullable: false, identity: true),
+                        serie = c.String(),
+                        numero = c.String(),
+                        ordenId = c.Int(nullable: false),
+                        tipoDocumentoId = c.Int(nullable: false),
+                        fecha = c.DateTime(nullable: false),
+                        estadoVentaId = c.Int(nullable: false),
+                        formaPagoId = c.Int(nullable: false),
+                        fechaPagoProgramado = c.DateTime(),
+                        fechaPagoReal = c.DateTime(),
+                    })
+                .PrimaryKey(t => t.ventaId)
+                .ForeignKey("dbo.EstadoVentas", t => t.estadoVentaId)
+                .ForeignKey("dbo.FormaPagoes", t => t.formaPagoId)
+                .ForeignKey("dbo.Ordens", t => t.ordenId)
+                .ForeignKey("dbo.TipoDocumentoes", t => t.tipoDocumentoId)
+                .Index(t => t.ordenId)
+                .Index(t => t.tipoDocumentoId)
+                .Index(t => t.estadoVentaId)
+                .Index(t => t.formaPagoId);
+            
+            CreateTable(
+                "dbo.EstadoVentas",
+                c => new
+                    {
+                        estadoVentaId = c.Int(nullable: false, identity: true),
+                        nombre = c.String(nullable: false),
+                        descripcion = c.String(),
+                    })
+                .PrimaryKey(t => t.estadoVentaId);
+            
+            CreateTable(
+                "dbo.Pagoes",
+                c => new
+                    {
+                        pagoId = c.Int(nullable: false, identity: true),
+                        envioId = c.Int(nullable: false),
+                        tipoDocumentoId = c.Int(nullable: false),
+                        numero = c.String(),
+                        fechaPagoProg = c.DateTime(),
+                        fechaPagoReal = c.DateTime(),
+                        estadoPagoId = c.Int(nullable: false),
+                        pagoMonto = c.Double(),
+                        pagoDetraccion = c.Double(),
+                        asientoContable = c.String(),
+                        fechaContable = c.DateTime(),
+                        fechaFactura = c.DateTime(),
+                        usuarioCreacion = c.String(),
+                        usuarioModificacion = c.String(),
+                        fechaCreacion = c.DateTime(nullable: false),
+                        fechaModificacion = c.DateTime(),
+                        preguntaPagoTotal = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.pagoId)
+                .ForeignKey("dbo.Envios", t => t.envioId)
+                .ForeignKey("dbo.EstadoPagoes", t => t.estadoPagoId)
+                .ForeignKey("dbo.TipoDocumentoes", t => t.tipoDocumentoId)
+                .Index(t => t.envioId)
+                .Index(t => t.tipoDocumentoId)
+                .Index(t => t.estadoPagoId);
+            
+            CreateTable(
+                "dbo.EstadoPagoes",
+                c => new
+                    {
+                        estadoPagoId = c.Int(nullable: false, identity: true),
+                        nombre = c.String(nullable: false, maxLength: 100),
+                        descripcion = c.String(maxLength: 500),
+                    })
+                .PrimaryKey(t => t.estadoPagoId);
             
             CreateTable(
                 "dbo.Vehiculoes",
@@ -337,8 +438,8 @@ namespace KleanKart.Migrations
                 c => new
                     {
                         estadoOrdenId = c.Int(nullable: false, identity: true),
-                        nombre = c.String(nullable: false),
-                        descripcion = c.String(),
+                        nombre = c.String(nullable: false, maxLength: 100),
+                        descripcion = c.String(maxLength: 500),
                     })
                 .PrimaryKey(t => t.estadoOrdenId);
             
@@ -364,12 +465,11 @@ namespace KleanKart.Migrations
                 c => new
                     {
                         guiaSalidaId = c.Int(nullable: false, identity: true),
-                        serie = c.String(),
-                        numero = c.String(),
+                        serie = c.String(nullable: false),
+                        numero = c.String(nullable: false),
                         ordenId = c.Int(nullable: false),
-                        motivoTrasladoId = c.Int(nullable: false),
+                        motivoTrasladoId = c.Int(),
                         motivoDetalle = c.String(),
-                        fechaTraslado = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.guiaSalidaId)
                 .ForeignKey("dbo.MotivoTrasladoes", t => t.motivoTrasladoId)
@@ -386,50 +486,6 @@ namespace KleanKart.Migrations
                         descripcion = c.String(),
                     })
                 .PrimaryKey(t => t.motivoTrasladoId);
-            
-            CreateTable(
-                "dbo.Ventas",
-                c => new
-                    {
-                        ventaId = c.Int(nullable: false, identity: true),
-                        serie = c.String(),
-                        numero = c.String(),
-                        ordenId = c.Int(nullable: false),
-                        tipoDocumentoId = c.Int(nullable: false),
-                        fecha = c.DateTime(nullable: false),
-                        estadoVentaId = c.Int(nullable: false),
-                        formaPagoId = c.Int(nullable: false),
-                        fechaPago = c.DateTime(),
-                    })
-                .PrimaryKey(t => t.ventaId)
-                .ForeignKey("dbo.EstadoVentas", t => t.estadoVentaId)
-                .ForeignKey("dbo.FormaPagoes", t => t.formaPagoId)
-                .ForeignKey("dbo.Ordens", t => t.ordenId)
-                .ForeignKey("dbo.TipoDocumentoes", t => t.tipoDocumentoId)
-                .Index(t => t.ordenId)
-                .Index(t => t.tipoDocumentoId)
-                .Index(t => t.estadoVentaId)
-                .Index(t => t.formaPagoId);
-            
-            CreateTable(
-                "dbo.EstadoVentas",
-                c => new
-                    {
-                        estadoVentaId = c.Int(nullable: false, identity: true),
-                        nombre = c.String(nullable: false),
-                        descripcion = c.String(),
-                    })
-                .PrimaryKey(t => t.estadoVentaId);
-            
-            CreateTable(
-                "dbo.FormaPagoes",
-                c => new
-                    {
-                        formaPagoId = c.Int(nullable: false, identity: true),
-                        nombre = c.String(),
-                        descripcion = c.String(),
-                    })
-                .PrimaryKey(t => t.formaPagoId);
             
             CreateTable(
                 "dbo.Precios",
@@ -501,10 +557,6 @@ namespace KleanKart.Migrations
             DropForeignKey("dbo.Precios", "productoId", "dbo.Productoes");
             DropForeignKey("dbo.Precios", "compraDetalleId", "dbo.CompraDetalles");
             DropForeignKey("dbo.OrdenDetalles", "productoId", "dbo.Productoes");
-            DropForeignKey("dbo.Ventas", "tipoDocumentoId", "dbo.TipoDocumentoes");
-            DropForeignKey("dbo.Ventas", "ordenId", "dbo.Ordens");
-            DropForeignKey("dbo.Ventas", "formaPagoId", "dbo.FormaPagoes");
-            DropForeignKey("dbo.Ventas", "estadoVentaId", "dbo.EstadoVentas");
             DropForeignKey("dbo.GuiaSalidas", "ordenId", "dbo.Ordens");
             DropForeignKey("dbo.GuiaSalidas", "motivoTrasladoId", "dbo.MotivoTrasladoes");
             DropForeignKey("dbo.OrdenEstadoOrdens", "ordenId", "dbo.Ordens");
@@ -513,8 +565,17 @@ namespace KleanKart.Migrations
             DropForeignKey("dbo.Envios", "vehiculoId", "dbo.Vehiculoes");
             DropForeignKey("dbo.Vehiculoes", "proveedorId", "dbo.Proveedors");
             DropForeignKey("dbo.Envios", "proveedorId", "dbo.Proveedors");
+            DropForeignKey("dbo.Pagoes", "tipoDocumentoId", "dbo.TipoDocumentoes");
+            DropForeignKey("dbo.Pagoes", "estadoPagoId", "dbo.EstadoPagoes");
+            DropForeignKey("dbo.Pagoes", "envioId", "dbo.Envios");
             DropForeignKey("dbo.EnvioOrdens", "Orden_ordenId", "dbo.Ordens");
             DropForeignKey("dbo.EnvioOrdens", "Envio_envioId", "dbo.Envios");
+            DropForeignKey("dbo.Ventas", "tipoDocumentoId", "dbo.TipoDocumentoes");
+            DropForeignKey("dbo.Ventas", "ordenId", "dbo.Ordens");
+            DropForeignKey("dbo.Ventas", "formaPagoId", "dbo.FormaPagoes");
+            DropForeignKey("dbo.Ventas", "estadoVentaId", "dbo.EstadoVentas");
+            DropForeignKey("dbo.Envios", "formaPagoId", "dbo.FormaPagoes");
+            DropForeignKey("dbo.Envios", "estadoEnvioId", "dbo.EstadoEnvios");
             DropForeignKey("dbo.Envios", "choferId", "dbo.Chofers");
             DropForeignKey("dbo.Chofers", "proveedorId", "dbo.Proveedors");
             DropForeignKey("dbo.Ordens", "direccionOrigenId", "dbo.Direccions");
@@ -525,8 +586,8 @@ namespace KleanKart.Migrations
             DropForeignKey("dbo.Ordens", "clienteDestinatarioId", "dbo.Clientes");
             DropForeignKey("dbo.Ordens", "Cliente_clienteid", "dbo.Clientes");
             DropForeignKey("dbo.ClienteDireccions", "tipoDireccionId", "dbo.TipoDireccions");
-            DropForeignKey("dbo.ClienteDireccions", "direccionId", "dbo.Direccions");
             DropForeignKey("dbo.Direccions", "ubigeoId", "dbo.Ubigeos");
+            DropForeignKey("dbo.ClienteDireccions", "direccionId", "dbo.Direccions");
             DropForeignKey("dbo.ClienteDireccions", "clienteId", "dbo.Clientes");
             DropForeignKey("dbo.CompraDetalles", "productoId", "dbo.Productoes");
             DropForeignKey("dbo.Compras", "tipoDocumentoId", "dbo.TipoDocumentoes");
@@ -539,16 +600,21 @@ namespace KleanKart.Migrations
             DropIndex("dbo.EnvioOrdens", new[] { "Envio_envioId" });
             DropIndex("dbo.Precios", new[] { "compraDetalleId" });
             DropIndex("dbo.Precios", new[] { "productoId" });
-            DropIndex("dbo.Ventas", new[] { "formaPagoId" });
-            DropIndex("dbo.Ventas", new[] { "estadoVentaId" });
-            DropIndex("dbo.Ventas", new[] { "tipoDocumentoId" });
-            DropIndex("dbo.Ventas", new[] { "ordenId" });
             DropIndex("dbo.GuiaSalidas", new[] { "motivoTrasladoId" });
             DropIndex("dbo.GuiaSalidas", new[] { "ordenId" });
             DropIndex("dbo.OrdenEstadoOrdens", new[] { "estadoOrdenId" });
             DropIndex("dbo.OrdenEstadoOrdens", new[] { "ordenId" });
             DropIndex("dbo.Vehiculoes", new[] { "proveedorId" });
+            DropIndex("dbo.Pagoes", new[] { "estadoPagoId" });
+            DropIndex("dbo.Pagoes", new[] { "tipoDocumentoId" });
+            DropIndex("dbo.Pagoes", new[] { "envioId" });
+            DropIndex("dbo.Ventas", new[] { "formaPagoId" });
+            DropIndex("dbo.Ventas", new[] { "estadoVentaId" });
+            DropIndex("dbo.Ventas", new[] { "tipoDocumentoId" });
+            DropIndex("dbo.Ventas", new[] { "ordenId" });
             DropIndex("dbo.Chofers", new[] { "proveedorId" });
+            DropIndex("dbo.Envios", new[] { "estadoEnvioId" });
+            DropIndex("dbo.Envios", new[] { "formaPagoId" });
             DropIndex("dbo.Envios", new[] { "vehiculoId" });
             DropIndex("dbo.Envios", new[] { "choferId" });
             DropIndex("dbo.Envios", new[] { "proveedorId" });
@@ -578,14 +644,17 @@ namespace KleanKart.Migrations
             DropTable("dbo.EmpresaAdministradoras");
             DropTable("dbo.UnidadMedidas");
             DropTable("dbo.Precios");
-            DropTable("dbo.FormaPagoes");
-            DropTable("dbo.EstadoVentas");
-            DropTable("dbo.Ventas");
             DropTable("dbo.MotivoTrasladoes");
             DropTable("dbo.GuiaSalidas");
             DropTable("dbo.OrdenEstadoOrdens");
             DropTable("dbo.EstadoOrdens");
             DropTable("dbo.Vehiculoes");
+            DropTable("dbo.EstadoPagoes");
+            DropTable("dbo.Pagoes");
+            DropTable("dbo.EstadoVentas");
+            DropTable("dbo.Ventas");
+            DropTable("dbo.FormaPagoes");
+            DropTable("dbo.EstadoEnvios");
             DropTable("dbo.Chofers");
             DropTable("dbo.Envios");
             DropTable("dbo.TipoDireccions");

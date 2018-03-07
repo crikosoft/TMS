@@ -169,99 +169,96 @@
                                 <div class="form-group"> <input type="text" placeholder="Ingrese precio" class="form-control" name="number" id="txtPrecioModal"></div>
                             </form>
                         </div>
-                        @*<div class="col-lg-6">
-                            <div class="radio radio-info radio-inline">
-                                <input type="radio" id="inlineRadio1" value="valPrecio1" name="radioInline" checked="">
-                                <label for="inlineRadio1"> Precio 1 </label>
-                            </div>
-                            <div class="radio radio-info radio-inline">
-                                <input type="radio" id="inlineRadio2" value="valPrecio2" name="radioInline">
-                                <label for="inlineRadio2">  Precio 2 </label>
-                            </div>
-                            <div class="radio radio-info radio-inline">
-                                <input type="radio" id="inlineRadio3" value="valPrecio3" name="radioInline">
-                                <label for="inlineRadio2">  Precio 3 </label>
-                            </div>
-                        </div>*@
+                        
 
                     </div>
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <label class="control-label">Comentario de Item:</label>
+                        </div>
+                        <div class="col-lg-10">
+                            <input type="text" placeholder="Ingrese comentario que aparecerá en Item de Guía" class="form-control" name="number" id="txtComentarioModal">
+                        </div>
+                    </div>
 
-                    <div class="wrapper wrapper-content animated fadeInRight">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="ibox float-e-margins">
-                                    <div class="ibox-title">
-                                        <h5>Elija sus Productos haciendo click en el botón de cada producto de la Siguiente Tabla. Use el Filtro de Búsqueda</h5>
-                                        <div class="ibox-tools">
-                                            <a class="collapse-link">
-                                                <i class="fa fa-chevron-up"></i>
-                                            </a>
+
+
+                        <div class="wrapper wrapper-content animated fadeInRight">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="ibox float-e-margins">
+                                        <div class="ibox-title">
+                                            <h5>Elija sus Productos haciendo click en el botón de cada producto de la Siguiente Tabla. Use el Filtro de Búsqueda</h5>
+                                            <div class="ibox-tools">
+                                                <a class="collapse-link">
+                                                    <i class="fa fa-chevron-up"></i>
+                                                </a>
+
+                                            </div>
+                                        </div>
+                                        <div class="ibox-content">
+
+                                            <table class="table table-striped table-bordered table-hover dataTables-example" id="tableMaterial">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Id</th>
+                                                        <th hidden="hidden">Código</th>
+                                                        <th>Producto</th>
+                                                        <th>Presentación</th>
+                                                        @*<th>Stock</th>*@
+                                                        @*<th>Precio 1</th>
+                                            <th>Precio 2</th>
+                                            <th>Precio 3</th>*@
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    @foreach (var item in Model.Productos)
+                                                    {
+
+                                                        <tr class="gradeX">
+                                                            <td>@Html.DisplayFor(modelItem => item.productoId)</td>
+                                                            <td hidden="hidden"></td>
+                                                            <td>@Html.DisplayFor(modelItem => item.nombre)</td>
+                                                            <td>@Html.DisplayFor(modelItem => item.UnidadMedida.nombre)</td>
+                                                            @*<td>@Html.DisplayFor(modelItem => item.stock)</td>
+                                                <td>@item.precio1 </td>
+                                                <td>@item.precio2 </td>
+                                                <td>@item.precio3 </td>*@
+                                                            <td> <button type="button" class="btn btn-success btn-sm btn-block" id="btnAgregar"> Agregar!!</button></td>
+                                                        </tr>
+                                                    }
+
+
+
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>Id</th>
+                                                        <th hidden="hidden">Código</th>
+                                                        <th>Producto</th>
+                                                        <th>Presentación</th>
+                                                        @*<th>Stock</th>
+                                            <th>Precio 1</th>
+                                            <th>Precio 2</th>
+                                            <th>Precio 3</th>*@
+                                                        <th></th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
 
                                         </div>
                                     </div>
-                                    <div class="ibox-content">
-
-                                        <table class="table table-striped table-bordered table-hover dataTables-example" id="tableMaterial">
-                                            <thead>
-                                                <tr>
-                                                    <th>Id</th>
-                                                    <th hidden="hidden">Código</th>
-                                                    <th>Producto</th>
-                                                    <th>Presentación</th>
-                                                    @*<th>Stock</th>*@
-                                                    @*<th>Precio 1</th>
-                                                    <th>Precio 2</th>
-                                                    <th>Precio 3</th>*@
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                                @foreach (var item in Model.Productos)
-                                                {
-
-                                                    <tr class="gradeX">
-                                                        <td>@Html.DisplayFor(modelItem => item.productoId)</td>
-                                                        <td hidden="hidden"></td>
-                                                        <td>@Html.DisplayFor(modelItem => item.nombre)</td>
-                                                        <td>@Html.DisplayFor(modelItem => item.UnidadMedida.nombre)</td>
-                                                        @*<td>@Html.DisplayFor(modelItem => item.stock)</td>
-                                                        <td>@item.precio1 </td>
-                                                        <td>@item.precio2 </td>
-                                                        <td>@item.precio3 </td>*@
-                                                        <td> <button type="button" class="btn btn-success btn-sm btn-block" id="btnAgregar"> Agregar!!</button></td>
-                                                    </tr>
-                                                }
-
-
-
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>Id</th>
-                                                    <th hidden="hidden">Código</th>
-                                                    <th>Producto</th>
-                                                    <th>Presentación</th>
-                                                    @*<th>Stock</th>
-                                                    <th>Precio 1</th>
-                                                    <th>Precio 2</th>
-                                                    <th>Precio 3</th>*@
-                                                    <th></th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-
-                                    </div>
                                 </div>
                             </div>
+
                         </div>
 
+
+                        @*Fin Lista de Productos*@
+
                     </div>
-
-
-                    @*Fin Lista de Productos*@
-
-                </div>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-white" data-dismiss="modal">Cerrar</button>
@@ -295,6 +292,15 @@
                             </form>
                         </div>
                         
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <label class="control-label">Comentario de Item:</label>
+                        </div>
+                        <div class="col-lg-10">
+                            <input type="text" placeholder="Ingrese comentario que aparecerá en Item de Guía" class="form-control" name="number" id="txtComentarioModalTotales">
+                        </div>
                     </div>
 
                     <div class="wrapper wrapper-content animated fadeInRight">
@@ -400,6 +406,7 @@
                                                         <th></th>
                                                         <th>Precio</th>
                                                         <th>Sub Total</th>
+                                                        <th>Comentario</th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
@@ -714,6 +721,7 @@
                 //var precio = cloneRow2.find("td:eq(5)").html();
                 var cantidad = $("#txtCantidadModal").val();
                 var precio = $("#txtPrecioModal").val();
+                var comentario = $("#txtComentarioModal").val();
 
                 //Validación de cantidad y precio
 
@@ -748,9 +756,10 @@
                 else {
                     if (precio == "")
                         precio = 0;
-                    $("#editableMaterial2").append('<tr><td hidden="hidden">' + codigo + '</td><td>' + nombre + '</td><td>' + unidadmedida + '</td><td>' + cantidad + '</td><td></td><td>' + precio + '</td><td>' + precio*cantidad + '</td><td><button type="button" class="btn btn-danger btn-sm btn-block" id="btnEliminar2"> Eliminar!!</button></td></tr>');
+                    $("#editableMaterial2").append('<tr><td hidden="hidden">' + codigo + '</td><td>' + nombre + '</td><td>' + unidadmedida + '</td><td>' + cantidad + '</td><td></td><td>' + precio + '</td><td>' + precio * cantidad + '</td><td>' + comentario + '</td><td><button type="button" class="btn btn-danger btn-sm btn-block" id="btnEliminar2"> Eliminar!!</button></td></tr>');
                     $('#txtCantidadModal').val("");
                     $('#txtPrecioModal').val("");
+                    $('#txtComentarioModal').val("");
                 }
 
 
@@ -802,6 +811,7 @@
                 //var precio = cloneRow2.find("td:eq(5)").html();
                 var cantidad = $("#txtCantidadModalTotales").val();
                 var precio = $("#txtPrecioModal").val();
+                var comentario = $("#txtComentarioModalTotales").val();
 
                 //Validación de cantidad y precio
                 precio = 0;
@@ -831,9 +841,10 @@
 
                     //}
                 else {
-                    $("#editableMaterial2").append('<tr><td hidden="hidden">' + codigo + '</td><td>' + nombre + '</td><td>' + unidadmedida + '</td><td>' + cantidad + '</td><td></td><td>' + precio + '</td><td>' + precio * cantidad + '</td><td><button type="button" class="btn btn-danger btn-sm btn-block" id="btnEliminar2"> Eliminar!!</button></td></tr>');
+                    $("#editableMaterial2").append('<tr><td hidden="hidden">' + codigo + '</td><td>' + nombre + '</td><td>' + unidadmedida + '</td><td>' + cantidad + '</td><td></td><td>' + precio + '</td><td>' + precio * cantidad + '</td><td>' +  comentario +'</td><td><button type="button" class="btn btn-danger btn-sm btn-block" id="btnEliminar2"> Eliminar!!</button></td></tr>');
                     $('#txtCantidadModal').val("");
                     $('#txtPrecioModal').val("");
+                    $('#txtComentarioModal').val("");
                 }
 
 
@@ -967,8 +978,7 @@
                         cantidad: $(this).find("td").eq(3).html(),
                         productoId: $(this).find("td").eq(0).html(),
                         precio: $(this).find("td").eq(5).html(),
-                        //partidaId: $(this).find("td").eq(4).html()
-
+                        comentario: $(this).find("td").eq(7).html()
 
                     });
                 });
@@ -985,6 +995,7 @@
                     pedidoDetalle.precioUnitario = cells[i].precio;
                     pedidoDetalle.precioTotal = pedidoDetalle.cantidad * pedidoDetalle.precioUnitario;
                     precioTotal = precioTotal + pedidoDetalle.precioTotal;
+                    pedidoDetalle.comentario = cells[i].comentario;
                     Detalles.push(pedidoDetalle);
                 }
 

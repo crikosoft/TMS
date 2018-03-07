@@ -158,7 +158,17 @@ namespace TransporteCarga.Controllers
         // GET: /Envio/Details/5
         public JsonResult GetDireccionesByCliente(int? id)
         {
-            var direcciones = db.Direcciones.Include(p => p.ClienteDirecciones).Where(a => a.ClienteDirecciones.FirstOrDefault().clienteId == id).Select(p => new { direccionId = p.direccionId, descripcion = p.descripcion }).ToList();
+
+
+            var direcciones =  db.Direcciones.Include(p => p.ClienteDirecciones).Where(a => a.ClienteDirecciones.FirstOrDefault().clienteId == id).Select(p => new { direccionId = p.direccionId, descripcion = p.descripcion + " (" + p.ClienteDirecciones.FirstOrDefault().TipoDireccion.descripcion.Substring(0,1) + ")" }).ToList();
+                                   //select new
+                                   //{
+                                   //    direccionId = q.direccionId,
+                                   //    descripcion = q.descripcion 
+                                   //};
+
+
+            //var direcciones = db.Direcciones.Include(p => p.ClienteDirecciones).Where(a => a.ClienteDirecciones.FirstOrDefault().clienteId == id).Select(p => new { direccionId = p.direccionId, descripcion = p.descripcion }).ToList();
 
             return new JsonResult { Data = direcciones, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
