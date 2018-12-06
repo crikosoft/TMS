@@ -10,7 +10,7 @@ namespace TransporteCarga.Controllers
     {
         public ActionResult Index()
         {
-            ViewData["SubTitle"] = "Bienvenido al Sistema de Operaciones de Consorcio Logístico Villa ";
+            ViewData["SubTitle"] = "Bienvenido al Sistema de Gestión de Transporte de Carga";
             ViewData["Message"] = "-Versión-1.0";
 
             return View();

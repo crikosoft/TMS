@@ -40,6 +40,7 @@ namespace TransporteCarga.Controllers
         public ActionResult Create()
         {
             ViewBag.proveedorId = new SelectList(db.Proveedores.OrderBy(a => a.razonSocial), "proveedorId", "razonSocial");
+            ViewBag.tipoDocumentoIdentidadId = new SelectList(db.TiposDocumentoIdentidad.OrderBy(a => a.nombre), "tipoDocumentoIdentidadId", "nombre");
             return View();
         }
 
@@ -48,7 +49,7 @@ namespace TransporteCarga.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="choferId,nombres,apellidos,nroDocumentoIdentidad,tipoDocumentoIdentodadId,fechaNacimiento,numeroBrevete,proveedorId,usuarioCreacion,usuarioModificacion,fechaCreacion,fechaModificacion")] Chofer chofer)
+        public ActionResult Create([Bind(Include="choferId,nombres,apellidos,nroDocumentoIdentidad,tipoDocumentoIdentidadId,fechaNacimiento,numeroBrevete,proveedorId,usuarioCreacion,usuarioModificacion,fechaCreacion,fechaModificacion")] Chofer chofer)
         {
             if (ModelState.IsValid)
             {
@@ -58,6 +59,7 @@ namespace TransporteCarga.Controllers
             }
 
             ViewBag.proveedorId = new SelectList(db.Proveedores.OrderBy(a => a.razonSocial), "proveedorId", "razonSocial", chofer.proveedorId);
+            ViewBag.tipoDocumentoIdentidadId = new SelectList(db.TiposDocumentoIdentidad.OrderBy(a => a.nombre), "tipoDocumentoIdentidadId", "nombre", chofer.tipoDocumentoIdentidadId);
             return View(chofer);
         }
 
@@ -74,6 +76,7 @@ namespace TransporteCarga.Controllers
                 return HttpNotFound();
             }
             ViewBag.proveedorId = new SelectList(db.Proveedores.OrderBy(a => a.razonSocial), "proveedorId", "razonSocial", chofer.proveedorId);
+            ViewBag.tipoDocumentoIdentidadId = new SelectList(db.TiposDocumentoIdentidad.OrderBy(a => a.nombre), "tipoDocumentoIdentidadId", "nombre", chofer.tipoDocumentoIdentidadId);
             return View(chofer);
         }
 
@@ -82,10 +85,12 @@ namespace TransporteCarga.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="choferId,nombres,apellidos,nroDocumentoIdentidad,tipoDocumentoIdentodadId,fechaNacimiento,numeroBrevete,proveedorId")] Chofer chofer)
+        public ActionResult Edit([Bind(Include="choferId,nombres,apellidos,nroDocumentoIdentidad,tipoDocumentoIdentidadId,fechaNacimiento,numeroBrevete,proveedorId")] Chofer chofer)
         {
             if (ModelState.IsValid)
             {
+                //foreach (TimeZoneInfo z in TimeZoneInfo.GetSystemTimeZones())
+                //    Console.WriteLine(z.Id, z.BaseUtcOffset);
 
                 DateTime timeUtc = DateTime.UtcNow;
                 TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
@@ -102,6 +107,7 @@ namespace TransporteCarga.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.proveedorId = new SelectList(db.Proveedores.OrderBy(a => a.razonSocial), "proveedorId", "razonSocial", chofer.proveedorId);
+            ViewBag.tipoDocumentoIdentidadId = new SelectList(db.TiposDocumentoIdentidad.OrderBy(a => a.nombre), "tipoDocumentoIdentidadId", "nombre", chofer.tipoDocumentoIdentidadId);
             return View(chofer);
         }
 

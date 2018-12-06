@@ -21,6 +21,12 @@ namespace TransporteCarga.Controllers
             return View(direcciones.ToList());
         }
 
+        // GET: /Direccion/
+        public ActionResult Map()
+        {
+           
+            return View();
+        }
 
 
         // GET: /Direccion/Details/5
@@ -42,13 +48,14 @@ namespace TransporteCarga.Controllers
         public ActionResult Create()
         {
 
-          
-           ViewBag.departamentoId = new SelectList(db.Ubigeo.OrderBy(a=> a.descripcion).Where(a=>a.codigo.Substring(2,4) == "0101"), "codigo", "descripcion") ;
-           ViewBag.provinciaId = new SelectList(db.Ubigeo.OrderBy(a => a.descripcion).Where(a => a.codigo.Substring(2, 4) == "0101"), "codigo", "descripcion");
+           
+          // ViewBag.departamentoId = new SelectList(db.Ubigeo.OrderBy(a=> a.descripcion).Where(a=>a.codigo.Substring(2,4) == "0101"), "codigo", "descripcion") ;
+           //ViewBag.provinciaId = new SelectList(db.Ubigeo.OrderBy(a => a.descripcion).Where(a => a.codigo.Substring(2, 4) == "0101"), "codigo", "descripcion");
            ViewBag.ubigeoId = new SelectList(db.Ubigeo.OrderBy(a=> a.descripcion).Where(a=>a.codigo.Substring(2,4) == "0101"), "ubigeoId", "descripcion") ;
 
+           ViewBag.departamentoId = new SelectList(db.Ubigeo.OrderBy(a => a.descripcion).Where(a => a.codigo.Substring(2, 4) == "0000"), "codigo", "descripcion");
+           ViewBag.provinciaId = new SelectList(db.Ubigeo.OrderBy(a => a.descripcion).Where(a => a.codigo.Substring(3, 1) != "0").Where(a => a.codigo.Substring(4, 2) != "00"), "codigo", "descripcion");
 
-            //ViewBag.departamentoId = new SelectList(db.Ubigeo.Where(a => a.codigo.Substring(2,4) =="0101").ToList(), "ubigeoId", "descripcion");
             return View();
         }
 
@@ -82,11 +89,12 @@ namespace TransporteCarga.Controllers
             {
                 return HttpNotFound();
             }
-            //ViewBag.ubigeoId = new SelectList(db.Ubigeo, "ubigeoId", "descripcion", direccion.ubigeoId);
 
             ViewBag.departamentoId = new SelectList(db.Ubigeo.OrderBy(a => a.descripcion).Where(a => a.codigo.Substring(2, 4) == "0101"), "codigo", "descripcion", direccion.Ubigeo.codigo.Substring(0, 2) + "0101");
             ViewBag.provinciaId = new SelectList(db.Ubigeo.OrderBy(a => a.descripcion).Where(a => a.codigo.Substring(0, 2) == direccion.Ubigeo.codigo.Substring(0, 2) && a.codigo.Substring(4, 2) == "01"), "codigo", "descripcion", direccion.Ubigeo.codigo.Substring(0, 4) + "01");
             ViewBag.ubigeoId = new SelectList(db.Ubigeo.OrderBy(a => a.descripcion).Where(a => a.codigo.Substring(0, 4) == direccion.Ubigeo.codigo.Substring(0, 4)), "ubigeoId", "descripcion", direccion.ubigeoId);
+
+
 
 
             return View(direccion);
@@ -160,17 +168,27 @@ namespace TransporteCarga.Controllers
         {
 
 
-            var direcciones =  db.Direcciones.Include(p => p.ClienteDirecciones).Where(a => a.ClienteDirecciones.FirstOrDefault().clienteId == id).Select(p => new { direccionId = p.direccionId, descripcion = p.descripcion + " (" + p.ClienteDirecciones.FirstOrDefault().TipoDireccion.descripcion.Substring(0,1) + ")" }).ToList();
-                                   //select new
+            //var direcciones =  db.Direcciones.Include(p => p.ClienteDirecciones).Where(a => a.ClienteDirecciones.FirstOrDefault().clienteId == id).Select(p => new { direccionId = p.direccionId, descripcion = p.descripcion + " (" + p.ClienteDirecciones.FirstOrDefault().TipoDireccion.descripcion.Substring(0,1) + ")" }).ToList();
+
+            var direcciones = db.ClienteDireccion.Where(a => a.clienteId == id).ToList();
+            //var direcciones = db.Direcciones.Where(a => a.ClienteDirecciones.Find(id)).ToList();
+                                    //select new
                                    //{
                                    //    direccionId = q.direccionId,
                                    //    descripcion = q.descripcion 
                                    //};
+            var query = from q in direcciones
+            select new
+            {
+                direccionId = q.direccionId,
+                descripcion = q.Direccion.descripcion + "(" + q.TipoDireccion.descripcion.Substring(0,1) + ")"
+            };
+
 
 
             //var direcciones = db.Direcciones.Include(p => p.ClienteDirecciones).Where(a => a.ClienteDirecciones.FirstOrDefault().clienteId == id).Select(p => new { direccionId = p.direccionId, descripcion = p.descripcion }).ToList();
 
-            return new JsonResult { Data = direcciones, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            return new JsonResult { Data = query, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
     }

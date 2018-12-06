@@ -68,11 +68,11 @@ namespace TransporteCarga.Helpers
                 //devuelve el resultado en mayusculas o minusculas
                 if (mayusculas)
                 {
-                    return (literal + parte_decimal).ToUpper();
+                    return (literal + " y " + parte_decimal).ToUpper();
                 }
                 else
                 {
-                    return (literal + parte_decimal);
+                    return (literal + " y " + parte_decimal);
                 }
             }
             else

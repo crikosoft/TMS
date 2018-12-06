@@ -26,12 +26,13 @@ namespace KleanKart.Controllers
 
 
 
-            var queryDirecciones = from q in db.Direcciones
-                 select new
-                 {
-                   direccionId = q.direccionId,
-                   descripcion = q.descripcion + " - " + q.Ubigeo.descripcion
-                 };
+            var queryDirecciones = "";
+            //var queryDirecciones = from q in db.Direcciones
+            //                       select new
+            //                       {
+            //                           direccionId = q.direccionId,
+            //                           descripcion = q.descripcion + " - " + q.Ubigeo.descripcion
+            //                       };
 
             ViewBag.direccionOrigenId = new SelectList(queryDirecciones, "direccionId", "descripcion");
             ViewBag.direccionDestinoId = new SelectList(queryDirecciones, "direccionId", "descripcion");
@@ -51,15 +52,39 @@ namespace KleanKart.Controllers
             ViewBag.Cliente = new SelectList(db.Clientes.OrderBy(a =>a.razonSocial), "clienteId", "razonSocial", pedido.clienteOrigenId);
             ViewBag.Remitente = new SelectList(db.Clientes.OrderBy(a => a.razonSocial), "clienteId", "razonSocial", pedido.ClienteOrigen.clienteid);
             ViewBag.Destinatario = new SelectList(db.Clientes.OrderBy(a => a.razonSocial), "clienteId", "razonSocial", pedido.ClienteDestinatario.clienteid);
-            var queryDirecciones = from q in db.Direcciones
-                                   select new
-                                   {
-                                       direccionId = q.direccionId,
-                                       descripcion = q.descripcion + " - " + q.Ubigeo.descripcion
-                                   };
+            ViewBag.ClientePago = new SelectList(db.Clientes.OrderBy(a => a.razonSocial), "clienteId", "razonSocial", pedido.ClientePago.clienteid);
 
-            ViewBag.direccionOrigenId = new SelectList(queryDirecciones, "direccionId", "descripcion", pedido.direccionOrigenId);
-            ViewBag.direccionDestinoId = new SelectList(queryDirecciones, "direccionId", "descripcion", pedido.direccionDestinoId);
+            var direcciones = db.ClienteDireccion.ToList();
+            //var direcciones = db.Direcciones.Where(a => a.ClienteDirecciones.Find(id)).ToList();
+            //select new
+            //{
+            //    direccionId = q.direccionId,
+            //    descripcion = q.descripcion 
+            //};
+            var queryDireccionOrigen = from q in direcciones.Where(a => a.clienteId == pedido.clienteOrigenId)
+                        select new
+                        {
+                            direccionId = q.direccionId,
+                            descripcion = q.Direccion.descripcion + "(" + q.TipoDireccion.descripcion.Substring(0, 1) + ")"
+                        };
+
+            var queryDireccionDestino = from q in direcciones.Where(a => a.clienteId == pedido.clienteDestinatarioId)
+                                       select new
+                                       {
+                                           direccionId = q.direccionId,
+                                           descripcion = q.Direccion.descripcion + "(" + q.TipoDireccion.descripcion.Substring(0, 1) + ")"
+                                       };
+            
+
+            //var queryDirecciones = from q in db.Direcciones
+            //                       select new
+            //                       {
+            //                           direccionId = q.direccionId,
+            //                           descripcion = q.descripcion + " - " + q.Ubigeo.descripcion
+            //                       };
+
+            ViewBag.direccionOrigenId = new SelectList(queryDireccionOrigen, "direccionId", "descripcion", pedido.direccionOrigenId);
+            ViewBag.direccionDestinoId = new SelectList(queryDireccionDestino, "direccionId", "descripcion", pedido.direccionDestinoId);
             return View(OrdenViewModels);
         }
 
@@ -70,7 +95,7 @@ namespace KleanKart.Controllers
 
             if (ModelState.IsValid)
             {
-                
+
                 DateTime timeUtc = DateTime.UtcNow;
                 TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
                 DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
@@ -101,8 +126,12 @@ namespace KleanKart.Controllers
 
                 return RedirectToAction("Index", "Orden");
             }
+            else {
+                var errorText = errors.FirstOrDefault().ErrorMessage;
+                return View(errorText);
+            }
 
-            return View(orden);
+           
         }
 
         [HttpPost]
@@ -126,6 +155,7 @@ namespace KleanKart.Controllers
                 ordenOriginal.direccionDestinoId = orden.direccionDestinoId;
                 ordenOriginal.clientePagoId = orden.clientePagoId;
                 ordenOriginal.comentario = orden.comentario;
+                ordenOriginal.resumen = orden.resumen;
                 ordenOriginal.subTotal = orden.subTotal;
                 ordenOriginal.igv = orden.igv;
                 ordenOriginal.Total = orden.Total;
@@ -143,12 +173,13 @@ namespace KleanKart.Controllers
 
                 }
 
-
-                foreach (var item in orden.Detalles)
-                {
-                    db.OrdenDetalles.Add(item);
+                if (orden.Detalles != null)
+                { 
+                    foreach (var item in orden.Detalles)
+                    {
+                        db.OrdenDetalles.Add(item);
+                    }
                 }
-
 
                 ////Actualiza Stock
                 //foreach (var item in orden.Detalles)
@@ -164,8 +195,13 @@ namespace KleanKart.Controllers
 
                 return RedirectToAction("Index", "Orden");
             }
+            else
+            {
+                var errorText = errors.FirstOrDefault().ErrorMessage;
+                return View(errorText);
+            }
 
-            return View(orden);
+            //return View(orden);
         }
 
 

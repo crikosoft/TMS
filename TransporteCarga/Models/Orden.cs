@@ -14,6 +14,7 @@ namespace TransporteCarga.Models
         public Orden()
     {
         this.Envios = new List<Envio>();
+        this.Ventas = new List<Venta>();
     }
 
         public int ordenId { get; set; }
@@ -64,6 +65,9 @@ namespace TransporteCarga.Models
 
         [StringLength(1000)]
         public string comentario { get; set; }
+
+        [StringLength(5000)]
+        public string resumen { get; set; }
 
 
         public virtual EstadoOrden EstadoOrden{ get; set; }

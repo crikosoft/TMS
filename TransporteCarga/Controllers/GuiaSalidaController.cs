@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using TransporteCarga.Models;
 using Microsoft.Reporting.WebForms;
 using TransporteCarga.Helpers;
+using System.Globalization;
 
 
 namespace TransporteCarga.Controllers
@@ -61,7 +62,7 @@ namespace TransporteCarga.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "guiaSalidaId,serie,ordenId,numero,motivoTrasladoId,motivoDetalle,fechaTraslado")] GuiaSalida guiasalida)
+        public ActionResult Create([Bind(Include = "guiaSalidaId,serie,ordenId,numero,motivoTrasladoId,motivoDetalle,fechaEmision")] GuiaSalida guiasalida)
         {
             if (ModelState.IsValid)
             {
@@ -99,7 +100,7 @@ namespace TransporteCarga.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="guiaSalidaId,serie,numero,ordenId,motivoTrasladoId,motivoDetalle,fechaTraslado")] GuiaSalida guiasalida)
+        public ActionResult Edit([Bind(Include="guiaSalidaId,serie,numero,ordenId,motivoTrasladoId,motivoDetalle,fechaEmision")] GuiaSalida guiasalida)
         {
             if (ModelState.IsValid)
             {
@@ -255,6 +256,7 @@ namespace TransporteCarga.Controllers
             dt.Columns.Add("TotalTexto");
             dt.Columns.Add("FechaEmisionF");
             dt.Columns.Add("Comentario");
+            
 
 
             foreach (var item in guia[0].Orden.Detalles.OrderBy(a => a.Producto.nombre))
@@ -268,12 +270,12 @@ namespace TransporteCarga.Controllers
                 _ravi["Destinatario"] = guia[0].Orden.ClienteDestinatario.razonSocial;
                 _ravi["direccionRemitente"] = guia[0].Orden.ClienteOrigen.Direcciones.Where(a=>a.TipoDireccion.nombre == "Fiscal").FirstOrDefault().Direccion.descripcion;
                 _ravi["direccionDestinatario"] = guia[0].Orden.ClienteDestinatario.Direcciones.Where(a => a.TipoDireccion.nombre == "Fiscal").FirstOrDefault().Direccion.descripcion;
-                _ravi["ciudadRemitente"] = guia[0].Orden.DireccionOrigen.Ubigeo.descripcion;
-                _ravi["ciudadDestinatario"] = guia[0].Orden.DireccionDestino.Ubigeo.descripcion;
+                _ravi["ciudadRemitente"] = guia[0].Orden.DireccionOrigen.Ubigeo.UbigeoParent.descripcion + " - " + guia[0].Orden.DireccionOrigen.Ubigeo.descripcion;
+                _ravi["ciudadDestinatario"] = guia[0].Orden.DireccionDestino.Ubigeo.UbigeoParent.descripcion + " - " + guia[0].Orden.DireccionDestino.Ubigeo.descripcion; ;
                 _ravi["RUCRemitente"] = guia[0].Orden.ClienteOrigen.ruc;
                 _ravi["RUCDestinatario"] = guia[0].Orden.ClienteDestinatario.ruc;
-                _ravi["PuntoPartida"] = guia[0].Orden.DireccionOrigen.descripcion;
-                _ravi["PuntoLlegada"] = guia[0].Orden.DireccionDestino.descripcion;
+                _ravi["PuntoPartida"] = guia[0].Orden.DireccionOrigen.direccionCompleta;
+                _ravi["PuntoLlegada"] = guia[0].Orden.DireccionDestino.direccionCompleta;
                 _ravi["Cod"] = item.Producto.productoId;
                 _ravi["Cantidad"] = item.cantidad;
                 _ravi["Comentario"] = item.comentario;
@@ -287,7 +289,7 @@ namespace TransporteCarga.Controllers
                 _ravi["RazonSocialSubcontratada"] = guia[0].Orden.Envios.FirstOrDefault().Proveedor.razonSocial;
                 _ravi["RUCSubcontratada"] = guia[0].Orden.Envios.FirstOrDefault().Proveedor.ruc;
                 _ravi["ChoferSubcontratada"] = guia[0].Orden.Envios.FirstOrDefault().Chofer.apellidos + ", " + guia[0].Orden.Envios.FirstOrDefault().Chofer.nombres;
-
+                
                 if (type ==2)
                 { 
                     _ravi["Referencia"] = guia[0].serie +" " + guia[0].numero; ;
@@ -298,36 +300,13 @@ namespace TransporteCarga.Controllers
                     _ravi["IGV"] = string.Format("{0:0,0.00}", guia[0].Orden.igv);
                     _ravi["Total"] = string.Format("{0:0,0.00}", guia[0].Orden.Total);
                     _ravi["FechaEmisionF"] = guia[0].Orden.Ventas.FirstOrDefault().fecha.ToShortDateString();
-
                     ConvertirNumero conv = new ConvertirNumero();
                     String numero = guia[0].Orden.Total.ToString();
                     _ravi["TotalTexto"] = conv.Convertir(numero, true);// "CIENTO OCHENTA Y OCHO y 10/100";
 
+
+
                 }
-                //_ravi["SubTotal"] = string.Format("{0:0,0.00}", guia[0].Orden.subTotal);
-                //_ravi["IGV"] = string.Format("{0:0,0.00}", guia[0].Orden.igv);
-
-                //_ravi["Total"] = string.Format("{0:0,0.00}", guia[0].Orden.Total);
-                //_ravi["FechaF"] = "";//"Lima, " + guia[0].fecha.Day + " de " + guia[0].fecha.ToString("MMMM").ToUpper() + "  del " + guia[0].fecha.Year;
-
-               
-                //string fechaTraslado = "";
-                ////fechaTraslado = "Lima, " + ((DateTime)guia[0].Orden.fechaEntrega).Day + " de Agosto del" + guia[0].Orden.GuiasSalida.SingleOrDefault().fechaTraslado.Year;
-
-                //_ravi["SerieG"] = guia[0].Orden.GuiasSalida.SingleOrDefault().serie;
-                //_ravi["NumeroG"] = guia[0].Orden.GuiasSalida.SingleOrDefault().numero;
-                ////_ravi["FechaG"] = guia[0].Orden.GuiasSalida.SingleOrDefault().fechaTraslado.ToString("dd/MM/yyyy").ToUpper();
-                ////_ravi["MotivoTralado"] = guia[0].Orden.GuiasSalida.SingleOrDefault().MotivoTraslado.nombre;
-
-
-                ////_ravi["PuntoDestinoG"] = guia[0].Orden.Cliente.direccion;
-                //_ravi["PuntoPartidaG"] = "CALLE AURELIO FERNANDEZ CONCHA 298-MIRAFLORES";
-                //_ravi["Cantidad"] = item.cantidad;
-                //_ravi["DescripcionP"] = item.Producto.nombre;
-                //_ravi["PrecioUnitario"] = string.Format("{0:0,0.00}", item.precioUnitario);
-                //_ravi["PrecioTotal"] = string.Format("{0:0,0.00}", item.precioTotal);
-                //_ravi["TotalTexto"] = "CIENTO OCHENTA Y OCHO y 10/100";
-                //_ravi["UnidadMedida"] = item.Producto.UnidadMedida.nombre;
                 dt.Rows.Add(_ravi);
             }
 
@@ -347,7 +326,6 @@ namespace TransporteCarga.Controllers
             {
                 localreport.ReportPath = Server.MapPath("~/Reports/Factura.rdlc");
             }
-            
             reportdatasource1.Value = dt;
             localreport.DataSources.Add(reportdatasource1);
 
@@ -480,6 +458,257 @@ namespace TransporteCarga.Controllers
 
 
         }
+
+        public FileResult DocumentVentaPrint(int? id, byte empty, int type, bool resumen)
+        {
+
+            if (id == null)
+            {
+                return null;
+            }
+
+
+            if (empty == 1)
+            {
+
+                DateTime timeUtc = DateTime.UtcNow;
+                TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+                DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
+
+                //1. Cambia Estado de Orden
+                List<Orden> ordenesOriginal = db.Ordenes.Where(a=>a.Ventas.FirstOrDefault().ventaId==id).ToList();
+                var estadoOrden = db.EstadosOrden.Single(p => p.nombre == "Con Guía");
+
+                foreach (var ordenOriginal in ordenesOriginal)
+                {
+                    ordenOriginal.estadoOrdenId = estadoOrden.estadoOrdenId;
+                    ordenOriginal.usuarioModificacion = User.Identity.Name;
+                    ordenOriginal.fechaModificacion = cstTime;
+                    //2. Grabar Estado de Pedido
+                    var ordenEstadoOrden = new OrdenEstadoOrden();
+
+                    ordenEstadoOrden.ordenId = ordenOriginal.ordenId;
+                    ordenEstadoOrden.estadoOrdenId = estadoOrden.estadoOrdenId;
+                    ordenEstadoOrden.usuarioCreacion = User.Identity.Name;
+                    ordenEstadoOrden.fechaCreacion = cstTime;
+
+                    db.OrdenesEstadoOrden.Add(ordenEstadoOrden);
+
+                    db.SaveChanges();
+                }
+            }
+
+            Venta venta = db.Ventas.Find(id);
+            //List<GuiaSalida> guias = db.GuiaSalidas.Where(a => a.ordenId == id).ToList();
+
+            DataTable dt = new DataTable();
+            dt.Clear();
+            dt.Columns.Add("Serie");
+            dt.Columns.Add("Numero");
+            dt.Columns.Add("SerieFactura");
+            dt.Columns.Add("NumeroFactura");
+            dt.Columns.Add("FechaEmision");
+            dt.Columns.Add("FechaTraslado");
+            dt.Columns.Add("Remitente");
+            dt.Columns.Add("Destinatario");
+            dt.Columns.Add("direccionRemitente");
+            dt.Columns.Add("direccionDestinatario");
+            dt.Columns.Add("ciudadRemitente");
+            dt.Columns.Add("ciudadDestinatario");
+            dt.Columns.Add("RUCRemitente");
+            dt.Columns.Add("RUCDestinatario");
+            dt.Columns.Add("PuntoPartida");
+            dt.Columns.Add("PuntoLlegada");
+            dt.Columns.Add("Cod");
+            dt.Columns.Add("Cantidad");
+            dt.Columns.Add("UnidadMedida");
+            dt.Columns.Add("Descripcion");
+            dt.Columns.Add("MarcaVehiculo");
+            dt.Columns.Add("PlacaVehiculo");
+            dt.Columns.Add("ConfiguracionVehicularVehiculo");
+            dt.Columns.Add("CertificadoInscripcionVehiculo");
+            dt.Columns.Add("LicenciaConductorVehiculo");
+            dt.Columns.Add("RazonSocialSubcontratada");
+            dt.Columns.Add("RUCSubcontratada");
+            dt.Columns.Add("ChoferSubcontratada");
+            dt.Columns.Add("Referencia");
+            dt.Columns.Add("DireccionFiscalClientePago");
+            dt.Columns.Add("RucClientePago");
+            dt.Columns.Add("Importe");
+            dt.Columns.Add("Flete");
+            dt.Columns.Add("IGV");
+            dt.Columns.Add("Total");
+            dt.Columns.Add("TotalTexto");
+            dt.Columns.Add("FechaEmisionF");
+            dt.Columns.Add("Comentario");
+            dt.Columns.Add("SPOT");
+            dt.Columns.Add("NumeroGuiaIndividual");
+
+            double? subTotal = 0;
+            double? igv = 0;
+            double? total = 0;
+            string guias = "";
+            subTotal = venta.Ordenes.AsEnumerable().Sum(a => a.subTotal);
+            igv = venta.Ordenes.AsEnumerable().Sum(a => a.igv);
+            total = venta.Ordenes.AsEnumerable().Sum(a => a.Total);
+
+            foreach (var orden in venta.Ordenes)
+            {
+                guias +=  orden.GuiasSalida.FirstOrDefault().serie   + "-"+ orden.GuiasSalida.FirstOrDefault().numero + ", ";
+            }
+
+            foreach (var orden in venta.Ordenes)
+            {
+                List<OrdenDetalle> detalles = new List<OrdenDetalle>();
+
+                //if (resumen == true && orden.resumen != null)
+                //{
+                //    resumen = false;
+                //}
+
+
+
+                if (resumen == true && orden.resumen != null)
+                {
+                    detalles.Add(orden.Detalles.FirstOrDefault());
+                }
+                else if (resumen == false)
+                {
+                    detalles = orden.Detalles;
+                }
+
+                //foreach (var detalle in orden.Detalles)
+                foreach (var detalle in detalles)
+                {
+
+                DataRow _ravi = dt.NewRow();
+                //_ravi["Serie"] = orden.GuiasSalida[0].serie;
+                _ravi["Numero"] = guias;
+                _ravi["SerieFactura"] = orden.Ventas.FirstOrDefault().serie; 
+                _ravi["NumeroFactura"] = orden.Ventas.FirstOrDefault().numero; 
+                //_ravi["FechaEmision"] = ((DateTime)(orden.GuiasSalida[0].Orden.Envios.FirstOrDefault().fechaCreacion)).ToShortDateString();
+                _ravi["FechaEmision"] = orden.GuiasSalida[0].Orden.Envios.FirstOrDefault().fechaCreacion.ToString();
+                _ravi["FechaTraslado"] = orden.GuiasSalida[0].Orden.Envios.FirstOrDefault().fechaTraslado.ToShortDateString();
+                _ravi["Remitente"] = orden.GuiasSalida[0].Orden.ClientePago.razonSocial;
+                _ravi["Destinatario"] = orden.GuiasSalida[0].Orden.ClienteDestinatario.razonSocial;
+                if (orden.GuiasSalida[0].Orden.ClienteOrigen.Direcciones.Where(a => a.TipoDireccion.nombre == "Fiscal").Count() > 0)
+                    _ravi["direccionRemitente"] = orden.GuiasSalida[0].Orden.ClienteOrigen.Direcciones.Where(a => a.TipoDireccion.nombre == "Fiscal").FirstOrDefault().Direccion.direccionCompleta;
+                else
+                    _ravi["direccionRemitente"] = "";
+
+                if (orden.GuiasSalida[0].Orden.ClienteDestinatario.Direcciones.Where(a => a.TipoDireccion.nombre == "Fiscal").Count() > 0)
+                    _ravi["direccionDestinatario"] = orden.GuiasSalida[0].Orden.ClienteDestinatario.Direcciones.Where(a => a.TipoDireccion.nombre == "Fiscal").FirstOrDefault().Direccion.direccionCompleta;
+                else
+                    _ravi["direccionDestinatario"] = "";
+                    
+                _ravi["ciudadRemitente"] = orden.GuiasSalida[0].Orden.DireccionOrigen.Ubigeo.descripcion;
+                _ravi["ciudadDestinatario"] = orden.GuiasSalida[0].Orden.DireccionDestino.Ubigeo.descripcion;
+                _ravi["RUCRemitente"] = orden.GuiasSalida[0].Orden.ClienteOrigen.ruc;
+                _ravi["RUCDestinatario"] = orden.GuiasSalida[0].Orden.ClienteDestinatario.ruc;
+                _ravi["PuntoPartida"] = orden.GuiasSalida[0].Orden.DireccionOrigen.descripcion;
+                _ravi["PuntoLlegada"] = orden.GuiasSalida[0].Orden.DireccionDestino.descripcion;
+                _ravi["Cod"] = detalle.Producto.productoId;
+                
+                _ravi["Comentario"] = detalle.comentario;
+
+                if (resumen == true && orden.resumen != null)
+                {
+                    _ravi["Cantidad"] = 1;
+                    _ravi["UnidadMedida"] = "Unidad";
+                    _ravi["Descripcion"] = orden.resumen;
+
+                }
+                else if (resumen == false)
+                {
+                    _ravi["Cantidad"] = detalle.cantidad;
+                    _ravi["UnidadMedida"] = detalle.Producto.UnidadMedida.nombre;
+                    _ravi["Descripcion"] = "POR EL SERVICIO DE TRASLADO DE " + orden.DireccionOrigen.Ubigeo.descripcion + " A " + orden.DireccionDestino.Ubigeo.descripcion + " SEGÚN DETALLE: " + detalle.Producto.nombre;
+                }
+                _ravi["MarcaVehiculo"] = orden.GuiasSalida[0].Orden.Envios.FirstOrDefault().Vehiculo.Marca;
+                _ravi["PlacaVehiculo"] = orden.GuiasSalida[0].Orden.Envios.FirstOrDefault().Vehiculo.placaUnidad;
+                _ravi["ConfiguracionVehicularVehiculo"] = orden.GuiasSalida[0].Orden.Envios.FirstOrDefault().Vehiculo.placaCarretera;
+                _ravi["CertificadoInscripcionVehiculo"] = orden.GuiasSalida[0].Orden.Envios.FirstOrDefault().Vehiculo.certificadoInscripcion1;
+                _ravi["LicenciaConductorVehiculo"] = orden.GuiasSalida[0].Orden.Envios.FirstOrDefault().Chofer.numeroBrevete;
+                _ravi["RazonSocialSubcontratada"] = orden.GuiasSalida[0].Orden.Envios.FirstOrDefault().Proveedor.razonSocial;
+                _ravi["RUCSubcontratada"] = orden.GuiasSalida[0].Orden.Envios.FirstOrDefault().Proveedor.ruc;
+                _ravi["ChoferSubcontratada"] = orden.GuiasSalida[0].Orden.Envios.FirstOrDefault().Chofer.apellidos + ", " + orden.GuiasSalida[0].Orden.Envios.FirstOrDefault().Chofer.nombres;
+                _ravi["NumeroGuiaIndividual"] = orden.GuiasSalida[0].serie.Trim() + "-" + orden.GuiasSalida[0].numero.Trim();
+                //type2: Factura o BOleta
+                if (type == 2 || type == 3)
+                {
+                    _ravi["Referencia"] = orden.GuiasSalida[0].serie + " " + orden.GuiasSalida[0].numero; ;
+                    //_ravi["DireccionFiscalClientePago"] = orden.GuiasSalida[0].Orden.ClientePago.Direcciones.FirstOrDefault().Direccion.descripcion;
+                    if (orden.GuiasSalida[0].Orden.ClientePago.Direcciones.Where(a => a.TipoDireccion.nombre == "Fiscal").Count() > 0)
+                        _ravi["DireccionFiscalClientePago"] = orden.GuiasSalida[0].Orden.ClientePago.Direcciones.Where(a => a.TipoDireccion.nombre == "Fiscal").FirstOrDefault().Direccion.direccionCompleta;
+                    else
+                        _ravi["DireccionFiscalClientePago"] = "";
+                    _ravi["RucClientePago"] = orden.GuiasSalida[0].Orden.ClientePago.ruc;
+                    if (resumen == true && orden.resumen != null)
+                    {
+                        _ravi["Importe"] = string.Format("{0:0,0.00}", orden.subTotal);
+                    }
+                    else if (resumen == false)
+                    {
+                        _ravi["Importe"] = string.Format("{0:0,0.00}", detalle.precioTotal);
+                    }
+
+                    _ravi["Flete"] = string.Format("{0:0,0.00}", subTotal);
+                    _ravi["IGV"] = string.Format("{0:0,0.00}", igv);
+                    _ravi["Total"] = string.Format("{0:0,0.00}", total);
+                    _ravi["FechaEmisionF"] = orden.GuiasSalida[0].Orden.Ventas.FirstOrDefault().fecha.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+
+
+
+                    ConvertirNumero conv = new ConvertirNumero();
+                    //String numero = orden.GuiasSalida[0].Orden.Total.ToString();
+                    _ravi["TotalTexto"] = conv.Convertir(total.ToString(), true);// "CIENTO OCHENTA Y OCHO y 10/100";
+
+                    if (orden.GuiasSalida[0].Orden.Ventas.FirstOrDefault().spot == true)
+                        _ravi["SPOT"] = "OPERACIÓN SUJETA A PAGO DE SPOT";
+                    else
+                        _ravi["SPOT"] = "OPERACIÓN NO SUJETA A PAGO DE SPOT";
+
+                }
+    
+                dt.Rows.Add(_ravi);
+                }
+            }
+
+
+            Microsoft.Reporting.WebForms.LocalReport localreport = new LocalReport();
+            ReportDataSource reportdatasource1 = new ReportDataSource("dsMaestroDetalle");
+            reportdatasource1.Name = "dsMaestroDetalle";
+            if (empty == 0 && type == 1) //type =1 guia
+            {
+                localreport.ReportPath = Server.MapPath("~/Reports/Guia.rdlc");
+            }
+            else if (empty == 1 && type == 1)
+            {
+                localreport.ReportPath = Server.MapPath("~/Reports/GuiaEmpty.rdlc");
+            }
+            else if (empty == 0 && type == 2)
+            {
+                localreport.ReportPath = Server.MapPath("~/Reports/Factura.rdlc");
+            }
+            else if (empty == 0 && type == 3)
+            {
+                localreport.ReportPath = Server.MapPath("~/Reports/Boleta.rdlc");
+            }
+
+            reportdatasource1.Value = dt;
+            localreport.DataSources.Add(reportdatasource1);
+
+            string reportType = "pdf";
+            string encoding;
+            string fileNameExtension;
+            Warning[] warnings;
+            string[] streams;
+            byte[] renderedBytes;
+            string mimeType;
+            renderedBytes = localreport.Render(reportType, null, out mimeType, out encoding, out fileNameExtension, out streams, out warnings);
+            return File(renderedBytes, mimeType);
+        }
+
 
     }
 }

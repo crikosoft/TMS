@@ -5,14 +5,14 @@
 }
 
 
-<h2>Cancelar  Ventas</h2>
+<h2>Retorno de Guias</h2>
 
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Todas los Ventas a Crédito. Use el Filtro de Búsqueda</h5>
+                    <h5>Todas las Guías. Use el Filtro de Búsqueda</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -41,8 +41,17 @@
                             <tr>
                                 <th></th>
                                 <th>
-                                    Guia
-                                </th>
+                                    Serie y Número Guía
+                                </th> 
+                                <th>
+                                    Remitente
+                                </th> 
+                                <th>
+                                    Transportista
+                                </th> 
+                                <th>
+                                    SUNAT
+                                </th> 
                                 <th>
                                     Estado
                                 </th>
@@ -55,16 +64,14 @@
                                 <th>
                                     Chofer
                                 </th>
-                                <th>
-                                    Serie y Número Guía
-                                </th>                                
+                                                               
                                 <th>
                                     Forma Pago
                                 </th>
                                 <th>
                                     Tipo Documento Venta
                                 <th>
-                                    Serie y Número
+                                    Serie y Número Factura
                                 </th>
 
                                 <th>
@@ -83,12 +90,81 @@
 
                             @foreach (var item in Model)
                             {
-
+                                
                                 <tr>
                                     <td><input type="checkbox" class="i-checks" id=@Html.DisplayFor(modelItem => item.ordenId) name="input[]"></td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.ordenId)
+                                        @{
+                                var guia = "";
+                                if (item.GuiasSalida.Count() > 0)
+                                {
+
+                                    guia = item.GuiasSalida.FirstOrDefault().serie + " - " + item.GuiasSalida.FirstOrDefault().numero;
+                                }
+
+                                        }
+
+                                        @guia
                                     </td>
+
+                                    <td>
+                                        @{
+
+                                        if (item.GuiasSalida.Count() > 0)
+                                        {
+                                            if (item.GuiasSalida.FirstOrDefault().retorno1 == true)
+                                            {
+                                                <input type="checkbox" class="i-checks" id="retorno1" value="@item.GuiasSalida.FirstOrDefault().retorno1" checked="checked" />
+                                            }
+                                            else
+                                            { 
+                                                <input type="checkbox" class="i-checks" id="retorno1" value="@item.GuiasSalida.FirstOrDefault().retorno1" />
+                                        
+                                            }
+                                        }
+                                        }
+                                        
+                                        
+                                    </td>
+
+                                    <td>
+                                       @{
+
+                                        if (item.GuiasSalida.Count() > 0)
+                                        {
+                                            if (item.GuiasSalida.FirstOrDefault().retorno2 == true)
+                                            {
+                                                <input type="checkbox" class="i-checks" id="retorno2" value="@item.GuiasSalida.FirstOrDefault().retorno2" checked="checked" />
+                                            } 
+                                           else
+                                            { 
+                                                <input type="checkbox" class="i-checks" id="retorno2" value="@item.GuiasSalida.FirstOrDefault().retorno2" />
+                                        
+                                            }
+                                        }
+                                        }
+                                        
+
+                                    </td>
+
+                                    <td>
+                                       @{
+
+                                        if (item.GuiasSalida.Count() > 0)
+                                        {
+                                            if (item.GuiasSalida.FirstOrDefault().retorno3 == true)
+                                            {
+                                                <input type="checkbox" class="i-checks" id="retorno3" value="@item.GuiasSalida.FirstOrDefault().retorno3" checked="checked" />
+                                            } 
+                                           else
+                                            { 
+                                                <input type="checkbox" class="i-checks" id="retorno3" value="@item.GuiasSalida.FirstOrDefault().retorno3" />
+                                            } 
+                                        }
+                                        }
+
+                                    </td>
+
                                     <td>
                                         @Html.DisplayFor(modelItem => item.EstadoOrden.nombre)
                                     </td>
@@ -101,19 +177,7 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Envios.FirstOrDefault().Chofer.nombres)  @Html.DisplayFor(modelItem => item.Envios.FirstOrDefault().Chofer.apellidos)
                                     </td>
-                                    <td>
-                                        @{
-                                            var guia = "";
-                                            if (item.GuiasSalida.Count() > 0)
-                                            {
 
-                                                guia = item.GuiasSalida.FirstOrDefault().serie + " - " + item.GuiasSalida.FirstOrDefault().numero;
-                                            }
-
-                                        }
-
-                                        @guia
-                                    </td>
 
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Ventas.FirstOrDefault().FormaPago.nombre)
@@ -180,8 +244,17 @@
                             <tr>
                                 <th></th>
                                 <th>
-                                    Pedido
+                                    Serie y Número Guía
                                 </th>
+                                <th>
+                                    Remitente
+                                </th>
+                                <th>
+                                    Transportista
+                                </th>
+                                <th>
+                                    SUNAT
+                                </th> 
                                 <th>
                                     Estado
                                 </th>
@@ -194,16 +267,14 @@
                                 <th>
                                     Chofer
                                 </th> 
-                                <th>
-                                    Serie y Número Guía
-                                </th>
+ 
                                 <th>
                                     Forma Pago
                                 </th>
                                 <th>
                                     Tipo Documento Venta
                                 <th>
-                                    Serie y Número
+                                    Serie y Número Factura
                                 </th>
 
                                 <th>
@@ -268,7 +339,8 @@
                     }
                 ],
                 "order": [[0, "desc"]],
-                "pageLength": 50
+                "pageLength": 50,
+                "scrollX": true
 
             });
 
@@ -317,7 +389,13 @@
                     if ($(this).find("td:eq(0) input[type='checkbox']").is(":checked")) {
                         cells.push({
 
-                            ordenId: $(this).find("td:eq(0) input[type='checkbox']").attr("id")
+                            ordenId: $(this).find("td:eq(0) input[type='checkbox']").attr("id"),
+                            retorno1: $(this).find("td:eq(2) input[type='checkbox']").is(":checked"),
+                            retorno2: $(this).find("td:eq(3) input[type='checkbox']").is(":checked"),
+                            retorno3: $(this).find("td:eq(4) input[type='checkbox']").is(":checked")
+                            //retorno1:  $(this).find("td:eq(2) input[type='checkbox']").attr("value"),
+                            //retorno2: $(this).find("td:eq(3) input[type='checkbox']").attr("value"),
+                            //retorno3: $(this).find("td:eq(4) input[type='checkbox']").attr("value")
 
                         });
                     }
@@ -332,11 +410,22 @@
                 }
 
                 var Ordenes = [];
-
+                
                 for (var i = 0; i < cells.length; i++) {
                     var orden = new Object();
+                    var guiaSalida = new Object();
+                    var GuiasSalida = [];
 
                     orden.ordenId = cells[i].ordenId;
+                    guiaSalida.retorno1 = cells[i].retorno1;
+                    guiaSalida.retorno2 = cells[i].retorno2;
+                    guiaSalida.retorno3 = cells[i].retorno3;
+                    guiaSalida.ordenId = cells[i].ordenId;
+                    guiaSalida.serie = "serie";
+                    guiaSalida.numero = "numero";
+
+                    GuiasSalida.push(guiaSalida);
+                    orden.GuiasSalida = GuiasSalida;
                     Ordenes.push(orden);
 
                     //alert(requerimientoDetalle.requerimientoDetalleId);
@@ -348,7 +437,7 @@
                 //return;
 
 
-                //var requerimiento = new Object();
+                
 
                 //requerimiento.requerimientoId = $("#requerimientoId").val();
                 //requerimiento.Detalles = Detalles;

@@ -2421,6 +2421,16 @@ namespace KleanKart.Migrations
             estadoVenta.ForEach(s => context.EstadoVentas.AddOrUpdate(p => p.nombre, s));
             context.SaveChanges();
 
+
+            var tipoDocumentoIdentidad = new List<TipoDocumentoIdentidad>
+            {
+                new TipoDocumentoIdentidad { nombre= "DNI", descripcion="DNI"},
+                new TipoDocumentoIdentidad { nombre= "Pasaporte", descripcion="Pasaporte"}
+                
+            };
+
+            tipoDocumentoIdentidad.ForEach(s => context.TiposDocumentoIdentidad.AddOrUpdate(p => p.nombre, s));
+            context.SaveChanges();
         }
     }
 }

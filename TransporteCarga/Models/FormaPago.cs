@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -10,10 +11,12 @@ namespace TransporteCarga.Models
     {
         public int formaPagoId { get; set; }
 
+        [DisplayName("Nombre")]
         [Required()]
          [StringLength(100)]
         public string nombre { get; set; }
 
+        [DisplayName("Descripción")]
          [StringLength(500)]
         public string descripcion { get; set; }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -41,5 +42,42 @@ namespace TransporteCarga.Models
         public virtual List<Orden> DestinosOrden { get; set; }
 
         public virtual List<ClienteDireccion> ClienteDirecciones  { get; set; }
+
+        [NotMapped]
+        public string direccionCompleta
+        {
+            get
+            {
+                string retorna = "";
+
+                if (this.Ubigeo != null)
+                {
+                    retorna = this.descripcion + " - " + this.Ubigeo.descripcion;
+
+                    if (this.Ubigeo.UbigeoParent != null)
+                    {
+                        retorna = retorna + " - " + this.Ubigeo.UbigeoParent.descripcion;
+
+                        if (this.Ubigeo.UbigeoParent.UbigeoParent != null)
+                        {
+                            retorna = retorna + " - " + this.Ubigeo.UbigeoParent.UbigeoParent.descripcion;
+                        }
+                    }
+                }
+
+                
+
+
+                
+                //string str = this.descripcion.Trim() + " " + this.Ubigeo.UbigeoParent.descripcion.Trim(); // +" " + this.Ubigeo.UbigeoParent.UbigeoParent.UbigeoParent.descripcion.Trim();
+                //str.Split(' ').ToList().ForEach(i => retorna = retorna + i[0] + "");
+                return retorna;
+
+            }
+            set
+            {
+            }
+        }
+
     }
 }

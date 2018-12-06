@@ -30,6 +30,7 @@ namespace TransporteCarga
             // jQueryUI 
             bundles.Add(new StyleBundle("~/bundles/jqueryui").Include(
                         "~/Scripts/plugins/jquery-ui/jquery-ui.min.js"));
+            //"~/Scripts/bootstrap.min.js"));
 
             // Bootstrap
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
@@ -418,6 +419,7 @@ namespace TransporteCarga
             // Autocomplete
             bundles.Add(new ScriptBundle("~/plugins/autocomplete").Include(
                       "~/Scripts/plugins/autocomplete/autocomplete.min.js"));
+
 
 
 

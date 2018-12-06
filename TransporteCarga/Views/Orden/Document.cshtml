@@ -1,0 +1,153 @@
+﻿@model TransporteCarga.Models.Orden
+
+@{
+    ViewBag.Title = "Document";
+}
+
+
+
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-6">
+
+        <h2>Guía</h2>
+
+
+        <ol class="breadcrumb"></ol>
+
+        @*@Html.ActionLink("Retornar al Listado", "Index", "Pedido", new { @class = "btn btn-primary" })*@
+        <a href="~/Orden/Index/" class="btn btn-primary"> Retornar al listado </a>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+
+        @* Copiar desde aqui para print*@
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="ibox-content p-xl">
+                <div class="row">
+                    <div class="col-sm-6 text-left">
+                        <address>
+                            Dirección: Jr. Las Turquesas 448 <br>
+                            Urb. Balconcillo<br>
+                            Lima - Lima - La Victoria<br>
+                            <abbr title="Teléfono">T: 471-3058 / 471-2630 / (99) 834*1310 / (98)131*2839 / 981000285</abbr>
+                        </address>
+                    </div>
+
+                    <div class="col-sm-6 text-right">
+
+                        <h4>No. de Guía</h4>
+
+                        <h4 class="text-navy">@Html.DisplayFor(model => model.GuiasSalida.FirstOrDefault().serie) - @Html.DisplayFor(model => model.GuiasSalida.FirstOrDefault().numero)</h4>
+
+                        @if (Model.EstadoOrden.nombre != "Creado")
+                        {
+                            <h4 class="text-danger">Estado: @Html.DisplayFor(model => model.EstadoOrden.nombre) </h4>
+                        }
+                        else
+                        {
+                            <h4 class="text-success">Estado: @Html.DisplayFor(model => model.EstadoOrden.nombre) </h4>
+                        }
+
+                        <span>Remitente:</span>
+                        <address>
+                            <strong>@Html.DisplayFor(model => model.ClienteOrigen.razonSocial)</strong><br>
+                            Punto Partida: @Html.DisplayFor(model => model.DireccionOrigen.descripcion)<br>
+                        </address>
+                        <span>Destinatario:</span>
+                        <address>
+                            <strong>@Html.DisplayFor(model => model.ClienteDestinatario.razonSocial)</strong><br>
+                            Punto Llegada: @Html.DisplayFor(model => model.DireccionDestino.descripcion)<br>
+                        </address>
+                        <span>Contratista:</span>
+                        <address>
+                            <strong>@Html.DisplayFor(model => model.Envios.FirstOrDefault().Proveedor.razonSocial)</strong><br>
+                            Chofer: @Html.DisplayFor(model => model.Envios.FirstOrDefault().Chofer.apellidos) , @Html.DisplayFor(model => model.Envios.FirstOrDefault().Chofer.nombres)<br>
+                            Placa: @Html.DisplayFor(model => model.Envios.FirstOrDefault().Vehiculo.placaUnidad)<br>
+                        </address>
+                        <p>
+                            <span><strong>Fecha Emisión:</strong> </span><br />
+                        </p>
+                    </div>
+                </div>
+
+                <div class="table-responsive m-t">
+                    <table class="table invoice-table">
+                        <thead>
+                            <tr>
+                                <th>Cantidad</th>
+                                <th>Descripción</th>
+
+                                <th>UND.</th>
+                                <th>Precio Unitario</th>
+                                <th>Importe</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+
+                            @foreach (var item in Model.Detalles.OrderBy(a => a.Producto.nombre))
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.cantidad)</td>
+                                    <td>
+                                        <div><strong>@Html.DisplayFor(modelItem => item.Producto.nombre)</strong></div>
+                                        <small>@Html.DisplayFor(modelItem => item.Producto.UnidadMedida.nombre)</small>
+                                    </td>
+
+                                    <td>@Html.DisplayFor(modelItem => item.Producto.UnidadMedida.nombre)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.precioUnitario)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.precioTotal)</td>
+
+                                    @*<td>@Html.DisplayFor(modelItem => item.OrdenCompra.Moneda.simbolo) @Html.DisplayFor(modelItem => item.precioUnitario)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.OrdenCompra.Moneda.simbolo) @Html.DisplayFor(modelItem => item.precioTotal)</td>*@
+                                </tr>
+                            }
+
+
+
+
+                        </tbody>
+                    </table>
+                </div><!-- /table-responsive -->
+
+                <table class="table invoice-total">
+                    <tbody>
+                        <tr>
+                            <td><strong>Sub Total :</strong></td>
+                            <td>S/.  @Html.DisplayFor(model => model.subTotal)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>IGV :</strong></td>
+                            <td>S/.  @Html.DisplayFor(model => model.igv)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>TOTAL :</strong></td>
+                            <td>S/.  @Html.DisplayFor(model => model.Total)</td>
+                        </tr>
+                    </tbody>
+                </table>
+                @*<div class="text-right">
+                        <button class="btn btn-primary"><i class="fa fa-dollar"></i> Aprobar!</button>
+                    </div>*@
+
+
+                <div class="well m-t">
+                    <strong>Comentario</strong>
+                    @Html.DisplayFor(model => model.comentario)
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@* Copiar hasta aqui para print*@
+
+

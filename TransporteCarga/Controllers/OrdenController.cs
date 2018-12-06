@@ -15,12 +15,31 @@ namespace TransporteCarga.Controllers
         private TransporteCargaContext db = new TransporteCargaContext();
 
         // GET: /Orden/
-        public ActionResult Index()
+        public ActionResult Index(DateTime? start, DateTime? end)
         {
-            ViewBag.clienteId = new SelectList(db.Clientes.OrderBy(a => a.razonSocial), "razonSocial", "razonSocial");
-            var ordenes = db.Ordenes.Where(a => a.EstadoOrden.nombre != "Anulado").Include(p => p.ClienteOrigen).Include(p => p.EstadoOrden).OrderByDescending(a=>a.ordenId);
+            List<Orden> ordenes = new List<Orden>();
+            if (this.Request.RequestType == "POST")
+            { 
+                //ViewBag.clienteId = new SelectList(db.Clientes.OrderBy(a => a.razonSocial), "razonSocial", "razonSocial");
+                //var ordenes = db.Ordenes.Where(a => a.EstadoOrden.nombre != "Anulado").Include(p => p.ClienteOrigen).Include(p => p.EstadoOrden);//.OrderByDescending(a=>a.ordenId);
 
-            //var ordenes = db.Ordenes.Include(o => o.Cliente).Include(o => o.DireccionDestino).Include(o => o.DireccionOrigen).Include(o => o.EstadoOrden);
+                ////var ordenes = db.Ordenes.Include(o => o.Cliente).Include(o => o.DireccionDestino).Include(o => o.DireccionOrigen).Include(o => o.EstadoOrden);
+                //return View(ordenes.ToList());
+
+                ViewBag.start = start;
+                ViewBag.end = end;
+
+                if (start != null && end != null)
+                {
+                    ordenes = db.Ordenes.Where(a => a.EstadoOrden.nombre != "Anulado").Include(p => p.ClienteOrigen).Include(p => p.EstadoOrden).Where(a => DbFunctions.TruncateTime(a.GuiasSalida.FirstOrDefault().fechaEmision) >= start && DbFunctions.TruncateTime(a.GuiasSalida.FirstOrDefault().fechaEmision) <= end).ToList();
+                    //ordenes = db.Ordenes.Where(a => a.EstadoOrden.nombre != "Anulado").Where(a => DbFunctions.TruncateTime(a.fechaCreacion) >= start && DbFunctions.TruncateTime(a.fechaCreacion) <= end).ToList();
+
+                }
+                else
+                {
+                    ordenes = db.Ordenes.Where(a => a.EstadoOrden.nombre != "Anulado").Include(p => p.ClienteOrigen).Include(p => p.EstadoOrden).ToList();
+                }
+            }
             return View(ordenes.ToList());
         }
 
@@ -277,6 +296,7 @@ namespace TransporteCarga.Controllers
         [HttpPost]
         public ActionResult RetornoGuiaMasivo(List<Orden> ordenes)
         {
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
             if (ModelState.IsValid)
             {
 
@@ -290,22 +310,34 @@ namespace TransporteCarga.Controllers
                 foreach (var orden in ordenes)
                 {
 
-                    //1. Cambia Estado de Orden
+                    //0. Save Guia Documents 
+                    var guia = db.GuiaSalidas.Where(a => a.ordenId == orden.ordenId).ToList().FirstOrDefault();
+                    guia.retorno1 = orden.GuiasSalida.FirstOrDefault().retorno1;
+                    guia.retorno2 = orden.GuiasSalida.FirstOrDefault().retorno2;
+                    guia.retorno3 = orden.GuiasSalida.FirstOrDefault().retorno3;
 
-                    var ordenOriginal = db.Ordenes.Find(orden.ordenId);
-                    ordenOriginal.estadoOrdenId = estadoOrden.estadoOrdenId;
-                    ordenOriginal.usuarioModificacion = User.Identity.Name;
-                    ordenOriginal.fechaModificacion = cstTime;
 
-                    //2. Grabar Estado de Pedido
-                    var ordenEstadoOrden = new OrdenEstadoOrden();
+                    if (guia.retorno1 == true && guia.retorno2 == true && guia.retorno3 == true)
+                    {
 
-                    ordenEstadoOrden.ordenId = ordenOriginal.ordenId;
-                    ordenEstadoOrden.estadoOrdenId = estadoOrden.estadoOrdenId;
-                    ordenEstadoOrden.usuarioCreacion = User.Identity.Name;
-                    ordenEstadoOrden.fechaCreacion = cstTime;
+                        //1. Cambia Estado de Orden
 
-                    db.OrdenesEstadoOrden.Add(ordenEstadoOrden);
+                        var ordenOriginal = db.Ordenes.Find(orden.ordenId);
+                        ordenOriginal.estadoOrdenId = estadoOrden.estadoOrdenId;
+                        ordenOriginal.usuarioModificacion = User.Identity.Name;
+                        ordenOriginal.fechaModificacion = cstTime;
+
+                        //2. Grabar Estado de Orden
+                        var ordenEstadoOrden = new OrdenEstadoOrden();
+
+                        ordenEstadoOrden.ordenId = ordenOriginal.ordenId;
+                        ordenEstadoOrden.estadoOrdenId = estadoOrden.estadoOrdenId;
+                        ordenEstadoOrden.usuarioCreacion = User.Identity.Name;
+                        ordenEstadoOrden.fechaCreacion = cstTime;
+
+                        db.OrdenesEstadoOrden.Add(ordenEstadoOrden);
+
+                    }
 
                     db.SaveChanges();
                 }
@@ -316,6 +348,7 @@ namespace TransporteCarga.Controllers
             }
 
 
+
             var estadoList = new string[] { "Con Factura", "Con Guía", "Cobrado" };
             var ordenes2 = db.Ordenes.Where(a => estadoList.Contains(a.EstadoOrden.nombre));
             return View(ordenes2.ToList());
@@ -324,6 +357,21 @@ namespace TransporteCarga.Controllers
             //var pedidosNew = db.Ordenes.Where(a => a.Ventas.Where(x => x.FormaPago.nombre == "Credito").Select(x => x.pedidoId).Contains(a.pedidoId));
             ////.Include(v => v.EstadoPedido).Include(v => v.Ventas);
             //return View(pedidosNew.ToList());
+        }
+
+        // GET: /Orden/Document/5
+        public ActionResult Document(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Orden orden = db.Ordenes.Find(id);
+            if (orden == null)
+            {
+                return HttpNotFound();
+            }
+            return View(orden);
         }
     }
 }

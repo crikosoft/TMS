@@ -4,9 +4,16 @@
     ViewBag.Title = "Index";
 }
 
-
-<h2>Docuentos de Ventas</h2>
-
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>Lista</h2>
+        <ol class="breadcrumb">
+            <li class="active">
+                <strong>Docuentos de Ventas</strong>
+            </li>
+        </ol>
+    </div>
+</div>
 
 
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -14,100 +21,132 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Todas los Documentos de Ventas. Use el Filtro de Búsqueda</h5>
+                    <h5>Lista de Guías con Factura</h5>
                     <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
+                        @Html.ActionLink("Asignar Factura a Guía(s)", "Create", null, new { @class = "btn btn-primary btn-lg" })
 
                     </div>
                 </div>
-
-
                 <div class="ibox-content">
 
-
-                    <div class="row">
-
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label class="control-label" for="status">Cliente</label>
-                                @Html.DropDownList("col2_filter", (IEnumerable<SelectListItem>)ViewBag.clienteId, "Todos", new { @class = "form-control column_filter", @data_column = "2" })
-
-                            </div>
-                        </div>
-
-
-                    </div>
-
-
                     <table class="table table-stripped table-bordered table-hover dataTables-example " data-page-size="10">
-
                         <thead>
                             <tr>
-
+                                <th hidden="hidden"></th>
                                 <th>
-                                    Pedido
+                                    Nro Factura
                                 </th>
                                 <th>
-                                    Estado
+                                   Razón Social Cliente 
                                 </th>
                                 <th>
-                                    Cliente
+                                    Nro Guía(s)
                                 </th>
                                 <th>
                                     Total
                                 </th>
                                 <th>
-                                    Tipo Documento Venta
+                                    Fecha Creación
                                 </th>
-                                <th>
-                                    Serie
-                                </th>
-                                <th>
-                                    Número
-                                </th>
-
-                                <th>
-                                    Fecha
-                                </th>
+                                <th></th>
+                                <th>Chofer</th>
+                                <th>Pago</th>
+                                <th>Nota Credito</th>
 
                             </tr>
                         </thead>
                         <tbody>
-
-
-
-
                             @foreach (var item in Model)
                             {
                                 <tr>
+                                    <td hidden="hidden">
+                                        @Html.DisplayFor(modelItem => item.ventaId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.serie) - @Html.DisplayFor(modelItem => item.numero)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Ordenes.FirstOrDefault().ClientePago.razonSocial)
+                                    </td>
+                                    <td>
+                                        @{ string cadenaGuias = "";}
+                                        @foreach (var orden in item.Ordenes.Where(a => a.GuiasSalida.Count() > 0 && a.Envios.Count() > 0))
+                                        {
 
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Pedido.pedidoId)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.EstadoVenta.nombre)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Pedido.Cliente.razonSocial)
-                                    </td>
-                                    <td>
-                                       S/. @Html.DisplayFor(modelItem => item.Pedido.Total)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.TipoDocumento.nombre)
-                                    </td>
-
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.serie)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.numero)
+                                            cadenaGuias = cadenaGuias + orden.GuiasSalida.FirstOrDefault().serie + "-" + orden.GuiasSalida.FirstOrDefault().numero + ", ";
+                                        }
+                                        @cadenaGuias
                                     </td>
 
+
+                                    <td align="right">
+                                        @{
+                                        double? totalGuias = 0;
+                                        totalGuias = item.Ordenes.AsEnumerable().Sum(o => o.Total);
+                                        }
+                                        
+                                        @string.Format("{0:0,0.00}", @totalGuias)
+                                        @*@Html.DisplayFor(modelItem => item.Ordenes.AsEnumerable().Sum(o=>o.Total))*@
+                                    </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.fecha)
+                                    </td>
+
+                                    <td>
+                                        @*<a href="~/Venta/Document/@item.ordenId" class="btn btn-primary btn-sm"> Detalle </a>*@
+                                        <a href="~/Venta/Edit/@item.ventaId" class="btn btn-white btn-sm"> Editar </a>
+                                        <a href="~/Venta/Document/@Html.DisplayFor(modelItem => item.ventaId)" target="_blank" class="btn btn-primary btn-sm"><i class="fa fa-print"></i>  </a>
+                                        <a href="~/Venta/Delete/@Html.DisplayFor(modelItem => item.ventaId)" class="btn btn-primary btn-sm"><i class="fa fa-remove"></i>  </a>
+
+
+                                    </td>
+
+                                    <td>
+                                        
+                                        @{string choferes = "";}
+                                        @foreach (var orden in item.Ordenes.Where(a => a.GuiasSalida.Count() > 0 && a.Envios.Count() > 0))
+                                        {
+                                            choferes += orden.Envios.FirstOrDefault().Chofer.iniciales + ",";
+                                                @*<span class="btn btn-primary btn-sm" data-container="body" data-toggle="popover"><i class="fa fa-truck"></i> Chofer @orden.Envios.FirstOrDefault().Chofer.iniciales</span>*@
+                                        }
+                                        @choferes
+
+                                    </td>
+
+                                   
+                                    
+
+                                    <td>
+
+                                        @if (item.Ordenes.Count() > 0)
+                                        { 
+                                            @*if (item.Ordenes.FirstOrDefault().Estados.Where(a => a.EstadoOrden.nombre == "Con Factura").Count() > 0 )
+                                            {
+
+                                                <a href="~/Venta/EditPayment/@Html.DisplayFor(modelItem =>item.Ordenes.FirstOrDefault().Ventas.FirstOrDefault().ventaId )" class="btn btn-danger btn-sm"><i class="fa fa-money"></i> Pend. Pago </a>
+
+                                            }*@
+                                            //if (item.Ordenes.FirstOrDefault().Estados.Where(a => a.EstadoOrden.nombre == "Cobrado").Count() > 0)
+                                            if (item.Ordenes.FirstOrDefault().EstadoOrden.nombre == "Cobrado")
+                                            {
+                                                <a href="~/Venta/EditPayment/@Html.DisplayFor(modelItem => item.Ordenes.FirstOrDefault().Ventas.FirstOrDefault().ventaId)" class="btn btn-primary btn-sm"><i class="fa fa-money"></i> Pagado </a>
+                                            }
+                                            else
+                                            {
+                                                 <a href="~/Venta/EditPayment/@Html.DisplayFor(modelItem => item.Ordenes.FirstOrDefault().Ventas.FirstOrDefault().ventaId)" class="btn btn-danger btn-sm"><i class="fa fa-money"></i> Pend. Pago </a>
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @{double? totalNotasCredito = 0;
+                                        }
+                                        @if (item.NotasCredito.Count() > 0)
+                                        {
+                                            
+                                            totalNotasCredito = item.NotasCredito.Sum(a=>a.monto);
+                                            
+                                        }
+                                       @string.Format("{0:0,0.00}", @totalNotasCredito)
                                     </td>
                                 </tr>
                             }
@@ -116,41 +155,36 @@
                         </tbody>
                         <tfoot>
                             <tr>
-
+                                <th hidden="hidden"></th>
                                 <th>
-                                    Pedido
+                                    Nro Factura
                                 </th>
                                 <th>
-                                    Estado
+                                    Razón Social Cliente
                                 </th>
                                 <th>
-                                    Cliente
+                                    Nro Guía(s)
                                 </th>
                                 <th>
                                     Total
                                 </th>
                                 <th>
-                                    Tipo Documento Venta
+                                    Fecha Creación
                                 </th>
-                                <th>
-                                    Serie
-                                </th>
-                                <th>
-                                    Número
-                                </th>
-
-                                <th>
-                                    Fecha
-                                </th>
+                                <th></th>
+                                <th>Chofer</th>
+                                <th>Pago</th>
                             </tr>
                         </tfoot>
                     </table>
 
+
+
                 </div>
+
             </div>
         </div>
     </div>
-
 </div>
 
 @section Styles {
@@ -193,7 +227,8 @@
                     }
                 ],
                 "order": [[0, "desc"]],
-                "pageLength": 25
+                "pageLength": 25,
+                "scrollX": true
 
             });
 
@@ -239,5 +274,4 @@
 
     </script>
 }
-
 

@@ -30,6 +30,19 @@ namespace TransporteCarga.Models
        // [DisplayName("Fecha Inicio de Traslado")]
        // public DateTime? fechaTraslado { get; set; }
 
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [DataType(DataType.Date)]
+        public DateTime? fechaEmision { get; set; }
+
+        [DisplayName("Remitente")]
+        public bool? retorno1 { get; set; }
+
+        [DisplayName("Transporte")]
+        public bool? retorno2 { get; set; }
+
+        [DisplayName("SUNAT")]
+        public bool? retorno3 { get; set; }
+
         public virtual Orden Orden { get; set; }
         public virtual MotivoTraslado MotivoTraslado{ get; set; }
     }

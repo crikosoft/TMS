@@ -21,8 +21,8 @@ namespace TransporteCarga.Models
         [StringLength(1000)]
         public string contacto { get; set; }
 
-        [DisplayName("RUC")]
-        [Required(ErrorMessage = "Se requiere RUC")]
+        [DisplayName("RUC o DNI")]
+        [Required(ErrorMessage = "Se requiere RUC o DNI")]
         [StringLength(50)]
         public string ruc { get; set; }
 

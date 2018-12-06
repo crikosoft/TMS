@@ -39,8 +39,8 @@ namespace TransporteCarga.Controllers
         // GET: /Producto/Create
         public ActionResult Create()
         {
-            ViewBag.categoriaId = new SelectList(db.Categorias, "categoriaId", "nombre");
-            ViewBag.unidadMedidaId = new SelectList(db.UnidadMedida, "unidadMedidaId", "nombre");
+            ViewBag.categoriaId = new SelectList(db.Categorias.OrderBy(a => a.nombre), "categoriaId", "nombre");
+            ViewBag.unidadMedidaId = new SelectList(db.UnidadMedida.OrderBy( a=> a.nombre), "unidadMedidaId", "nombre");
             return View();
         }
 
@@ -53,13 +53,20 @@ namespace TransporteCarga.Controllers
         {
             if (ModelState.IsValid)
             {
+                DateTime timeUtc = DateTime.UtcNow;
+                TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+                DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
+
+                producto.fechaCreacion = cstTime;
+                producto.usuarioCreacion = User.Identity.Name;
+
                 db.Productos.Add(producto);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.categoriaId = new SelectList(db.Categorias, "categoriaId", "nombre", producto.categoriaId);
-            ViewBag.unidadMedidaId = new SelectList(db.UnidadMedida, "unidadMedidaId", "nombre", producto.unidadMedidaId);
+            ViewBag.categoriaId = new SelectList(db.Categorias.OrderBy(a => a.nombre), "categoriaId", "nombre", producto.categoriaId);
+            ViewBag.unidadMedidaId = new SelectList(db.UnidadMedida.OrderBy(a => a.nombre), "unidadMedidaId", "nombre", producto.unidadMedidaId);
             return View(producto);
         }
 
@@ -75,8 +82,8 @@ namespace TransporteCarga.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.categoriaId = new SelectList(db.Categorias, "categoriaId", "nombre", producto.categoriaId);
-            ViewBag.unidadMedidaId = new SelectList(db.UnidadMedida, "unidadMedidaId", "nombre", producto.unidadMedidaId);
+            ViewBag.categoriaId = new SelectList(db.Categorias.OrderBy(a => a.nombre), "categoriaId", "nombre", producto.categoriaId);
+            ViewBag.unidadMedidaId = new SelectList(db.UnidadMedida.OrderBy(a => a.nombre), "unidadMedidaId", "nombre", producto.unidadMedidaId);
             return View(producto);
         }
 
@@ -104,8 +111,8 @@ namespace TransporteCarga.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.categoriaId = new SelectList(db.Categorias, "categoriaId", "nombre", producto.categoriaId);
-            ViewBag.unidadMedidaId = new SelectList(db.UnidadMedida, "unidadMedidaId", "nombre", producto.unidadMedidaId);
+            ViewBag.categoriaId = new SelectList(db.Categorias.OrderBy(a => a.nombre), "categoriaId", "nombre", producto.categoriaId);
+            ViewBag.unidadMedidaId = new SelectList(db.UnidadMedida.OrderBy(a => a.nombre), "unidadMedidaId", "nombre", producto.unidadMedidaId);
             return View(producto);
         }
 

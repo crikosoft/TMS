@@ -18,7 +18,8 @@
     </div>
     <div class="col-sm-8">
         <div class="title-action">
-            @Html.ActionLink("Volver al Listado", "Index", null, new { @class = "btn btn-primary" })
+            @*@Html.ActionLink("Volver al Listado", "Index", null, new { @class = "btn btn-primary" })*@
+            <a href="~/Orden/Index/" class="btn btn-primary">Volver a la lista </a>
         </div>
     </div>
 </div>
@@ -43,9 +44,9 @@
 
                             @Html.ValidationSummary(true)
                             @Html.HiddenFor(model => model.ventaId)
-                            @Html.HiddenFor(model => model.ordenId)
+                            @{int[] ordenIds = new int[] { 1 };}
 
-                            
+                            <input type="hidden" id="OrdenIds" name="OrdenIds" value=@ordenIds[0]>
 
                             <div class="form-group">
                                 @Html.LabelFor(model => model.fechaPagoReal, new { @class = "control-label col-md-2" })
@@ -59,8 +60,8 @@
                                 <div class="col-md-offset-2 col-md-10">
                                     <input type="submit" value="Guardar" class="btn btn-primary" />
                                     @*@Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-white"})*@
-                                    <a href="~/Pedido/Index/" class="btn btn-white btn-sm">Cancel </a>
-
+                                    
+                                    <a href="~/Orden/Index/" class="btn btn-white btn-sm">Cancelar </a>
                                 </div>
                             </div>
                         </div>
@@ -89,8 +90,8 @@
                                             </div>
                                             <div class="vertical-timeline-content">
                                                 <p>
-                                                    Cliente: @Model.Orden.ClientePago.razonSocial<br />
-                                                    RUC: @Model.Orden.ClientePago.ruc
+                                                    Cliente: @Model.Ordenes.FirstOrDefault().ClientePago.razonSocial<br />
+                                                    RUC: @Model.Ordenes.FirstOrDefault().ClientePago.ruc
                                                 </p>
                                                 <span class="vertical-date small text-muted"> </span>
                                             </div>
@@ -101,7 +102,16 @@
                                             </div>
                                             <div class="vertical-timeline-content">
                                                 <p>
-                                                    Moto Total: S/. @Html.DisplayFor(modelItem => modelItem.Orden.Total)
+                                                    @{
+                                                        double? subTotal = 0;
+                                                        double? igv = 0;
+                                                        double? total = 0;
+                                                        subTotal = Model.Ordenes.AsEnumerable().Sum(a => a.subTotal);
+                                                        igv = Model.Ordenes.AsEnumerable().Sum(a => a.igv);
+                                                        total = Model.Ordenes.AsEnumerable().Sum(a => a.Total);
+                                                    }
+                                                    Monto Total: S/.  @total
+
                                                 </p>
                                                 <span class="vertical-date small text-muted"> </span>
                                             </div>
@@ -112,7 +122,15 @@
                                             </div>
                                             <div class="vertical-timeline-content">
                                                 <p>
-                                                    Nro Guía: @Html.DisplayFor(modelItem => modelItem.Orden.GuiasSalida.SingleOrDefault().serie) - @Html.DisplayFor(modelItem => modelItem.Orden.GuiasSalida.SingleOrDefault().numero)
+                                                    @{
+                                                        string guias = "";
+                                                        foreach (var orden in Model.Ordenes)
+                                                        {
+                                                            guias +=  orden.GuiasSalida.FirstOrDefault().serie   + "-"+ orden.GuiasSalida.FirstOrDefault().numero + ", ";
+                                                        }
+                                                    }
+                                                    Nro Guía: @guias;
+                                                    @*Nro Guía: @Html.DisplayFor(modelItem => modelItem.Orden.GuiasSalida.SingleOrDefault().serie) - @Html.DisplayFor(modelItem => modelItem.Orden.GuiasSalida.SingleOrDefault().numero)*@
                                                 </p>
                                                 @*<span class="vertical-date small text-muted"> @Html.DisplayFor(modelItem => modelItem.Orden.GuiasSalida.SingleOrDefault()) </span>*@
                                             </div>

@@ -127,16 +127,19 @@ namespace TransporteCarga.Controllers
         // GET: /Envio/Details/5
         public JsonResult GetProvincias(string codigo)
         {
-            //var provincias = new SelectList(db.Ubigeo.OrderBy(a => a.descripcion).Where(a => a.codigo.Substring(0, 2) == codigo && a.codigo.Substring(2, 2) != "00" && a.codigo.Substring(4, 2) == "01"), "codigo", "descripcion");
-            var provincias =  db.Ubigeo.OrderBy(a => a.descripcion).Where(a => a.codigo.Substring(0, 2) == codigo && a.codigo.Substring(2, 2) != "00" && a.codigo.Substring(4, 2) == "01").ToList();
-            //where substring(codigo,1,2) = '10' and substring(codigo,3,2) <> '00' and substring(codigo,5,2) = '01'
+
+            
+            //var provincias =  db.Ubigeo.OrderBy(a => a.descripcion).Where(a => a.codigo.Substring(0, 2) == codigo && a.codigo.Substring(2, 2) != "00" && a.codigo.Substring(4, 2) == "01").ToList();
+
+            var provincias = db.Ubigeo.OrderBy(a => a.descripcion).Where(a => a.codigo.Substring(0, 2) == codigo && a.codigo.Substring(3, 1) != "0" && a.codigo.Substring(4, 2) == "00").ToList();
+
             return new JsonResult { Data = provincias, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         // GET: /Envio/Details/5
         public JsonResult GetDistritos(string codigo)
-        {           
-            var distritos = db.Ubigeo.OrderBy(a => a.descripcion).Where(a => a.codigo.Substring(0, 4) == codigo).ToList();
+        {
+            var distritos = db.Ubigeo.OrderBy(a => a.descripcion).Where(a => a.codigo.Substring(0, 4) == codigo && a.codigo.Substring(4, 2) != "00").ToList();
             return new JsonResult { Data = distritos, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
     }

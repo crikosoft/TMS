@@ -55,14 +55,12 @@
                             <tr>
 
                                 <th>
-                                    Razón Social
+                                    Razón Social Cliente
                                 </th>
                                 <th>
-                                    RUC
+                                   Rázón Social SubContratista
                                 </th>
-                                <th>
-                                    Nro de Orden
-                                </th>
+
                                 <th>
                                     Documento Venta
                                 </th>
@@ -93,11 +91,19 @@
                                             @Html.DisplayFor(modelItem => item.ClientePago.razonSocial)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.ClientePago.ruc)
+                                            @{
+                                            if (item.Envios.Count() > 0)
+                                                { 
+                                                     @Html.DisplayFor(modelItem => item.Envios.FirstOrDefault().Proveedor.razonSocial)
+                                                }
+                                            }
+
+                                            
+                                            @*@Html.DisplayFor(modelItem => item.ClientePago.ruc)*@
                                         </td>
-                                        <td>
+                                        @*<td>
                                             @Html.DisplayFor(modelItem => item.ordenId)
-                                        </td>
+                                        </td>*@
                                         <td>
                                             @{var factura = "";
 
@@ -159,14 +165,12 @@
                             <tr>
 
                                 <th>
-                                    Razón Social
+                                    Razón Social Cliente
                                 </th>
                                 <th>
-                                    RUC
+                                    Rázón Social SubContratista
                                 </th>
-                                <th>
-                                    Nro de Orden
-                                </th>
+ 
                                 <th>
                                     Documento Venta
                                 </th>
@@ -237,7 +241,8 @@
                     }
                 ],
                 "order": [[0, "asc"]],
-                "pageLength": 25
+                "pageLength": 25,
+                "scrollX": true
 
             });
 

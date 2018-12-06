@@ -10,7 +10,7 @@
         <Tables>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="usp_documentoTableAdapter" GeneratorDataComponentClassName="usp_documentoTableAdapter" Name="usp_documento" UserDataComponentName="usp_documentoTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="IdentityConnection (Web.config)" DbObjectName="TransporteCarga.dbo.usp_documento" DbObjectType="StoredProcedure" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="DefaultConnection (Web.config)" DbObjectName="TransporteCarga.dbo.usp_documento" DbObjectType="StoredProcedure" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <SelectCommand>
                   <DbCommand CommandType="StoredProcedure" ModifiedByUser="false">
                     <CommandText>dbo.usp_documento</CommandText>
@@ -22,7 +22,11 @@
               </DbSource>
             </MainSource>
             <Mappings>
-              <Mapping SourceColumn="TotalTexto" DataSetColumn="TotalTexto" />
+              <Mapping SourceColumn="Serie" DataSetColumn="Serie" />
+              <Mapping SourceColumn="Numero" DataSetColumn="Numero" />
+              <Mapping SourceColumn="FechaEmision" DataSetColumn="FechaEmision" />
+              <Mapping SourceColumn="FechaTraslado" DataSetColumn="FechaTraslado" />
+              <Mapping SourceColumn="Numero1" DataSetColumn="Numero1" />
               <Mapping SourceColumn="Remitente" DataSetColumn="Remitente" />
               <Mapping SourceColumn="Destinatario" DataSetColumn="Destinatario" />
               <Mapping SourceColumn="direccionRemitente" DataSetColumn="direccionRemitente" />
@@ -34,6 +38,7 @@
               <Mapping SourceColumn="PuntoPartida" DataSetColumn="PuntoPartida" />
               <Mapping SourceColumn="PuntoLlegada" DataSetColumn="PuntoLlegada" />
               <Mapping SourceColumn="Cod" DataSetColumn="Cod" />
+              <Mapping SourceColumn="Cantidad" DataSetColumn="Cantidad" />
               <Mapping SourceColumn="UnidadMedida" DataSetColumn="UnidadMedida" />
               <Mapping SourceColumn="Descripcion" DataSetColumn="Descripcion" />
               <Mapping SourceColumn="MarcaVehiculo" DataSetColumn="MarcaVehiculo" />
@@ -42,22 +47,20 @@
               <Mapping SourceColumn="CertificadoInscripcionVehiculo" DataSetColumn="CertificadoInscripcionVehiculo" />
               <Mapping SourceColumn="LicenciaConductorVehiculo" DataSetColumn="LicenciaConductorVehiculo" />
               <Mapping SourceColumn="RazonSocialSubcontratada" DataSetColumn="RazonSocialSubcontratada" />
+              <Mapping SourceColumn="RUCSubcontratada" DataSetColumn="RUCSubcontratada" />
               <Mapping SourceColumn="ChoferSubcontratada" DataSetColumn="ChoferSubcontratada" />
               <Mapping SourceColumn="Referencia" DataSetColumn="Referencia" />
               <Mapping SourceColumn="DireccionFiscalClientePago" DataSetColumn="DireccionFiscalClientePago" />
               <Mapping SourceColumn="RucClientePago" DataSetColumn="RucClientePago" />
               <Mapping SourceColumn="Importe" DataSetColumn="Importe" />
-              <Mapping SourceColumn="Cantidad" DataSetColumn="Cantidad1" />
-              <Mapping SourceColumn="Flete" DataSetColumn="Flete1" />
-              <Mapping SourceColumn="IGV" DataSetColumn="IGV1" />
-              <Mapping SourceColumn="Total" DataSetColumn="Total1" />
-              <Mapping SourceColumn="Serie" DataSetColumn="Serie" />
-              <Mapping SourceColumn="Numero" DataSetColumn="Numero" />
-              <Mapping SourceColumn="RUCSubcontratada" DataSetColumn="RUCSubcontratada" />
-              <Mapping SourceColumn="FechaEmision" DataSetColumn="FechaEmision" />
-              <Mapping SourceColumn="FechaTraslado" DataSetColumn="FechaTraslado" />
-              <Mapping SourceColumn="Numero1" DataSetColumn="Numero1" />
+              <Mapping SourceColumn="Flete" DataSetColumn="Flete" />
+              <Mapping SourceColumn="IGV" DataSetColumn="IGV" />
+              <Mapping SourceColumn="Total" DataSetColumn="Total" />
+              <Mapping SourceColumn="TotalTexto" DataSetColumn="TotalTexto" />
               <Mapping SourceColumn="FechaEmisionF" DataSetColumn="FechaEmisionF" />
+              <Mapping SourceColumn="Comentario" DataSetColumn="Comentario" />
+              <Mapping SourceColumn="SerieFactura" DataSetColumn="SerieFactura" />
+              <Mapping SourceColumn="NumeroFactura" DataSetColumn="NumeroFactura" />
             </Mappings>
             <Sources />
           </TableAdapter>
@@ -69,10 +72,38 @@
   <xs:element name="dsMaestroDetalle" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="dsMaestroDetalle" msprop:Generator_UserDSName="dsMaestroDetalle">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="usp_documento" msprop:Generator_TableClassName="usp_documentoDataTable" msprop:Generator_TableVarName="tableusp_documento" msprop:Generator_RowChangedName="usp_documentoRowChanged" msprop:Generator_TablePropName="usp_documento" msprop:Generator_RowDeletingName="usp_documentoRowDeleting" msprop:Generator_RowChangingName="usp_documentoRowChanging" msprop:Generator_RowEvHandlerName="usp_documentoRowChangeEventHandler" msprop:Generator_RowDeletedName="usp_documentoRowDeleted" msprop:Generator_RowClassName="usp_documentoRow" msprop:Generator_UserTableName="usp_documento" msprop:Generator_RowEvArgName="usp_documentoRowChangeEvent">
+        <xs:element name="usp_documento" msprop:Generator_TableClassName="usp_documentoDataTable" msprop:Generator_TableVarName="tableusp_documento" msprop:Generator_TablePropName="usp_documento" msprop:Generator_RowDeletingName="usp_documentoRowDeleting" msprop:Generator_RowChangingName="usp_documentoRowChanging" msprop:Generator_RowEvHandlerName="usp_documentoRowChangeEventHandler" msprop:Generator_RowDeletedName="usp_documentoRowDeleted" msprop:Generator_UserTableName="usp_documento" msprop:Generator_RowChangedName="usp_documentoRowChanged" msprop:Generator_RowEvArgName="usp_documentoRowChangeEvent" msprop:Generator_RowClassName="usp_documentoRow">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="TotalTexto" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTotalTexto" msprop:Generator_ColumnPropNameInRow="TotalTexto" msprop:Generator_ColumnPropNameInTable="TotalTextoColumn" msprop:Generator_UserColumnName="TotalTexto" minOccurs="0">
+              <xs:element name="Serie" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnSerie" msprop:Generator_ColumnPropNameInRow="Serie" msprop:Generator_ColumnPropNameInTable="SerieColumn" msprop:Generator_UserColumnName="Serie" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Numero" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnNumero" msprop:Generator_ColumnPropNameInRow="Numero" msprop:Generator_ColumnPropNameInTable="NumeroColumn" msprop:Generator_UserColumnName="Numero" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FechaEmision" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFechaEmision" msprop:Generator_ColumnPropNameInRow="FechaEmision" msprop:Generator_ColumnPropNameInTable="FechaEmisionColumn" msprop:Generator_UserColumnName="FechaEmision" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FechaTraslado" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFechaTraslado" msprop:Generator_ColumnPropNameInRow="FechaTraslado" msprop:Generator_ColumnPropNameInTable="FechaTrasladoColumn" msprop:Generator_UserColumnName="FechaTraslado" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Numero1" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnNumero1" msprop:Generator_ColumnPropNameInRow="Numero1" msprop:Generator_ColumnPropNameInTable="Numero1Column" msprop:Generator_UserColumnName="Numero1" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="1" />
@@ -156,13 +187,7 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="Cantidad" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnCantidad" msprop:Generator_ColumnPropNameInRow="Cantidad" msprop:Generator_ColumnPropNameInTable="CantidadColumn" msprop:Generator_UserColumnName="Cantidad" minOccurs="0">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="1" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
+              <xs:element name="Cantidad" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnCantidad" msprop:Generator_ColumnPropNameInRow="Cantidad" msprop:Generator_ColumnPropNameInTable="CantidadColumn" msprop:Generator_UserColumnName="Cantidad" type="xs:int" minOccurs="0" />
               <xs:element name="UnidadMedida" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnUnidadMedida" msprop:Generator_ColumnPropNameInRow="UnidadMedida" msprop:Generator_ColumnPropNameInTable="UnidadMedidaColumn" msprop:Generator_UserColumnName="UnidadMedida" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
@@ -219,6 +244,13 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
+              <xs:element name="RUCSubcontratada" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRUCSubcontratada" msprop:Generator_ColumnPropNameInRow="RUCSubcontratada" msprop:Generator_ColumnPropNameInTable="RUCSubcontratadaColumn" msprop:Generator_UserColumnName="RUCSubcontratada" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
               <xs:element name="ChoferSubcontratada" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnChoferSubcontratada" msprop:Generator_ColumnPropNameInRow="ChoferSubcontratada" msprop:Generator_ColumnPropNameInTable="ChoferSubcontratadaColumn" msprop:Generator_UserColumnName="ChoferSubcontratada" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
@@ -254,67 +286,10 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="Flete" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFlete" msprop:Generator_ColumnPropNameInRow="Flete" msprop:Generator_ColumnPropNameInTable="FleteColumn" msprop:Generator_UserColumnName="Flete" minOccurs="0">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="1" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="IGV" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnIGV" msprop:Generator_ColumnPropNameInRow="IGV" msprop:Generator_ColumnPropNameInTable="IGVColumn" msprop:Generator_UserColumnName="IGV" minOccurs="0">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="1" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="Total" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTotal" msprop:Generator_ColumnPropNameInRow="Total" msprop:Generator_ColumnPropNameInTable="TotalColumn" msprop:Generator_UserColumnName="Total" minOccurs="0">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="1" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="Cantidad1" msdata:ReadOnly="true" msdata:Caption="Cantidad" msprop:Generator_ColumnVarNameInTable="columnCantidad1" msprop:Generator_ColumnPropNameInRow="Cantidad1" msprop:Generator_ColumnPropNameInTable="Cantidad1Column" msprop:Generator_UserColumnName="Cantidad1" type="xs:int" minOccurs="0" />
-              <xs:element name="Flete1" msdata:ReadOnly="true" msdata:Caption="Flete" msprop:Generator_ColumnVarNameInTable="columnFlete1" msprop:Generator_ColumnPropNameInRow="Flete1" msprop:Generator_ColumnPropNameInTable="Flete1Column" msprop:Generator_UserColumnName="Flete1" type="xs:int" minOccurs="0" />
-              <xs:element name="IGV1" msdata:ReadOnly="true" msdata:Caption="IGV" msprop:Generator_ColumnVarNameInTable="columnIGV1" msprop:Generator_ColumnPropNameInRow="IGV1" msprop:Generator_ColumnPropNameInTable="IGV1Column" msprop:Generator_UserColumnName="IGV1" type="xs:int" minOccurs="0" />
-              <xs:element name="Total1" msdata:ReadOnly="true" msdata:Caption="Total" msprop:Generator_ColumnVarNameInTable="columnTotal1" msprop:Generator_ColumnPropNameInRow="Total1" msprop:Generator_ColumnPropNameInTable="Total1Column" msprop:Generator_UserColumnName="Total1" type="xs:int" minOccurs="0" />
-              <xs:element name="Serie" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnSerie" msprop:Generator_ColumnPropNameInRow="Serie" msprop:Generator_ColumnPropNameInTable="SerieColumn" msprop:Generator_UserColumnName="Serie" minOccurs="0">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="1" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="Numero" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnNumero" msprop:Generator_ColumnPropNameInRow="Numero" msprop:Generator_ColumnPropNameInTable="NumeroColumn" msprop:Generator_UserColumnName="Numero" minOccurs="0">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="1" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="RUCSubcontratada" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRUCSubcontratada" msprop:Generator_ColumnPropNameInRow="RUCSubcontratada" msprop:Generator_ColumnPropNameInTable="RUCSubcontratadaColumn" msprop:Generator_UserColumnName="RUCSubcontratada" minOccurs="0">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="1" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="FechaEmision" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFechaEmision" msprop:Generator_ColumnPropNameInRow="FechaEmision" msprop:Generator_ColumnPropNameInTable="FechaEmisionColumn" msprop:Generator_UserColumnName="FechaEmision" minOccurs="0">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="1" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="FechaTraslado" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFechaTraslado" msprop:Generator_ColumnPropNameInRow="FechaTraslado" msprop:Generator_ColumnPropNameInTable="FechaTrasladoColumn" msprop:Generator_UserColumnName="FechaTraslado" minOccurs="0">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="1" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="Numero1" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnNumero1" msprop:Generator_ColumnPropNameInRow="Numero1" msprop:Generator_ColumnPropNameInTable="Numero1Column" msprop:Generator_UserColumnName="Numero1" minOccurs="0">
+              <xs:element name="Flete" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFlete" msprop:Generator_ColumnPropNameInRow="Flete" msprop:Generator_ColumnPropNameInTable="FleteColumn" msprop:Generator_UserColumnName="Flete" type="xs:int" minOccurs="0" />
+              <xs:element name="IGV" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnIGV" msprop:Generator_ColumnPropNameInRow="IGV" msprop:Generator_ColumnPropNameInTable="IGVColumn" msprop:Generator_UserColumnName="IGV" type="xs:int" minOccurs="0" />
+              <xs:element name="Total" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTotal" msprop:Generator_ColumnPropNameInRow="Total" msprop:Generator_ColumnPropNameInTable="TotalColumn" msprop:Generator_UserColumnName="Total" type="xs:int" minOccurs="0" />
+              <xs:element name="TotalTexto" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnTotalTexto" msprop:Generator_ColumnPropNameInRow="TotalTexto" msprop:Generator_ColumnPropNameInTable="TotalTextoColumn" msprop:Generator_UserColumnName="TotalTexto" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="1" />
@@ -322,6 +297,27 @@
                 </xs:simpleType>
               </xs:element>
               <xs:element name="FechaEmisionF" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnFechaEmisionF" msprop:Generator_ColumnPropNameInRow="FechaEmisionF" msprop:Generator_ColumnPropNameInTable="FechaEmisionFColumn" msprop:Generator_UserColumnName="FechaEmisionF" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Comentario" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnComentario" msprop:Generator_ColumnPropNameInRow="Comentario" msprop:Generator_ColumnPropNameInTable="ComentarioColumn" msprop:Generator_UserColumnName="Comentario" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="SerieFactura" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnSerieFactura" msprop:Generator_ColumnPropNameInRow="SerieFactura" msprop:Generator_ColumnPropNameInTable="SerieFacturaColumn" msprop:Generator_UserColumnName="SerieFactura" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="NumeroFactura" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnNumeroFactura" msprop:Generator_ColumnPropNameInRow="NumeroFactura" msprop:Generator_ColumnPropNameInTable="NumeroFacturaColumn" msprop:Generator_UserColumnName="NumeroFactura" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="1" />

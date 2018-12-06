@@ -41,6 +41,25 @@ namespace TransporteCarga.Controllers
             return View(envios.ToList());
         }
 
+        public ActionResult IndexReducedPayPending(DateTime? start, DateTime? end)
+        {
+            ViewBag.start = start;
+            ViewBag.end = end;
+
+            List<Envio> envios = new List<Envio>();
+            if (start != null && end != null)
+            {
+
+                envios = db.Envios.Where(a => a.EstadoEnvio.nombre == "Creado").Where(a => DbFunctions.TruncateTime(a.fechaPagoProgramado) >= start && DbFunctions.TruncateTime(a.fechaPagoProgramado) <= end).ToList();
+            }
+            else
+            {
+                envios = db.Envios.Where(a => a.EstadoEnvio.nombre == "Creado").ToList();
+            }
+
+            return View(envios.ToList());
+        }
+
 
         public ActionResult IndexPayPending()
         {
@@ -152,27 +171,29 @@ namespace TransporteCarga.Controllers
                 envio.igv = envio.subTotal * 0.18;
                 envio.Total = envio.subTotal * 1.18;
 
-                var formaPago = db.FormaPagos.Find(envio.formaPagoId);
+                if (envio.formaPagoId != null)
+                { 
+                    var formaPago = db.FormaPagos.Find(envio.formaPagoId);
 
-                switch (formaPago.nombre)
-                {
-                    case "Factura a 7 días":
-                         envio.fechaPagoProgramado = envio.fechaTraslado.AddDays(7);
-                        break;
-                    case "Factura a 15 días":
-                         envio.fechaPagoProgramado = envio.fechaTraslado.AddDays(15);
-                        break;
-                    case "Factura a 30 días":
-                         envio.fechaPagoProgramado = envio.fechaTraslado.AddDays(30);
-                        break;
-                    case "Factura a 90 días":
-                         envio.fechaPagoProgramado = envio.fechaTraslado.AddDays(90);
-                        break;
-                    default:
-                          envio.fechaPagoProgramado = envio.fechaTraslado;
-                          break;
+                    switch (formaPago.nombre)
+                    {
+                        case "Factura a 7 días":
+                             envio.fechaPagoProgramado = envio.fechaTraslado.AddDays(7);
+                            break;
+                        case "Factura a 15 días":
+                             envio.fechaPagoProgramado = envio.fechaTraslado.AddDays(15);
+                            break;
+                        case "Factura a 30 días":
+                             envio.fechaPagoProgramado = envio.fechaTraslado.AddDays(30);
+                            break;
+                        case "Factura a 90 días":
+                             envio.fechaPagoProgramado = envio.fechaTraslado.AddDays(90);
+                            break;
+                        default:
+                              envio.fechaPagoProgramado = envio.fechaTraslado;
+                              break;
+                    }
                 }
-
                 envio.fechaCreacion = cstTime;
                 envio.usuarioCreacion = User.Identity.Name;
                 envio.fechaModificacion = cstTime;
@@ -276,6 +297,7 @@ namespace TransporteCarga.Controllers
                     }
                 }
 
+                envioOriginal.subTotal = envio.subTotal;
                 envioOriginal.igv = envio.subTotal * 0.18;
                 envioOriginal.Total = envio.subTotal * 1.18;
                 envioOriginal.proveedorId = envio.proveedorId;
@@ -287,25 +309,29 @@ namespace TransporteCarga.Controllers
                 envioOriginal.fechaModificacion =cstTime;
                 envioOriginal.usuarioModificacion = User.Identity.Name;
 
-                var formaPago = db.FormaPagos.Find(envio.formaPagoId);
-
-                switch (formaPago.nombre)
+                if (envio.formaPagoId != null)
                 {
-                    case "Factura a 7 días":
-                        envioOriginal.fechaPagoProgramado = envio.fechaTraslado.AddDays(7);
-                        break;
-                    case "Factura a 15 días":
-                        envioOriginal.fechaPagoProgramado = envio.fechaTraslado.AddDays(15);
-                        break;
-                    case "Factura a 30 días":
-                        envioOriginal.fechaPagoProgramado = envio.fechaTraslado.AddDays(30);
-                        break;
-                    case "Factura a 90 días":
-                        envioOriginal.fechaPagoProgramado = envio.fechaTraslado.AddDays(90);
-                        break;
-                    default:
-                        envioOriginal.fechaPagoProgramado = envio.fechaTraslado;
-                        break;
+                
+                    var formaPago = db.FormaPagos.Find(envio.formaPagoId);
+
+                    switch (formaPago.nombre)
+                    {
+                        case "Factura a 7 días":
+                            envioOriginal.fechaPagoProgramado = envio.fechaTraslado.AddDays(7);
+                            break;
+                        case "Factura a 15 días":
+                            envioOriginal.fechaPagoProgramado = envio.fechaTraslado.AddDays(15);
+                            break;
+                        case "Factura a 30 días":
+                            envioOriginal.fechaPagoProgramado = envio.fechaTraslado.AddDays(30);
+                            break;
+                        case "Factura a 90 días":
+                            envioOriginal.fechaPagoProgramado = envio.fechaTraslado.AddDays(90);
+                            break;
+                        default:
+                            envioOriginal.fechaPagoProgramado = envio.fechaTraslado;
+                            break;
+                    }
                 }
 
 

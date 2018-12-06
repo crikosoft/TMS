@@ -43,9 +43,9 @@
                                 <th>
                                     @Html.DisplayNameFor(model => model.descripcion)
                                 </th>
-                                <th>
+                                @*<th>
                                     @Html.DisplayNameFor(model => model.Categoria.nombre)
-                                </th>
+                                </th>*@
                                 <th></th>
                             </tr>
                         </thead>
@@ -63,9 +63,9 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.descripcion)
                                     </td>
-                                    <td>
+                                    @*<td>
                                         @Html.DisplayFor(modelItem => item.Categoria.nombre)
-                                    </td>
+                                    </td>*@
                                     <td>
                                         @Html.ActionLink("Detalle", "Details", new { id = item.productoId }, new { @class = "btn btn-primary btn-sm" })
                                         @Html.ActionLink("Editar", "Edit", new { id = item.productoId }, new { @class = "btn btn-white btn-sm" })
@@ -144,7 +144,8 @@
                     }
                 ],
                 "order": [[0, "asc"]],
-                "pageLength": 25
+                "pageLength": 25,
+                "scrollX": true
 
             });
 

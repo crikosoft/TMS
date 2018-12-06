@@ -95,15 +95,7 @@
                             {
                                     <tr>
 
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Cliente.razonSocial)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Cliente.ruc)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.pedidoId)
-                                        </td>
+
                                         <td>
                                             @{var factura = "";
 
@@ -177,12 +169,6 @@
 
 
 
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Cliente.Distrito.nombre)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Cliente.EmpresaAdministradora.RazonSocial)
-                                        </td>
 
                                     </tr>
                                 }
@@ -277,7 +263,8 @@
                     }
                 ],
                 "order": [[0, "asc"]],
-                "pageLength": 25
+                "pageLength": 25,
+                "scrollX": true
 
             });
 

@@ -6,16 +6,19 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>2.55383cm</Width>
+              <Width>2.02158cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.03202cm</Width>
+              <Width>2.1987cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>12.16377cm</Width>
+              <Width>1.96455cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.5cm</Width>
+              <Width>10.73538cm</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>2.27393cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -108,6 +111,58 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
+                    <Textbox Name="Textbox15">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value># GUÍA</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox15</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <TopBorder>
+                          <Color>Black</Color>
+                          <Style>Solid</Style>
+                          <Width>1pt</Width>
+                        </TopBorder>
+                        <BottomBorder>
+                          <Color>Black</Color>
+                          <Style>Solid</Style>
+                          <Width>1pt</Width>
+                        </BottomBorder>
+                        <LeftBorder>
+                          <Color>Black</Color>
+                          <Style>Solid</Style>
+                          <Width>1pt</Width>
+                        </LeftBorder>
+                        <RightBorder>
+                          <Color>Black</Color>
+                          <Style>Solid</Style>
+                          <Width>1pt</Width>
+                        </RightBorder>
+                        <BackgroundColor>LightGrey</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
                     <Textbox Name="Textbox41">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
@@ -115,7 +170,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Descripción</Value>
+                              <Value>DESCRIPCIÓN</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -283,10 +338,65 @@
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>UnidadMedida</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <TopBorder>
+                          <Color>Black</Color>
+                          <Style>Solid</Style>
+                          <Width>1pt</Width>
+                        </TopBorder>
+                        <BottomBorder>
+                          <Color>Black</Color>
+                          <Style>Solid</Style>
+                          <Width>1pt</Width>
+                        </BottomBorder>
+                        <LeftBorder>
+                          <Color>Black</Color>
+                          <Style>Solid</Style>
+                          <Width>1pt</Width>
+                        </LeftBorder>
+                        <RightBorder>
+                          <Color>Black</Color>
+                          <Style>Solid</Style>
+                          <Width>1pt</Width>
+                        </RightBorder>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="NumeroGuiaIndividual">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!NumeroGuiaIndividual.Value</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>NumeroGuiaIndividual</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -385,7 +495,9 @@
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Importe</rd:DefaultName>
@@ -431,6 +543,7 @@
             <TablixMember />
             <TablixMember />
             <TablixMember />
+            <TablixMember />
           </TablixMembers>
         </TablixColumnHierarchy>
         <TablixRowHierarchy>
@@ -446,7 +559,7 @@
         <DataSetName>dsMaestroDetalle</DataSetName>
         <Top>4.79022cm</Top>
         <Height>1.26649cm</Height>
-        <Width>20.24962cm</Width>
+        <Width>19.19414cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -493,7 +606,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=First(Fields!direccionRemitente.Value, "dsMaestroDetalle")</Value>
+                    <Value>=First(Fields!DireccionFiscalClientePago.Value, "dsMaestroDetalle")</Value>
                     <Style>
                       <FontSize>8pt</FontSize>
                     </Style>
@@ -506,7 +619,7 @@
             <Top>2.29144cm</Top>
             <Left>3.74783cm</Left>
             <Height>0.49417cm</Height>
-            <Width>7.82424cm</Width>
+            <Width>15.28301cm</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
@@ -570,7 +683,7 @@
             <Top>0.98617cm</Top>
             <Left>3.74784cm</Left>
             <Height>0.49388cm</Height>
-            <Width>7.82424cm</Width>
+            <Width>10.66738cm</Width>
             <ZIndex>3</ZIndex>
             <Style>
               <Border>
@@ -653,7 +766,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>TIPO DE MODNEDA:</Value>
+                    <Value>TIPO DE MONEDA:</Value>
                     <Style>
                       <FontSize>8pt</FontSize>
                     </Style>
@@ -728,42 +841,10 @@
             </Paragraphs>
             <rd:DefaultName>Textbox10</rd:DefaultName>
             <Top>0.28034cm</Top>
-            <Left>10.44214cm</Left>
+            <Left>9.74571cm</Left>
             <Height>0.52944cm</Height>
             <Width>6.09299cm</Width>
             <ZIndex>8</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
-          <Textbox Name="Serie">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>=First(Fields!Serie.Value, "dsMaestroDetalle")</Value>
-                    <Style>
-                      <FontSize>8pt</FontSize>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Serie</rd:DefaultName>
-            <Top>0.30096cm</Top>
-            <Left>16.61363cm</Left>
-            <Height>0.52944cm</Height>
-            <Width>1.52922cm</Width>
-            <ZIndex>9</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -783,7 +864,7 @@
                   <TextRun>
                     <Value>=First(Fields!Numero.Value, "dsMaestroDetalle")</Value>
                     <Style>
-                      <FontSize>8pt</FontSize>
+                      <FontSize>9pt</FontSize>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -791,11 +872,11 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Numero</rd:DefaultName>
-            <Top>0.33651cm</Top>
-            <Left>18.17812cm</Left>
-            <Height>0.49389cm</Height>
-            <Width>1.96852cm</Width>
-            <ZIndex>10</ZIndex>
+            <Top>0.28034cm</Top>
+            <Left>16.01509cm</Left>
+            <Height>1.19971cm</Height>
+            <Width>3.01575cm</Width>
+            <ZIndex>9</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -826,8 +907,8 @@
             <Top>1.65644cm</Top>
             <Left>3.76461cm</Left>
             <Height>0.52916cm</Height>
-            <Width>7.80747cm</Width>
-            <ZIndex>11</ZIndex>
+            <Width>3.84301cm</Width>
+            <ZIndex>10</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -859,7 +940,71 @@
             <Left>3.73788cm</Left>
             <Height>0.50748cm</Height>
             <Width>3.86974cm</Width>
+            <ZIndex>11</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox21">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>OBSERVACIÓN:</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox10</rd:DefaultName>
+            <Top>3.66726cm</Top>
+            <Left>0.14707cm</Left>
+            <Height>0.52916cm</Height>
+            <Width>3.47643cm</Width>
             <ZIndex>12</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="SPOT">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!SPOT.Value, "dsMaestroDetalle")</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>SPOT</rd:DefaultName>
+            <Top>3.70254cm</Top>
+            <Left>3.74783cm</Left>
+            <Height>0.52916cm</Height>
+            <Width>12.73524cm</Width>
+            <ZIndex>13</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -873,8 +1018,8 @@
         </ReportItems>
         <KeepTogether>true</KeepTogether>
         <Top>0.10583cm</Top>
-        <Height>4.39031cm</Height>
-        <Width>20.24962cm</Width>
+        <Height>4.46862cm</Height>
+        <Width>19.22905cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -890,10 +1035,10 @@
       </Border>
     </Style>
   </Body>
-  <Width>21.99523cm</Width>
+  <Width>19.2978cm</Width>
   <Page>
     <PageHeader>
-      <Height>4.24371cm</Height>
+      <Height>4cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -921,7 +1066,7 @@
               <rd:DefaultName>Textbox1</rd:DefaultName>
               <Top>0.96774cm</Top>
               <Left>0.06649cm</Left>
-              <Height>1.36115cm</Height>
+              <Height>1.18476cm</Height>
               <Width>8.34787cm</Width>
               <Style>
                 <Border>
@@ -974,7 +1119,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=First(Fields!Serie.Value, "dsMaestroDetalle")</Value>
+                      <Value>=First(Fields!SerieFactura.Value, "dsMaestroDetalle")</Value>
                       <Style>
                         <FontSize>14pt</FontSize>
                         <FontWeight>Bold</FontWeight>
@@ -994,10 +1139,10 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>SerieF</rd:DefaultName>
-              <Top>2.32889cm</Top>
+              <Top>2.22306cm</Top>
               <Left>0.06649cm</Left>
-              <Height>0.69744cm</Height>
-              <Width>2.5cm</Width>
+              <Height>0.80327cm</Height>
+              <Width>3.73225cm</Width>
               <ZIndex>2</ZIndex>
               <Style>
                 <Border>
@@ -1016,7 +1161,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=First(Fields!Numero.Value, "dsMaestroDetalle")</Value>
+                      <Value>=First(Fields!NumeroFactura.Value, "dsMaestroDetalle")</Value>
                       <Style>
                         <FontSize>14pt</FontSize>
                         <FontWeight>Bold</FontWeight>
@@ -1029,10 +1174,10 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>NumeroF</rd:DefaultName>
-              <Top>2.32889cm</Top>
-              <Left>2.67705cm</Left>
-              <Height>0.69744cm</Height>
-              <Width>5.73731cm</Width>
+              <Top>2.22306cm</Top>
+              <Left>3.83401cm</Left>
+              <Height>0.80327cm</Height>
+              <Width>4.58035cm</Width>
               <ZIndex>3</ZIndex>
               <Style>
                 <Border>
@@ -1047,7 +1192,7 @@
           </ReportItems>
           <KeepTogether>true</KeepTogether>
           <Top>0.3175cm</Top>
-          <Left>11.56898cm</Left>
+          <Left>10.61648cm</Left>
           <Height>3.02633cm</Height>
           <Width>8.57766cm</Width>
           <Style>
@@ -1063,7 +1208,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>Consorcio Logístico Villa</Value>
+                  <Value>Consorcio Logístico Villa SAC.</Value>
                   <Style>
                     <FontWeight>Bold</FontWeight>
                   </Style>
@@ -1095,7 +1240,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>Jr. Las Turquesas 448 </Value>
+                  <Value>Jr. Las Turquesas 448, Urb. Balconcillo,  La Victoria, Lima</Value>
                   <Style>
                     <FontSize>9pt</FontSize>
                   </Style>
@@ -1108,7 +1253,7 @@
           <Top>2.12983cm</Top>
           <Left>0.27595cm</Left>
           <Height>0.6cm</Height>
-          <Width>6.7422cm</Width>
+          <Width>8.93644cm</Width>
           <ZIndex>2</ZIndex>
           <Style>
             <Border>
@@ -1127,7 +1272,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>Urb. Balconcillo</Value>
+                  <Value>Teléfonos: 471-3058 / 471-2630 / 98100285 / 998341310</Value>
                   <Style>
                     <FontSize>9pt</FontSize>
                   </Style>
@@ -1140,40 +1285,8 @@
           <Top>2.72983cm</Top>
           <Left>0.27595cm</Left>
           <Height>0.49417cm</Height>
-          <Width>6.7422cm</Width>
+          <Width>8.93644cm</Width>
           <ZIndex>3</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="Textbox13">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>Teléfonos: 471-3058/471-2630</Value>
-                  <Style>
-                    <FontSize>9pt</FontSize>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style />
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox10</rd:DefaultName>
-          <Top>3.71817cm</Top>
-          <Left>0.27595cm</Left>
-          <Height>0.52554cm</Height>
-          <Width>6.7422cm</Width>
-          <ZIndex>4</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1191,7 +1304,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>Lima - Lima - La Victoria</Value>
+                  <Value>Email: contacto@clogisticovilla.com</Value>
                   <Style>
                     <FontSize>9pt</FontSize>
                   </Style>
@@ -1205,7 +1318,7 @@
           <Left>0.27595cm</Left>
           <Height>0.45889cm</Height>
           <Width>6.7422cm</Width>
-          <ZIndex>5</ZIndex>
+          <ZIndex>4</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1223,7 +1336,7 @@
           <Left>0.3175cm</Left>
           <Height>1.75087cm</Height>
           <Width>6.39989cm</Width>
-          <ZIndex>6</ZIndex>
+          <ZIndex>5</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1249,7 +1362,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>=Fields!Flete1.Value</Value>
+                  <Value>=Fields!Flete.Value</Value>
                   <Style />
                 </TextRun>
               </TextRuns>
@@ -1280,7 +1393,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>=Fields!IGV1.Value</Value>
+                  <Value>=Fields!IGV.Value</Value>
                   <Style />
                 </TextRun>
               </TextRuns>
@@ -1312,7 +1425,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>=Fields!Total1.Value</Value>
+                  <Value>=Fields!Total.Value</Value>
                   <Style />
                 </TextRun>
               </TextRuns>
@@ -1505,9 +1618,9 @@
       </Style>
     </PageFooter>
     <PageHeight>29.7cm</PageHeight>
-    <PageWidth>25cm</PageWidth>
-    <LeftMargin>1cm</LeftMargin>
-    <RightMargin>1cm</RightMargin>
+    <PageWidth>21cm</PageWidth>
+    <LeftMargin>0.5cm</LeftMargin>
+    <RightMargin>0.5cm</RightMargin>
     <TopMargin>1cm</TopMargin>
     <BottomMargin>1cm</BottomMargin>
     <ColumnSpacing>0.13cm</ColumnSpacing>
@@ -1544,8 +1657,24 @@
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
-        <Field Name="TotalTexto">
-          <DataField>TotalTexto</DataField>
+        <Field Name="Serie">
+          <DataField>Serie</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Numero">
+          <DataField>Numero</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FechaEmision">
+          <DataField>FechaEmision</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="FechaTraslado">
+          <DataField>FechaTraslado</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Numero1">
+          <DataField>Numero1</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Remitente">
@@ -1594,7 +1723,7 @@
         </Field>
         <Field Name="Cantidad">
           <DataField>Cantidad</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="UnidadMedida">
           <DataField>UnidadMedida</DataField>
@@ -1628,6 +1757,10 @@
           <DataField>RazonSocialSubcontratada</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="RUCSubcontratada">
+          <DataField>RUCSubcontratada</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="ChoferSubcontratada">
           <DataField>ChoferSubcontratada</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -1650,64 +1783,48 @@
         </Field>
         <Field Name="Flete">
           <DataField>Flete</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="IGV">
           <DataField>IGV</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="Total">
           <DataField>Total</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Cantidad1">
-          <DataField>Cantidad</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
-        <Field Name="Flete1">
-          <DataField>Flete</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="IGV1">
-          <DataField>IGV</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Total1">
-          <DataField>Total</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Serie">
-          <DataField>Serie</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Numero">
-          <DataField>Numero</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="RUCSubcontratada">
-          <DataField>RUCSubcontratada</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="FechaEmision">
-          <DataField>FechaEmision</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="FechaTraslado">
-          <DataField>FechaTraslado</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Numero1">
-          <DataField>Numero1</DataField>
+        <Field Name="TotalTexto">
+          <DataField>TotalTexto</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="FechaEmisionF">
           <DataField>FechaEmisionF</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Comentario">
+          <DataField>Comentario</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SerieFactura">
+          <DataField>SerieFactura</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="NumeroFactura">
+          <DataField>NumeroFactura</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SPOT">
+          <DataField>SPOT</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="NumeroGuiaIndividual">
+          <DataField>NumeroGuiaIndividual</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>dsMaestroDetalle</rd:DataSetName>
-        <rd:SchemaPath>C:\GitHub\Transporte\TransporteCarga\dsMaestroDetalle.xsd</rd:SchemaPath>
+        <rd:DataSetName>dsMaestroDetalle2</rd:DataSetName>
+        <rd:SchemaPath>C:\GitHub\Transporte\TransporteCarga\dsMaestroDetalle2.xsd</rd:SchemaPath>
         <rd:TableName>usp_documento</rd:TableName>
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
@@ -2841,6 +2958,7 @@ uBBGSVyvmmVqSPknKmeurppHPlX4u/nvP+a/Kn96/wC1V45p/k+TtE1+zVdNNNNVX11568fM7qT7NERO
 l8HL2u62PrFtByoXdPedp8vLVftXgxtt7SNnRlPRjSJKDG/4YlckSMSBGPx0isVnZ7LFTTlqxONIvbxDWsXVHwgZzuZFC5PFkHaiR/xgqN0e/ufHVXP/AF10lrzdgTLnvvR8p1puRufLYqiT9/tMLhzKBY4NeXSienx4jdV+1nb+5nhlmliJzBt1l8zXTcnIrcguDx5EaiaJ1MVfz8DN292N2rwZAkTw/wCFsFxmkeM75kdLDNWVo8zJX681R2n5vXhsQ0EY7I2tZFHG1WxwtbyRsbWK3pZp8EXROPX+vT/3J/nN6fH8/p6ovNEX0/v/AJOnr/d8dft40Tl/I5O0/wD9UX8np/evHNdf/GpJIUna2IkkV3fGnGcsok8g8qsaRHG6SFZI16ZG6senNqqn8/0156KunxVE01VE9V01T+3/ACtC+rOpxaGCaxkyYY6tNOtrKKUKaOsGpTorUIWmUeyeyaeSaA1JYY+0xkSu7jf8xvmd1LzRFTrROhHOWNFa+STV6MciOdrq5U15ckT+fRkPiY6aFkkcMqtRZI2zdPda13wSTtt1/o/lf//Z</ImageData>
     </EmbeddedImage>
   </EmbeddedImages>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
   <rd:ReportID>251db23c-1fb1-4ab3-b7a9-97ac7d8fda6b</rd:ReportID>
 </Report>

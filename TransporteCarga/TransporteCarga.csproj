@@ -135,13 +135,13 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="WebGrease">
-      <Private>True</Private>
-      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
-    </Reference>
     <Reference Include="Antlr3.Runtime">
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -170,13 +170,17 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\ChoferController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\ClienteDireccionController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DireccionController.cs" />
     <Compile Include="Controllers\EnvioController.cs" />
+    <Compile Include="Controllers\FormaPagoController.cs" />
     <Compile Include="Controllers\GuiaSalidaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\NotaCreditoController.cs" />
     <Compile Include="Controllers\OrdenController.cs" />
     <Compile Include="Controllers\OrdenViewModelController.cs" />
     <Compile Include="Controllers\PagoController.cs" />
@@ -186,10 +190,20 @@
     <Compile Include="Controllers\UnidadMedidaController.cs" />
     <Compile Include="Controllers\VehiculoController.cs" />
     <Compile Include="Controllers\VentaController.cs" />
+    <Compile Include="DataSet2.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSet2.xsd</DependentUpon>
+    </Compile>
     <Compile Include="dsMaestroDetalle.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>dsMaestroDetalle.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="dsMaestroDetalle2.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsMaestroDetalle2.xsd</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -221,17 +235,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>KleanKartDocumentoDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201802151456128_db-create.cs" />
-    <Compile Include="Migrations\201802151456128_db-create.Designer.cs">
-      <DependentUpon>201802151456128_db-create.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803060505010_db-update.cs" />
-    <Compile Include="Migrations\201803060505010_db-update.Designer.cs">
-      <DependentUpon>201803060505010_db-update.cs</DependentUpon>
+    <Compile Include="Migrations\201810202120549_db-update.cs" />
+    <Compile Include="Migrations\201810202120549_db-update.Designer.cs">
+      <DependentUpon>201810202120549_db-update.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Banco.cs" />
+    <Compile Include="Models\Calendar.cs" />
     <Compile Include="Models\Categoria.cs" />
     <Compile Include="Models\Chofer.cs" />
     <Compile Include="Models\Cliente.cs" />
@@ -251,14 +262,18 @@
     <Compile Include="Models\GuiaSalida.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\MotivoTraslado.cs" />
+    <Compile Include="Models\NotaCredito.cs" />
+    <Compile Include="Models\NotaCreditoConcepto.cs" />
     <Compile Include="Models\Orden.cs" />
     <Compile Include="Models\OrdenDetalle.cs" />
     <Compile Include="Models\OrdenEstadoOrden.cs" />
     <Compile Include="Models\Pago.cs" />
+    <Compile Include="Models\Point.cs" />
     <Compile Include="Models\Precio.cs" />
     <Compile Include="Models\Presentacion.cs" />
     <Compile Include="Models\Producto.cs" />
     <Compile Include="Models\Proveedor.cs" />
+    <Compile Include="Models\TimeZone.cs" />
     <Compile Include="Models\TipoDireccion.cs" />
     <Compile Include="Models\TipoDocumento.cs" />
     <Compile Include="Models\TipoDocumentoIdentidad.cs" />
@@ -274,6 +289,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TransporteCarga_DataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Validator\CustomValidator.cs" />
     <Compile Include="ViewModels\PedidoViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -391,6 +407,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="img\logocon_reduced.jpg" />
     <Content Include="img\logokk.jpg" />
     <Content Include="img\profile_small.jpg" />
     <Content Include="Scripts\app\inspinia.js" />
@@ -451,6 +468,17 @@
     <Content Include="dsMaestroDetalle.xsc">
       <DependentUpon>dsMaestroDetalle.xsd</DependentUpon>
     </Content>
+    <Content Include="DataSet2.xsc">
+      <DependentUpon>DataSet2.xsd</DependentUpon>
+    </Content>
+    <None Include="DataSet2.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSet2.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="DataSet2.xss">
+      <DependentUpon>DataSet2.xsd</DependentUpon>
+    </Content>
     <None Include="dsMaestroDetalle.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>dsMaestroDetalle.Designer.cs</LastGenOutput>
@@ -458,6 +486,17 @@
     </None>
     <Content Include="dsMaestroDetalle.xss">
       <DependentUpon>dsMaestroDetalle.xsd</DependentUpon>
+    </Content>
+    <Content Include="dsMaestroDetalle2.xsc">
+      <DependentUpon>dsMaestroDetalle2.xsd</DependentUpon>
+    </Content>
+    <None Include="dsMaestroDetalle2.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsMaestroDetalle2.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="dsMaestroDetalle2.xss">
+      <DependentUpon>dsMaestroDetalle2.xsd</DependentUpon>
     </Content>
     <None Include="KleanKartDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
@@ -508,6 +547,7 @@
     <Content Include="KleanKartDocumentoDataSet.xss">
       <DependentUpon>KleanKartDocumentoDataSet.xsd</DependentUpon>
     </Content>
+    <Content Include="Models\ClassDiagram1.cd" />
     <None Include="Properties\PublishProfiles\HostDemo.pubxml" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
@@ -931,6 +971,9 @@
     <Content Include="Scripts\plugins\velocity\velocity.min.js" />
     <Content Include="Scripts\plugins\velocity\velocity.ui.min.js" />
     <Content Include="Scripts\plugins\video\responsible-video.js" />
+    <Content Include="Views\Contactos.html" />
+    <Content Include="Views\Direccion\Maps.html" />
+    <Content Include="Views\Maps.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1103,6 +1146,24 @@
     <Content Include="TransporteCarga_DataSet.xss">
       <DependentUpon>TransporteCarga_DataSet.xsd</DependentUpon>
     </Content>
+    <Content Include="Views\Orden\Document.cshtml" />
+    <Content Include="Views\Envio\IndexReducedPayPending.cshtml" />
+    <Content Include="Views\FormaPago\Create.cshtml" />
+    <Content Include="Views\FormaPago\Delete.cshtml" />
+    <Content Include="Views\FormaPago\Details.cshtml" />
+    <Content Include="Views\FormaPago\Edit.cshtml" />
+    <Content Include="Views\FormaPago\Index.cshtml" />
+    <Content Include="Views\NotaCredito\Create.cshtml" />
+    <Content Include="Views\NotaCredito\Delete.cshtml" />
+    <Content Include="Views\NotaCredito\Details.cshtml" />
+    <Content Include="Views\NotaCredito\Edit.cshtml" />
+    <Content Include="Views\NotaCredito\Index.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Calendar\Index.cshtml" />
+    <Content Include="Views\Shared\_Layout_2.cshtml" />
+    <Content Include="Views\Shared\_TopNavbar2.cshtml" />
+    <Content Include="Views\Shared\_SkinConfig.cshtml" />
+    <Content Include="Views\Direccion\Map.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1114,15 +1175,17 @@
     <Content Include="Scripts\jquery-2.1.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201802151456128_db-create.resx">
-      <DependentUpon>201802151456128_db-create.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201810202120549_db-update.resx">
+      <DependentUpon>201810202120549_db-update.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803060505010_db-update.resx">
-      <DependentUpon>201803060505010_db-update.cs</DependentUpon>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Boleta - Copia.rdlc" />
+    <EmbeddedResource Include="Reports\Boleta.rdlc" />
     <EmbeddedResource Include="Reports\Factura.rdlc" />
     <EmbeddedResource Include="Reports\GuiaEmpty.rdlc" />
     <EmbeddedResource Include="Reports\Guia.rdlc" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

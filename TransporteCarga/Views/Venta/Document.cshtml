@@ -10,7 +10,7 @@
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-6">
 
-        <h2>Factura</h2>
+        <h2>@Model.TipoDocumento.nombre</h2>
 
 
         <ol class="breadcrumb"></ol>
@@ -23,14 +23,29 @@
     <div class="col-lg-3">
         <div class="title-action">
 
-            @*<a href="~/GuiaSalida/DocumentGuiaPrint/?id=@Html.DisplayFor(model => model.ordenId)&empty=1" target="_blank" class="btn btn-success"><i class="fa fa-print"></i> Imprimir Guía Pre-Impresa</a>*@
+            @if (Model.TipoDocumento.nombre == "Factura de Venta" && Model.Ordenes.FirstOrDefault().resumen != "")
+{
+    <a href="~/GuiaSalida/DocumentVentaPrint/?id=@Html.DisplayFor(model => model.ventaId)&empty=0&type=2&resumen=true" target="_blank" class="btn btn-success"><i class="fa fa-print"></i> Imprimir Factura Resumen</a>
+}
+            else if (Model.TipoDocumento.nombre == "Boleta de Venta" && Model.Ordenes.FirstOrDefault().resumen != "")
+            {
+                <a href="~/GuiaSalida/DocumentVentaPrint/?id=@Html.DisplayFor(model => model.ventaId)&empty=0&type=3&resumen=true" target="_blank" class="btn btn-success"><i class="fa fa-print"></i> Imprimir Boleta Resumen</a>
+            }
 
+ 
 
         </div>
     </div>
     <div class="col-lg-3">
         <div class="title-action">
-            <a href="~/GuiaSalida/DocumentGuiaPrint/?id=@Html.DisplayFor(model => model.ordenId)&empty=0&type=2" target="_blank" class="btn btn-success"><i class="fa fa-print"></i> Imprimir Factura</a>
+            @if (Model.TipoDocumento.nombre == "Factura de Venta")
+{
+    <a href="~/GuiaSalida/DocumentVentaPrint/?id=@Html.DisplayFor(model => model.ventaId)&empty=0&type=2&resumen=false" target="_blank" class="btn btn-success"><i class="fa fa-print"></i> Imprimir Factura</a>
+}
+            else if (Model.TipoDocumento.nombre == "Boleta de Venta")
+            {
+                <a href="~/GuiaSalida/DocumentVentaPrint/?id=@Html.DisplayFor(model => model.ventaId)&empty=0&type=3&resumen=false" target="_blank" class="btn btn-success"><i class="fa fa-print"></i> Imprimir Boleta</a>
+            } 
 
         </div>
     </div>
@@ -55,37 +70,45 @@
 
                     <div class="col-sm-6 text-right">
 
-                        <h4>No. de Guía</h4>
+                        <h4>No. de @Model.TipoDocumento.nombre</h4>
 
                         <h4 class="text-navy">@Html.DisplayFor(model => model.serie) - @Html.DisplayFor(model => model.numero)</h4>
 
-                        @if (Model.Orden.EstadoOrden.nombre != "Creado")
+                        @if (Model.Ordenes.FirstOrDefault().EstadoOrden.nombre != "Creado")
                         {
-                            <h4 class="text-danger">Estado: @Html.DisplayFor(model => model.Orden.EstadoOrden.nombre) </h4>
+                            <h4 class="text-danger">Estado: @Html.DisplayFor(model => model.EstadoVenta.nombre) </h4>
                         }
                         else
                         {
-                            <h4 class="text-success">Estado: @Html.DisplayFor(model => model.Orden.EstadoOrden.nombre) </h4>
+                            <h4 class="text-success">Estado: @Html.DisplayFor(model => model.EstadoVenta.nombre) </h4>
                         }
 
-                        <span>Remitente:</span>
+                        <span>Cliente:</span>
                         <address>
-                            <strong>@Html.DisplayFor(model => model.Orden.ClienteOrigen.razonSocial)</strong><br>
-                            Punto Partida: @Html.DisplayFor(model => model.Orden.DireccionOrigen.descripcion)<br>
+                            <strong>@Html.DisplayFor(model => model.Ordenes.FirstOrDefault().ClientePago.razonSocial)</strong><br>
+                            @{
+                                string guias = "";
+                                foreach (var orden in Model.Ordenes)
+                                  {
+                                      guias += orden.GuiasSalida.FirstOrDefault().serie + "-" + orden.GuiasSalida.FirstOrDefault().numero + ", ";
+                                  }
+                                }
+
+                            Guia(s): @guias<br>
                         </address>
-                        <span>Destinatario:</span>
+                        @*<span>Destinatario:</span>
                         <address>
-                            <strong>@Html.DisplayFor(model => model.Orden.ClienteDestinatario.razonSocial)</strong><br>
-                            Punto Llegada: @Html.DisplayFor(model => model.Orden.DireccionDestino.descripcion)<br>
+                            <strong>@Html.DisplayFor(model => model.Ordenes.FirstOrDefault().ClienteDestinatario.razonSocial)</strong><br>
+                            Punto Llegada: @Html.DisplayFor(model => model.Ordenes.FirstOrDefault().DireccionDestino.descripcion)<br>
                         </address>
                         <span>Contratista:</span>
                         <address>
-                            <strong>@Html.DisplayFor(model => model.Orden.Envios.FirstOrDefault().Proveedor.razonSocial)</strong><br>
-                            Chofer: @Html.DisplayFor(model => model.Orden.Envios.FirstOrDefault().Chofer.apellidos) , @Html.DisplayFor(model => model.Orden.Envios.FirstOrDefault().Chofer.nombres)<br>
-                            Placa: @Html.DisplayFor(model => model.Orden.Envios.FirstOrDefault().Vehiculo.placaUnidad)<br>
-                        </address>
+                            <strong>@Html.DisplayFor(model => model.Ordenes.FirstOrDefault().Envios.FirstOrDefault().Proveedor.razonSocial)</strong><br>
+                            Chofer: @Html.DisplayFor(model => model.Ordenes.FirstOrDefault().Envios.FirstOrDefault().Chofer.apellidos) , @Html.DisplayFor(model => model.Ordenes.FirstOrDefault().Envios.FirstOrDefault().Chofer.nombres)<br>
+                            Placa: @Html.DisplayFor(model => model.Ordenes.FirstOrDefault().Envios.FirstOrDefault().Vehiculo.placaUnidad)<br>
+                        </address>*@
                         <p>
-                            <span><strong>Fecha Emisión:</strong> </span><br />
+                            <span><strong>Fecha Emisión:</strong>  @Html.DisplayFor(modelItem => modelItem.fecha) </span><br />
                         </p>
                     </div>
                 </div>
@@ -106,22 +129,43 @@
 
 
 
-                            @foreach (var item in Model.Orden.Detalles.OrderBy(a => a.Producto.nombre))
+                            @*@foreach (var item in Model.Ordenes.FirstOrDefault().Detalles.OrderBy(a => a.Producto.nombre))*@
+                            @foreach (var item in Model.Ordenes)
                             {
+                                foreach(var orden in item.Detalles)
+                                { 
                                 <tr>
-                                    <td>@Html.DisplayFor(modelItem => item.cantidad)</td>
+                                    <td>@Html.DisplayFor(modelItem => orden.cantidad)</td>
                                     <td>
-                                        <div><strong>@Html.DisplayFor(modelItem => item.Producto.nombre)</strong></div>
-                                        <small>@Html.DisplayFor(modelItem => item.Producto.UnidadMedida.nombre)</small>
+                                        <div><strong>@Html.DisplayFor(modelItem => orden.Producto.nombre)</strong></div>
+                                        <small>@Html.DisplayFor(modelItem => orden.Producto.UnidadMedida.nombre)</small>
                                     </td>
 
-                                    <td>@Html.DisplayFor(modelItem => item.Producto.UnidadMedida.nombre)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.precioUnitario)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.precioTotal)</td>
+                                    <td>@Html.DisplayFor(modelItem => orden.Producto.UnidadMedida.nombre)</td>
+                                    <td>@Html.DisplayFor(modelItem => orden.precioUnitario)</td>
+                                    <td>@Html.DisplayFor(modelItem => orden.precioTotal)</td>
 
-                                    @*<td>@Html.DisplayFor(modelItem => item.OrdenCompra.Moneda.simbolo) @Html.DisplayFor(modelItem => item.precioUnitario)</td>
-                                        <td>@Html.DisplayFor(modelItem => item.OrdenCompra.Moneda.simbolo) @Html.DisplayFor(modelItem => item.precioTotal)</td>*@
-                                </tr>
+                                    @*@{
+                                    double totalDetalle = 0;
+                                    if (orden.precioTotal == 0 && item.Ventas.Count > 0)
+                                    {
+                                        totalDetalle = item.subTotal;
+                                     }
+                                    else
+                                    {
+                                        totalDetalle = orden.precioTotal;
+                                    }
+                                    }
+                                    <td>
+                                        @string.Format("{0:0,0.00}", @totalDetalle)
+                                    </td>*@
+
+
+
+                                        @*<td>@Html.DisplayFor(modelItem => item.OrdenCompra.Moneda.simbolo) @Html.DisplayFor(modelItem => item.precioUnitario)</td>
+            <td>@Html.DisplayFor(modelItem => item.OrdenCompra.Moneda.simbolo) @Html.DisplayFor(modelItem => item.precioTotal)</td>*@
+</tr>
+                                }
                             }
 
 
@@ -135,15 +179,23 @@
                     <tbody>
                         <tr>
                             <td><strong>Sub Total :</strong></td>
-                            <td>S/.  @Html.DisplayFor(model => model.Orden.subTotal)</td>
+                            @{
+                                double? subTotal = 0;
+                                double? igv = 0;
+                                double? total = 0;
+                                subTotal = Model.Ordenes.AsEnumerable().Sum(a => a.subTotal);
+                                igv = Model.Ordenes.AsEnumerable().Sum(a => a.igv);
+                                total = Model.Ordenes.AsEnumerable().Sum(a => a.Total);
+                            }
+                            <td>S/.  @string.Format("{0:0,0.00}", subTotal)</td>
                         </tr>
                         <tr>
                             <td><strong>IGV :</strong></td>
-                            <td>S/.  @Html.DisplayFor(model => model.Orden.igv)</td>
+                            <td>S/.  @string.Format("{0:0,0.00}", igv)</td>
                         </tr>
                         <tr>
                             <td><strong>TOTAL :</strong></td>
-                            <td>S/.  @Html.DisplayFor(model => model.Orden.Total)</td>
+                            <td>S/. @string.Format("{0:0,0.00}", total)</td>
                         </tr>
                     </tbody>
                 </table>
@@ -154,7 +206,7 @@
 
                 <div class="well m-t">
                     <strong>Comentario</strong>
-                    @Html.DisplayFor(model => model.Orden.comentario)
+                    @Html.DisplayFor(model => model.Ordenes.FirstOrDefault().comentario)
                 </div>
 
 

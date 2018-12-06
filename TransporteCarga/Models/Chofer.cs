@@ -26,7 +26,8 @@ namespace TransporteCarga.Models
         public string nroDocumentoIdentidad { get; set; }
 
         [DisplayName("Tipo Documento Identidad")]
-        public int? tipoDocumentoIdentodadId { get; set; }
+        public int? tipoDocumentoIdentidadId { get; set; }
+        public virtual TipoDocumentoIdentidad TipoDocumentoIdentidad { get; set; }
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [DataType(DataType.Date)]
@@ -63,7 +64,7 @@ namespace TransporteCarga.Models
                 
                 
                string retorna="";
-               string str = this.nombres + " " + this.apellidos;
+               string str = this.nombres.Trim() + " " + this.apellidos.Trim();
                str.Split(' ').ToList().ForEach(i => retorna = retorna + i[0] + "");
                return retorna;
 

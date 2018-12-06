@@ -279,7 +279,15 @@ namespace TransporteCarga {
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class usp_documentoDataTable : global::System.Data.TypedTableBase<usp_documentoRow> {
             
-            private global::System.Data.DataColumn columnTotalTexto;
+            private global::System.Data.DataColumn columnSerie;
+            
+            private global::System.Data.DataColumn columnNumero;
+            
+            private global::System.Data.DataColumn columnFechaEmision;
+            
+            private global::System.Data.DataColumn columnFechaTraslado;
+            
+            private global::System.Data.DataColumn columnNumero1;
             
             private global::System.Data.DataColumn columnRemitente;
             
@@ -321,6 +329,8 @@ namespace TransporteCarga {
             
             private global::System.Data.DataColumn columnRazonSocialSubcontratada;
             
+            private global::System.Data.DataColumn columnRUCSubcontratada;
+            
             private global::System.Data.DataColumn columnChoferSubcontratada;
             
             private global::System.Data.DataColumn columnReferencia;
@@ -337,27 +347,15 @@ namespace TransporteCarga {
             
             private global::System.Data.DataColumn columnTotal;
             
-            private global::System.Data.DataColumn columnCantidad1;
-            
-            private global::System.Data.DataColumn columnFlete1;
-            
-            private global::System.Data.DataColumn columnIGV1;
-            
-            private global::System.Data.DataColumn columnTotal1;
-            
-            private global::System.Data.DataColumn columnSerie;
-            
-            private global::System.Data.DataColumn columnNumero;
-            
-            private global::System.Data.DataColumn columnRUCSubcontratada;
-            
-            private global::System.Data.DataColumn columnFechaEmision;
-            
-            private global::System.Data.DataColumn columnFechaTraslado;
-            
-            private global::System.Data.DataColumn columnNumero1;
+            private global::System.Data.DataColumn columnTotalTexto;
             
             private global::System.Data.DataColumn columnFechaEmisionF;
+            
+            private global::System.Data.DataColumn columnComentario;
+            
+            private global::System.Data.DataColumn columnSerieFactura;
+            
+            private global::System.Data.DataColumn columnNumeroFactura;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -394,9 +392,41 @@ namespace TransporteCarga {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn TotalTextoColumn {
+            public global::System.Data.DataColumn SerieColumn {
                 get {
-                    return this.columnTotalTexto;
+                    return this.columnSerie;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn NumeroColumn {
+                get {
+                    return this.columnNumero;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn FechaEmisionColumn {
+                get {
+                    return this.columnFechaEmision;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn FechaTrasladoColumn {
+                get {
+                    return this.columnFechaTraslado;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn Numero1Column {
+                get {
+                    return this.columnNumero1;
                 }
             }
             
@@ -562,6 +592,14 @@ namespace TransporteCarga {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn RUCSubcontratadaColumn {
+                get {
+                    return this.columnRUCSubcontratada;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public global::System.Data.DataColumn ChoferSubcontratadaColumn {
                 get {
                     return this.columnChoferSubcontratada;
@@ -626,81 +664,9 @@ namespace TransporteCarga {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn Cantidad1Column {
+            public global::System.Data.DataColumn TotalTextoColumn {
                 get {
-                    return this.columnCantidad1;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn Flete1Column {
-                get {
-                    return this.columnFlete1;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn IGV1Column {
-                get {
-                    return this.columnIGV1;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn Total1Column {
-                get {
-                    return this.columnTotal1;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn SerieColumn {
-                get {
-                    return this.columnSerie;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn NumeroColumn {
-                get {
-                    return this.columnNumero;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn RUCSubcontratadaColumn {
-                get {
-                    return this.columnRUCSubcontratada;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn FechaEmisionColumn {
-                get {
-                    return this.columnFechaEmision;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn FechaTrasladoColumn {
-                get {
-                    return this.columnFechaTraslado;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn Numero1Column {
-                get {
-                    return this.columnNumero1;
+                    return this.columnTotalTexto;
                 }
             }
             
@@ -709,6 +675,30 @@ namespace TransporteCarga {
             public global::System.Data.DataColumn FechaEmisionFColumn {
                 get {
                     return this.columnFechaEmisionF;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ComentarioColumn {
+                get {
+                    return this.columnComentario;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn SerieFacturaColumn {
+                get {
+                    return this.columnSerieFactura;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn NumeroFacturaColumn {
+                get {
+                    return this.columnNumeroFactura;
                 }
             }
             
@@ -750,7 +740,11 @@ namespace TransporteCarga {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public usp_documentoRow Addusp_documentoRow(
-                        string TotalTexto, 
+                        string Serie, 
+                        string Numero, 
+                        string FechaEmision, 
+                        string FechaTraslado, 
+                        string Numero1, 
                         string Remitente, 
                         string Destinatario, 
                         string direccionRemitente, 
@@ -762,7 +756,7 @@ namespace TransporteCarga {
                         string PuntoPartida, 
                         string PuntoLlegada, 
                         string Cod, 
-                        string Cantidad, 
+                        int Cantidad, 
                         string UnidadMedida, 
                         string Descripcion, 
                         string MarcaVehiculo, 
@@ -771,28 +765,27 @@ namespace TransporteCarga {
                         string CertificadoInscripcionVehiculo, 
                         string LicenciaConductorVehiculo, 
                         string RazonSocialSubcontratada, 
+                        string RUCSubcontratada, 
                         string ChoferSubcontratada, 
                         string Referencia, 
                         string DireccionFiscalClientePago, 
                         string RucClientePago, 
                         string Importe, 
-                        string Flete, 
-                        string IGV, 
-                        string Total, 
-                        int Cantidad1, 
-                        int Flete1, 
-                        int IGV1, 
-                        int Total1, 
-                        string Serie, 
-                        string Numero, 
-                        string RUCSubcontratada, 
-                        string FechaEmision, 
-                        string FechaTraslado, 
-                        string Numero1, 
-                        string FechaEmisionF) {
+                        int Flete, 
+                        int IGV, 
+                        int Total, 
+                        string TotalTexto, 
+                        string FechaEmisionF, 
+                        string Comentario, 
+                        string SerieFactura, 
+                        string NumeroFactura) {
                 usp_documentoRow rowusp_documentoRow = ((usp_documentoRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        TotalTexto,
+                        Serie,
+                        Numero,
+                        FechaEmision,
+                        FechaTraslado,
+                        Numero1,
                         Remitente,
                         Destinatario,
                         direccionRemitente,
@@ -813,6 +806,7 @@ namespace TransporteCarga {
                         CertificadoInscripcionVehiculo,
                         LicenciaConductorVehiculo,
                         RazonSocialSubcontratada,
+                        RUCSubcontratada,
                         ChoferSubcontratada,
                         Referencia,
                         DireccionFiscalClientePago,
@@ -821,17 +815,11 @@ namespace TransporteCarga {
                         Flete,
                         IGV,
                         Total,
-                        Cantidad1,
-                        Flete1,
-                        IGV1,
-                        Total1,
-                        Serie,
-                        Numero,
-                        RUCSubcontratada,
-                        FechaEmision,
-                        FechaTraslado,
-                        Numero1,
-                        FechaEmisionF};
+                        TotalTexto,
+                        FechaEmisionF,
+                        Comentario,
+                        SerieFactura,
+                        NumeroFactura};
                 rowusp_documentoRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowusp_documentoRow);
                 return rowusp_documentoRow;
@@ -854,7 +842,11 @@ namespace TransporteCarga {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             internal void InitVars() {
-                this.columnTotalTexto = base.Columns["TotalTexto"];
+                this.columnSerie = base.Columns["Serie"];
+                this.columnNumero = base.Columns["Numero"];
+                this.columnFechaEmision = base.Columns["FechaEmision"];
+                this.columnFechaTraslado = base.Columns["FechaTraslado"];
+                this.columnNumero1 = base.Columns["Numero1"];
                 this.columnRemitente = base.Columns["Remitente"];
                 this.columnDestinatario = base.Columns["Destinatario"];
                 this.columndireccionRemitente = base.Columns["direccionRemitente"];
@@ -875,6 +867,7 @@ namespace TransporteCarga {
                 this.columnCertificadoInscripcionVehiculo = base.Columns["CertificadoInscripcionVehiculo"];
                 this.columnLicenciaConductorVehiculo = base.Columns["LicenciaConductorVehiculo"];
                 this.columnRazonSocialSubcontratada = base.Columns["RazonSocialSubcontratada"];
+                this.columnRUCSubcontratada = base.Columns["RUCSubcontratada"];
                 this.columnChoferSubcontratada = base.Columns["ChoferSubcontratada"];
                 this.columnReferencia = base.Columns["Referencia"];
                 this.columnDireccionFiscalClientePago = base.Columns["DireccionFiscalClientePago"];
@@ -883,24 +876,26 @@ namespace TransporteCarga {
                 this.columnFlete = base.Columns["Flete"];
                 this.columnIGV = base.Columns["IGV"];
                 this.columnTotal = base.Columns["Total"];
-                this.columnCantidad1 = base.Columns["Cantidad1"];
-                this.columnFlete1 = base.Columns["Flete1"];
-                this.columnIGV1 = base.Columns["IGV1"];
-                this.columnTotal1 = base.Columns["Total1"];
-                this.columnSerie = base.Columns["Serie"];
-                this.columnNumero = base.Columns["Numero"];
-                this.columnRUCSubcontratada = base.Columns["RUCSubcontratada"];
-                this.columnFechaEmision = base.Columns["FechaEmision"];
-                this.columnFechaTraslado = base.Columns["FechaTraslado"];
-                this.columnNumero1 = base.Columns["Numero1"];
+                this.columnTotalTexto = base.Columns["TotalTexto"];
                 this.columnFechaEmisionF = base.Columns["FechaEmisionF"];
+                this.columnComentario = base.Columns["Comentario"];
+                this.columnSerieFactura = base.Columns["SerieFactura"];
+                this.columnNumeroFactura = base.Columns["NumeroFactura"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             private void InitClass() {
-                this.columnTotalTexto = new global::System.Data.DataColumn("TotalTexto", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnTotalTexto);
+                this.columnSerie = new global::System.Data.DataColumn("Serie", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSerie);
+                this.columnNumero = new global::System.Data.DataColumn("Numero", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnNumero);
+                this.columnFechaEmision = new global::System.Data.DataColumn("FechaEmision", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFechaEmision);
+                this.columnFechaTraslado = new global::System.Data.DataColumn("FechaTraslado", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFechaTraslado);
+                this.columnNumero1 = new global::System.Data.DataColumn("Numero1", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnNumero1);
                 this.columnRemitente = new global::System.Data.DataColumn("Remitente", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnRemitente);
                 this.columnDestinatario = new global::System.Data.DataColumn("Destinatario", typeof(string), null, global::System.Data.MappingType.Element);
@@ -923,7 +918,7 @@ namespace TransporteCarga {
                 base.Columns.Add(this.columnPuntoLlegada);
                 this.columnCod = new global::System.Data.DataColumn("Cod", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnCod);
-                this.columnCantidad = new global::System.Data.DataColumn("Cantidad", typeof(string), null, global::System.Data.MappingType.Element);
+                this.columnCantidad = new global::System.Data.DataColumn("Cantidad", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnCantidad);
                 this.columnUnidadMedida = new global::System.Data.DataColumn("UnidadMedida", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnUnidadMedida);
@@ -941,6 +936,8 @@ namespace TransporteCarga {
                 base.Columns.Add(this.columnLicenciaConductorVehiculo);
                 this.columnRazonSocialSubcontratada = new global::System.Data.DataColumn("RazonSocialSubcontratada", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnRazonSocialSubcontratada);
+                this.columnRUCSubcontratada = new global::System.Data.DataColumn("RUCSubcontratada", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnRUCSubcontratada);
                 this.columnChoferSubcontratada = new global::System.Data.DataColumn("ChoferSubcontratada", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnChoferSubcontratada);
                 this.columnReferencia = new global::System.Data.DataColumn("Referencia", typeof(string), null, global::System.Data.MappingType.Element);
@@ -951,36 +948,32 @@ namespace TransporteCarga {
                 base.Columns.Add(this.columnRucClientePago);
                 this.columnImporte = new global::System.Data.DataColumn("Importe", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnImporte);
-                this.columnFlete = new global::System.Data.DataColumn("Flete", typeof(string), null, global::System.Data.MappingType.Element);
+                this.columnFlete = new global::System.Data.DataColumn("Flete", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnFlete);
-                this.columnIGV = new global::System.Data.DataColumn("IGV", typeof(string), null, global::System.Data.MappingType.Element);
+                this.columnIGV = new global::System.Data.DataColumn("IGV", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnIGV);
-                this.columnTotal = new global::System.Data.DataColumn("Total", typeof(string), null, global::System.Data.MappingType.Element);
+                this.columnTotal = new global::System.Data.DataColumn("Total", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnTotal);
-                this.columnCantidad1 = new global::System.Data.DataColumn("Cantidad1", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnCantidad1);
-                this.columnFlete1 = new global::System.Data.DataColumn("Flete1", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnFlete1);
-                this.columnIGV1 = new global::System.Data.DataColumn("IGV1", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnIGV1);
-                this.columnTotal1 = new global::System.Data.DataColumn("Total1", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnTotal1);
-                this.columnSerie = new global::System.Data.DataColumn("Serie", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnSerie);
-                this.columnNumero = new global::System.Data.DataColumn("Numero", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnNumero);
-                this.columnRUCSubcontratada = new global::System.Data.DataColumn("RUCSubcontratada", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnRUCSubcontratada);
-                this.columnFechaEmision = new global::System.Data.DataColumn("FechaEmision", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnFechaEmision);
-                this.columnFechaTraslado = new global::System.Data.DataColumn("FechaTraslado", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnFechaTraslado);
-                this.columnNumero1 = new global::System.Data.DataColumn("Numero1", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnNumero1);
+                this.columnTotalTexto = new global::System.Data.DataColumn("TotalTexto", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnTotalTexto);
                 this.columnFechaEmisionF = new global::System.Data.DataColumn("FechaEmisionF", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnFechaEmisionF);
-                this.columnTotalTexto.ReadOnly = true;
-                this.columnTotalTexto.MaxLength = 1;
+                this.columnComentario = new global::System.Data.DataColumn("Comentario", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnComentario);
+                this.columnSerieFactura = new global::System.Data.DataColumn("SerieFactura", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSerieFactura);
+                this.columnNumeroFactura = new global::System.Data.DataColumn("NumeroFactura", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnNumeroFactura);
+                this.columnSerie.ReadOnly = true;
+                this.columnSerie.MaxLength = 1;
+                this.columnNumero.ReadOnly = true;
+                this.columnNumero.MaxLength = 1;
+                this.columnFechaEmision.ReadOnly = true;
+                this.columnFechaEmision.MaxLength = 1;
+                this.columnFechaTraslado.ReadOnly = true;
+                this.columnFechaTraslado.MaxLength = 1;
+                this.columnNumero1.ReadOnly = true;
+                this.columnNumero1.MaxLength = 1;
                 this.columnRemitente.ReadOnly = true;
                 this.columnRemitente.MaxLength = 1;
                 this.columnDestinatario.ReadOnly = true;
@@ -1004,7 +997,6 @@ namespace TransporteCarga {
                 this.columnCod.ReadOnly = true;
                 this.columnCod.MaxLength = 1;
                 this.columnCantidad.ReadOnly = true;
-                this.columnCantidad.MaxLength = 1;
                 this.columnUnidadMedida.ReadOnly = true;
                 this.columnUnidadMedida.MaxLength = 1;
                 this.columnDescripcion.ReadOnly = true;
@@ -1021,6 +1013,8 @@ namespace TransporteCarga {
                 this.columnLicenciaConductorVehiculo.MaxLength = 1;
                 this.columnRazonSocialSubcontratada.ReadOnly = true;
                 this.columnRazonSocialSubcontratada.MaxLength = 1;
+                this.columnRUCSubcontratada.ReadOnly = true;
+                this.columnRUCSubcontratada.MaxLength = 1;
                 this.columnChoferSubcontratada.ReadOnly = true;
                 this.columnChoferSubcontratada.MaxLength = 1;
                 this.columnReferencia.ReadOnly = true;
@@ -1032,33 +1026,18 @@ namespace TransporteCarga {
                 this.columnImporte.ReadOnly = true;
                 this.columnImporte.MaxLength = 1;
                 this.columnFlete.ReadOnly = true;
-                this.columnFlete.MaxLength = 1;
                 this.columnIGV.ReadOnly = true;
-                this.columnIGV.MaxLength = 1;
                 this.columnTotal.ReadOnly = true;
-                this.columnTotal.MaxLength = 1;
-                this.columnCantidad1.ReadOnly = true;
-                this.columnCantidad1.Caption = "Cantidad";
-                this.columnFlete1.ReadOnly = true;
-                this.columnFlete1.Caption = "Flete";
-                this.columnIGV1.ReadOnly = true;
-                this.columnIGV1.Caption = "IGV";
-                this.columnTotal1.ReadOnly = true;
-                this.columnTotal1.Caption = "Total";
-                this.columnSerie.ReadOnly = true;
-                this.columnSerie.MaxLength = 1;
-                this.columnNumero.ReadOnly = true;
-                this.columnNumero.MaxLength = 1;
-                this.columnRUCSubcontratada.ReadOnly = true;
-                this.columnRUCSubcontratada.MaxLength = 1;
-                this.columnFechaEmision.ReadOnly = true;
-                this.columnFechaEmision.MaxLength = 1;
-                this.columnFechaTraslado.ReadOnly = true;
-                this.columnFechaTraslado.MaxLength = 1;
-                this.columnNumero1.ReadOnly = true;
-                this.columnNumero1.MaxLength = 1;
+                this.columnTotalTexto.ReadOnly = true;
+                this.columnTotalTexto.MaxLength = 1;
                 this.columnFechaEmisionF.ReadOnly = true;
                 this.columnFechaEmisionF.MaxLength = 1;
+                this.columnComentario.ReadOnly = true;
+                this.columnComentario.MaxLength = 1;
+                this.columnSerieFactura.ReadOnly = true;
+                this.columnSerieFactura.MaxLength = 1;
+                this.columnNumeroFactura.ReadOnly = true;
+                this.columnNumeroFactura.MaxLength = 1;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1201,17 +1180,81 @@ namespace TransporteCarga {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string TotalTexto {
+            public string Serie {
                 get {
                     try {
-                        return ((string)(this[this.tableusp_documento.TotalTextoColumn]));
+                        return ((string)(this[this.tableusp_documento.SerieColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'TotalTexto\' de la tabla \'usp_documento\' es DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Serie\' de la tabla \'usp_documento\' es DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableusp_documento.TotalTextoColumn] = value;
+                    this[this.tableusp_documento.SerieColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Numero {
+                get {
+                    try {
+                        return ((string)(this[this.tableusp_documento.NumeroColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Numero\' de la tabla \'usp_documento\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableusp_documento.NumeroColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string FechaEmision {
+                get {
+                    try {
+                        return ((string)(this[this.tableusp_documento.FechaEmisionColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'FechaEmision\' de la tabla \'usp_documento\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableusp_documento.FechaEmisionColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string FechaTraslado {
+                get {
+                    try {
+                        return ((string)(this[this.tableusp_documento.FechaTrasladoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'FechaTraslado\' de la tabla \'usp_documento\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableusp_documento.FechaTrasladoColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Numero1 {
+                get {
+                    try {
+                        return ((string)(this[this.tableusp_documento.Numero1Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Numero1\' de la tabla \'usp_documento\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableusp_documento.Numero1Column] = value;
                 }
             }
             
@@ -1396,10 +1439,10 @@ namespace TransporteCarga {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Cantidad {
+            public int Cantidad {
                 get {
                     try {
-                        return ((string)(this[this.tableusp_documento.CantidadColumn]));
+                        return ((int)(this[this.tableusp_documento.CantidadColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("El valor de la columna \'Cantidad\' de la tabla \'usp_documento\' es DBNull.", e);
@@ -1544,6 +1587,22 @@ namespace TransporteCarga {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string RUCSubcontratada {
+                get {
+                    try {
+                        return ((string)(this[this.tableusp_documento.RUCSubcontratadaColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'RUCSubcontratada\' de la tabla \'usp_documento\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableusp_documento.RUCSubcontratadaColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string ChoferSubcontratada {
                 get {
                     try {
@@ -1626,10 +1685,10 @@ namespace TransporteCarga {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Flete {
+            public int Flete {
                 get {
                     try {
-                        return ((string)(this[this.tableusp_documento.FleteColumn]));
+                        return ((int)(this[this.tableusp_documento.FleteColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("El valor de la columna \'Flete\' de la tabla \'usp_documento\' es DBNull.", e);
@@ -1642,10 +1701,10 @@ namespace TransporteCarga {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string IGV {
+            public int IGV {
                 get {
                     try {
-                        return ((string)(this[this.tableusp_documento.IGVColumn]));
+                        return ((int)(this[this.tableusp_documento.IGVColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("El valor de la columna \'IGV\' de la tabla \'usp_documento\' es DBNull.", e);
@@ -1658,10 +1717,10 @@ namespace TransporteCarga {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Total {
+            public int Total {
                 get {
                     try {
-                        return ((string)(this[this.tableusp_documento.TotalColumn]));
+                        return ((int)(this[this.tableusp_documento.TotalColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("El valor de la columna \'Total\' de la tabla \'usp_documento\' es DBNull.", e);
@@ -1674,161 +1733,17 @@ namespace TransporteCarga {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int Cantidad1 {
+            public string TotalTexto {
                 get {
                     try {
-                        return ((int)(this[this.tableusp_documento.Cantidad1Column]));
+                        return ((string)(this[this.tableusp_documento.TotalTextoColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Cantidad1\' de la tabla \'usp_documento\' es DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'TotalTexto\' de la tabla \'usp_documento\' es DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableusp_documento.Cantidad1Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int Flete1 {
-                get {
-                    try {
-                        return ((int)(this[this.tableusp_documento.Flete1Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Flete1\' de la tabla \'usp_documento\' es DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableusp_documento.Flete1Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int IGV1 {
-                get {
-                    try {
-                        return ((int)(this[this.tableusp_documento.IGV1Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'IGV1\' de la tabla \'usp_documento\' es DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableusp_documento.IGV1Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int Total1 {
-                get {
-                    try {
-                        return ((int)(this[this.tableusp_documento.Total1Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Total1\' de la tabla \'usp_documento\' es DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableusp_documento.Total1Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Serie {
-                get {
-                    try {
-                        return ((string)(this[this.tableusp_documento.SerieColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Serie\' de la tabla \'usp_documento\' es DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableusp_documento.SerieColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Numero {
-                get {
-                    try {
-                        return ((string)(this[this.tableusp_documento.NumeroColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Numero\' de la tabla \'usp_documento\' es DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableusp_documento.NumeroColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string RUCSubcontratada {
-                get {
-                    try {
-                        return ((string)(this[this.tableusp_documento.RUCSubcontratadaColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'RUCSubcontratada\' de la tabla \'usp_documento\' es DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableusp_documento.RUCSubcontratadaColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string FechaEmision {
-                get {
-                    try {
-                        return ((string)(this[this.tableusp_documento.FechaEmisionColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'FechaEmision\' de la tabla \'usp_documento\' es DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableusp_documento.FechaEmisionColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string FechaTraslado {
-                get {
-                    try {
-                        return ((string)(this[this.tableusp_documento.FechaTrasladoColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'FechaTraslado\' de la tabla \'usp_documento\' es DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableusp_documento.FechaTrasladoColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Numero1 {
-                get {
-                    try {
-                        return ((string)(this[this.tableusp_documento.Numero1Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Numero1\' de la tabla \'usp_documento\' es DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableusp_documento.Numero1Column] = value;
+                    this[this.tableusp_documento.TotalTextoColumn] = value;
                 }
             }
             
@@ -1850,14 +1765,110 @@ namespace TransporteCarga {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsTotalTextoNull() {
-                return this.IsNull(this.tableusp_documento.TotalTextoColumn);
+            public string Comentario {
+                get {
+                    try {
+                        return ((string)(this[this.tableusp_documento.ComentarioColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Comentario\' de la tabla \'usp_documento\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableusp_documento.ComentarioColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetTotalTextoNull() {
-                this[this.tableusp_documento.TotalTextoColumn] = global::System.Convert.DBNull;
+            public string SerieFactura {
+                get {
+                    try {
+                        return ((string)(this[this.tableusp_documento.SerieFacturaColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'SerieFactura\' de la tabla \'usp_documento\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableusp_documento.SerieFacturaColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string NumeroFactura {
+                get {
+                    try {
+                        return ((string)(this[this.tableusp_documento.NumeroFacturaColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'NumeroFactura\' de la tabla \'usp_documento\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableusp_documento.NumeroFacturaColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsSerieNull() {
+                return this.IsNull(this.tableusp_documento.SerieColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetSerieNull() {
+                this[this.tableusp_documento.SerieColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsNumeroNull() {
+                return this.IsNull(this.tableusp_documento.NumeroColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetNumeroNull() {
+                this[this.tableusp_documento.NumeroColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsFechaEmisionNull() {
+                return this.IsNull(this.tableusp_documento.FechaEmisionColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetFechaEmisionNull() {
+                this[this.tableusp_documento.FechaEmisionColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsFechaTrasladoNull() {
+                return this.IsNull(this.tableusp_documento.FechaTrasladoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetFechaTrasladoNull() {
+                this[this.tableusp_documento.FechaTrasladoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsNumero1Null() {
+                return this.IsNull(this.tableusp_documento.Numero1Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetNumero1Null() {
+                this[this.tableusp_documento.Numero1Column] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2102,6 +2113,18 @@ namespace TransporteCarga {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsRUCSubcontratadaNull() {
+                return this.IsNull(this.tableusp_documento.RUCSubcontratadaColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetRUCSubcontratadaNull() {
+                this[this.tableusp_documento.RUCSubcontratadaColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsChoferSubcontratadaNull() {
                 return this.IsNull(this.tableusp_documento.ChoferSubcontratadaColumn);
             }
@@ -2198,122 +2221,14 @@ namespace TransporteCarga {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsCantidad1Null() {
-                return this.IsNull(this.tableusp_documento.Cantidad1Column);
+            public bool IsTotalTextoNull() {
+                return this.IsNull(this.tableusp_documento.TotalTextoColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetCantidad1Null() {
-                this[this.tableusp_documento.Cantidad1Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsFlete1Null() {
-                return this.IsNull(this.tableusp_documento.Flete1Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetFlete1Null() {
-                this[this.tableusp_documento.Flete1Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsIGV1Null() {
-                return this.IsNull(this.tableusp_documento.IGV1Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetIGV1Null() {
-                this[this.tableusp_documento.IGV1Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsTotal1Null() {
-                return this.IsNull(this.tableusp_documento.Total1Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetTotal1Null() {
-                this[this.tableusp_documento.Total1Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsSerieNull() {
-                return this.IsNull(this.tableusp_documento.SerieColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetSerieNull() {
-                this[this.tableusp_documento.SerieColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsNumeroNull() {
-                return this.IsNull(this.tableusp_documento.NumeroColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetNumeroNull() {
-                this[this.tableusp_documento.NumeroColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsRUCSubcontratadaNull() {
-                return this.IsNull(this.tableusp_documento.RUCSubcontratadaColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetRUCSubcontratadaNull() {
-                this[this.tableusp_documento.RUCSubcontratadaColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsFechaEmisionNull() {
-                return this.IsNull(this.tableusp_documento.FechaEmisionColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetFechaEmisionNull() {
-                this[this.tableusp_documento.FechaEmisionColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsFechaTrasladoNull() {
-                return this.IsNull(this.tableusp_documento.FechaTrasladoColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetFechaTrasladoNull() {
-                this[this.tableusp_documento.FechaTrasladoColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsNumero1Null() {
-                return this.IsNull(this.tableusp_documento.Numero1Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetNumero1Null() {
-                this[this.tableusp_documento.Numero1Column] = global::System.Convert.DBNull;
+            public void SetTotalTextoNull() {
+                this[this.tableusp_documento.TotalTextoColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2326,6 +2241,42 @@ namespace TransporteCarga {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetFechaEmisionFNull() {
                 this[this.tableusp_documento.FechaEmisionFColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsComentarioNull() {
+                return this.IsNull(this.tableusp_documento.ComentarioColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetComentarioNull() {
+                this[this.tableusp_documento.ComentarioColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsSerieFacturaNull() {
+                return this.IsNull(this.tableusp_documento.SerieFacturaColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetSerieFacturaNull() {
+                this[this.tableusp_documento.SerieFacturaColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsNumeroFacturaNull() {
+                return this.IsNull(this.tableusp_documento.NumeroFacturaColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetNumeroFacturaNull() {
+                this[this.tableusp_documento.NumeroFacturaColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -2488,7 +2439,11 @@ namespace TransporteCarga.dsMaestroDetalleTableAdapters {
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
             tableMapping.DataSetTable = "usp_documento";
-            tableMapping.ColumnMappings.Add("TotalTexto", "TotalTexto");
+            tableMapping.ColumnMappings.Add("Serie", "Serie");
+            tableMapping.ColumnMappings.Add("Numero", "Numero");
+            tableMapping.ColumnMappings.Add("FechaEmision", "FechaEmision");
+            tableMapping.ColumnMappings.Add("FechaTraslado", "FechaTraslado");
+            tableMapping.ColumnMappings.Add("Numero1", "Numero1");
             tableMapping.ColumnMappings.Add("Remitente", "Remitente");
             tableMapping.ColumnMappings.Add("Destinatario", "Destinatario");
             tableMapping.ColumnMappings.Add("direccionRemitente", "direccionRemitente");
@@ -2500,6 +2455,7 @@ namespace TransporteCarga.dsMaestroDetalleTableAdapters {
             tableMapping.ColumnMappings.Add("PuntoPartida", "PuntoPartida");
             tableMapping.ColumnMappings.Add("PuntoLlegada", "PuntoLlegada");
             tableMapping.ColumnMappings.Add("Cod", "Cod");
+            tableMapping.ColumnMappings.Add("Cantidad", "Cantidad");
             tableMapping.ColumnMappings.Add("UnidadMedida", "UnidadMedida");
             tableMapping.ColumnMappings.Add("Descripcion", "Descripcion");
             tableMapping.ColumnMappings.Add("MarcaVehiculo", "MarcaVehiculo");
@@ -2508,22 +2464,20 @@ namespace TransporteCarga.dsMaestroDetalleTableAdapters {
             tableMapping.ColumnMappings.Add("CertificadoInscripcionVehiculo", "CertificadoInscripcionVehiculo");
             tableMapping.ColumnMappings.Add("LicenciaConductorVehiculo", "LicenciaConductorVehiculo");
             tableMapping.ColumnMappings.Add("RazonSocialSubcontratada", "RazonSocialSubcontratada");
+            tableMapping.ColumnMappings.Add("RUCSubcontratada", "RUCSubcontratada");
             tableMapping.ColumnMappings.Add("ChoferSubcontratada", "ChoferSubcontratada");
             tableMapping.ColumnMappings.Add("Referencia", "Referencia");
             tableMapping.ColumnMappings.Add("DireccionFiscalClientePago", "DireccionFiscalClientePago");
             tableMapping.ColumnMappings.Add("RucClientePago", "RucClientePago");
             tableMapping.ColumnMappings.Add("Importe", "Importe");
-            tableMapping.ColumnMappings.Add("Cantidad", "Cantidad1");
-            tableMapping.ColumnMappings.Add("Flete", "Flete1");
-            tableMapping.ColumnMappings.Add("IGV", "IGV1");
-            tableMapping.ColumnMappings.Add("Total", "Total1");
-            tableMapping.ColumnMappings.Add("Serie", "Serie");
-            tableMapping.ColumnMappings.Add("Numero", "Numero");
-            tableMapping.ColumnMappings.Add("RUCSubcontratada", "RUCSubcontratada");
-            tableMapping.ColumnMappings.Add("FechaEmision", "FechaEmision");
-            tableMapping.ColumnMappings.Add("FechaTraslado", "FechaTraslado");
-            tableMapping.ColumnMappings.Add("Numero1", "Numero1");
+            tableMapping.ColumnMappings.Add("Flete", "Flete");
+            tableMapping.ColumnMappings.Add("IGV", "IGV");
+            tableMapping.ColumnMappings.Add("Total", "Total");
+            tableMapping.ColumnMappings.Add("TotalTexto", "TotalTexto");
             tableMapping.ColumnMappings.Add("FechaEmisionF", "FechaEmisionF");
+            tableMapping.ColumnMappings.Add("Comentario", "Comentario");
+            tableMapping.ColumnMappings.Add("SerieFactura", "SerieFactura");
+            tableMapping.ColumnMappings.Add("NumeroFactura", "NumeroFactura");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -2531,7 +2485,7 @@ namespace TransporteCarga.dsMaestroDetalleTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["IdentityConnection"].ConnectionString;
+            this._connection.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

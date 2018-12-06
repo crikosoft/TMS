@@ -31,159 +31,283 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
 
-        <div class="col-sm-8">
+        <div class="col-sm-12">
+
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Crear Venta</h5>
                 </div>
                 <div class="ibox-content">
 
-				@using (Html.BeginForm()) 
+                    @using (Html.BeginForm())
 {
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true)
-        @Html.HiddenFor(model => model.ordenId)
-        
-        <div class="form-group">
-            @*@Html.LabelFor(model => model.estadoVentaId, "tipoDocumentoId", new { @class = "control-label col-md-2" })*@
-            <label class="control-label col-md-2"> Tipo Documento</label>
+                        @Html.AntiForgeryToken()
 
-            <div class="col-md-10">
-                @Html.DropDownList("tipoDocumentoId", String.Empty)
-                @Html.ValidationMessageFor(model => model.tipoDocumentoId)
-            </div>
-        </div>
-        
-        <div class="form-group">
-            @Html.LabelFor(model => model.serie, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.serie)
-                @Html.ValidationMessageFor(model => model.serie)
-            </div>
-        </div>
+                        <div class="form-horizontal">
+                            @Html.ValidationSummary(true)
+                            @*@Html.HiddenFor(model => model.ordenId)*@
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.numero, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.numero)
-                @Html.ValidationMessageFor(model => model.numero)
-            </div>
-        </div>
+                            <div class="form-group">
+                                @*@Html.LabelFor(model => model.estadoVentaId, "tipoDocumentoId", new { @class = "control-label col-md-2" })*@
+                                <label class="control-label col-md-2"> Tipo Documento</label>
 
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.pedidoId, "pedidoId", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("pedidoId", String.Empty)
-                @Html.ValidationMessageFor(model => model.pedidoId)
-            </div>
-        </div>*@
+                                <div class="col-md-10">
+                                    @Html.DropDownList("tipoDocumentoId", String.Empty)
+                                    @Html.ValidationMessageFor(model => model.tipoDocumentoId)
+                                </div>
+                            </div>
 
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.serie, new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.serie)
+                                    @Html.ValidationMessageFor(model => model.serie)
+                                </div>
+                            </div>
 
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.numero, new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.numero)
+                                    @Html.ValidationMessageFor(model => model.numero)
+                                </div>
+                            </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.fecha, new { @class = "control-label col-md-2" })
-            @*<label class="control-label col-md-2" for="order_id">Fecha Emisión</label>*@
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.fecha)
-                @Html.ValidationMessageFor(model => model.fecha)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @*@Html.LabelFor(model => model.formaPagoId, "formaPagoId", new { @class = "control-label col-md-2" })*@
-            <label class="control-label col-md-2"> Forma Pago</label>
-
-            <div class="col-md-10">
-                @Html.DropDownList("formaPagoId", String.Empty)
-                @Html.ValidationMessageFor(model => model.formaPagoId)
-            </div>
-        </div>
-
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.fechaPagoProgramado, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.fechaPagoProgramado)
-                @Html.ValidationMessageFor(model => model.fechaPagoProgramado)
-            </div>
-        </div>*@
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Crear" class="btn btn-primary" />
-				@*@Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-white"})*@
-                <a href="~/Orden/Index/" class="btn btn-white">Cancelar </a>
-
-            </div>
-        </div>
-    </div>
-}
-
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm-4">
-
-            <div class="ibox ">
-                <div class="ibox-content">
-                    <div class="tab-content">
-                        <div id="contact-1" class="tab-pane active">
-                            
-                            <div class="client-detail">
-                                <div class="full-height-scroll">
-                                    <strong>Información Relevante</strong>
-                                    <div id="vertical-timeline" class="vertical-container dark-timeline">
-                                        <div class="vertical-timeline-block">
-                                            <div class="vertical-timeline-icon navy-bg">
-                                                <i class="fa fa-warning"></i>
-                                            </div>
-                                            <div class="vertical-timeline-content">
-                                                <p>
-                                                   Cliente: @Model.Orden.ClientePago.razonSocial<br />
-                                                   RUC: @Model.Orden.ClientePago.ruc
-                                                </p>
-                                                <span class="vertical-date small text-muted"> </span>
-                                            </div>
-                                        </div>
-                                        <div class="vertical-timeline-block">
-                                            <div class="vertical-timeline-icon navy-bg">
-                                                <i class="fa fa-warning"></i>
-                                            </div>
-                                            <div class="vertical-timeline-content">
-                                                <p>
-                                                    Moto Total: S/. @Html.DisplayFor(modelItem => modelItem.Orden.Total)
-                                                </p>
-                                                <span class="vertical-date small text-muted"> </span>
-                                            </div>
-                                        </div>  
-                                        <div class="vertical-timeline-block">
-                                            <div class="vertical-timeline-icon navy-bg">
-                                                <i class="fa fa-warning"></i>
-                                            </div>
-                                            <div class="vertical-timeline-content">
-                                                <p>
-                                                    Nro Guía: @Html.DisplayFor(modelItem => modelItem.Orden.GuiasSalida.SingleOrDefault().serie) - @Html.DisplayFor(modelItem => modelItem.Orden.GuiasSalida.SingleOrDefault().numero )
-                                                </p>
-                                                @*<span class="vertical-date small text-muted"> @Html.DisplayFor(modelItem => modelItem.Orden.GuiasSalida.SingleOrDefault().fechaTraslado) </span>*@
-                                            </div>
-                                        </div>               
+                            @*<div class="form-group">
+                                    @Html.LabelFor(model => model.pedidoId, "pedidoId", new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("pedidoId", String.Empty)
+                                        @Html.ValidationMessageFor(model => model.pedidoId)
                                     </div>
+                                </div>*@
+
+
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.fecha, new { @class = "control-label col-md-2" })
+                                @*<label class="control-label col-md-2" for="order_id">Fecha Emisión</label>*@
+                                <div class="col-md-10">
+                                    @*@Html.EditorFor(model => model.fecha)*@
+                                    @Html.TextBoxFor(model => model.fecha, "{0:yyyy-MM-dd}", new { @type = "date" })
+                                    @Html.ValidationMessageFor(model => model.fecha)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @*@Html.LabelFor(model => model.formaPagoId, "formaPagoId", new { @class = "control-label col-md-2" })*@
+                                <label class="control-label col-md-2"> Forma Pago</label>
+
+                                <div class="col-md-10">
+                                    @Html.DropDownList("formaPagoId", String.Empty)
+                                    @Html.ValidationMessageFor(model => model.formaPagoId)
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.spot, new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.spot)
+                                    @Html.ValidationMessageFor(model => model.spot)
+                                </div>
+                            </div>
+                            @*<div class="form-group">
+                                    @Html.LabelFor(model => model.fechaPagoProgramado, new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.fechaPagoProgramado)
+                                        @Html.ValidationMessageFor(model => model.fechaPagoProgramado)
+                                    </div>
+                                </div>*@
+
+
+
+
+                            <div class="form-group">
+
+                                Guias Disponibles
+                                @Html.ValidationMessageFor(model => model.OrdenIds)
+                                <table class="table table-stripped table-bordered table-hover dataTables-example" id="tableGuias" data-page-size="10">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                            </th>
+                                            @*<th>
+                                                Guia Sistema
+                                            </th>*@
+                                            <th>
+                                                Nro Guia
+                                            </th>
+                                            <th>
+                                                Cliente
+                                            </th>
+                                            <th>
+                                                Origen
+                                            </th>
+                                            <th>
+                                                Destino
+                                            </th>
+                                            <th>
+                                                Costo (Sin IGV)
+                                            </th>
+                                            <th>
+                                                Fecha Creación
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                   
+                                    <tbody>
+                                        @foreach (TransporteCarga.Models.Orden orden in ViewBag.Ordenes)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" name="OrdenIds" value="@orden.ordenId" class="i-checks" />
+                                                </td>
+                                                @*<td>
+                                                    @Html.DisplayFor(modelItem => orden.ordenId)
+                                                </td>*@
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => orden.GuiasSalida.FirstOrDefault().numero)
+
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => orden.ClientePago.razonSocial)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => orden.DireccionOrigen.descripcion)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => orden.DireccionDestino.descripcion)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => orden.subTotal)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => orden.fechaCreacion)
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" id="btnSubmit" value="Crear" class="btn btn-primary" />
+                                    @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-white" })
                                 </div>
                             </div>
                         </div>
+}
 
-                    </div>
                 </div>
             </div>
 
+
+
         </div>
 
- </div>
+       
 
- 
+    </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+</div>
+
+    @section Styles {
+        @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+        @Styles.Render("~/plugins/footableStyles")
+        @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+        @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+    }
+
+    @section Scripts {
+        @Scripts.Render("~/plugins/dataTables")
+        @Scripts.Render("~/plugins/jeditable")
+        @Scripts.Render("~/plugins/footable")
+        @Scripts.Render("~/plugins/iCheck")
+        @Scripts.Render("~/plugins/chosen")
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('.i-checks').iCheck({
+                    checkboxClass: 'icheckbox_square-green',
+                    radioClass: 'iradio_square-green',
+                });
+
+                $("#btnSubmit2").on("click", function () {
+
+                    var cells = [];
+
+                    $('#tableGuias tr').each(function () {
+                        if ($(this).find("td:eq(0) input[type='checkbox']").is(":checked")) {
+                            cells.push({
+
+                                cliente: $(this).find("td").eq(3).html()
+
+                            });
+                        }
+                    });
+
+                    if (cells.length == 0) {
+                        alert("Seleccione al menos una Guía");
+                        return;
+                    }
+
+                    var Detalles = [];
+                    var cliente = "";
+                    for (var i = 1; i < cells.length; i++) {
+
+                        if (cliente != cells[i].cliente && cells[i].cliente != "")
+                        {
+                            alert('Elegir el mismo cliente');
+                            return;
+                        }
+                    }
+
+
+
+
+
+                   
+
+
+
+
+
+
+                   
+                });
+            })
+
+
+            function validateForm() {
+
+                var cells = [];
+
+                $('#tableGuias tr').each(function () {
+                    if ($(this).find("td:eq(0) input[type='checkbox']").is(":checked")) {
+                        cells.push({
+
+                            cliente: $(this).find("td").eq(3).html()
+
+                        });
+                    }
+                });
+
+                if (cells.length == 0) {
+                    alert("Seleccione al menos una Guía");
+                    return false;
+                }
+
+                var Detalles = [];
+                var cliente = "";
+                for (var i = 1; i < cells.length; i++) {
+
+                    if (cliente != cells[i].cliente && cells[i].cliente != "") {
+                        alert('Elegir el mismo cliente');
+                        return false;
+                    }
+                }
+
+            }
+
+        </script>
+    }

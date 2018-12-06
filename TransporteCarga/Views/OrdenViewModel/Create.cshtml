@@ -12,17 +12,25 @@
 
 
 <div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-10">
-        <h2>Solicitud de Guía</h2>
+    <div class="col-lg-4">
+        <h2>Creación de Guía</h2>
         <ol class="breadcrumb">
             <li>
                 @*@Html.ActionLink("Lista", "Index")*@
-                <a href="~/Pedido/Index/"> Lista </a>
+                <a href="~/Orden/Index/"> Lista </a>
             </li>
             <li class="active">
                 <strong>Creación de Guía</strong>
             </li>
         </ol>
+    </div>
+
+    <div class="col-sm-8">
+        <div class="title-action">
+            @*@Html.ActionLink("Volver al Listado", "Index", null, new { @class = "btn btn-primary"})*@
+            <a href="~/Orden/Index/" class="btn btn-default">Volver a la lista </a>
+
+        </div>
     </div>
     @*<div class="col-lg-2">
 
@@ -38,7 +46,8 @@
 
     <div class="row">
         <div class="col-xs-12">
-            <input value="Guardar!" class="btn btn-primary" id="BtnGuardar" />
+            @*<input value="Guardar!" class="btn btn-primary" id="BtnGuardar" />*@
+            <button class="ladda-button ladda-button-demo btn btn-primary btn-lg" id="BtnGuardar"><i class="fa fa-save"></i> Guardar!</button>
         </div>
     </div>
 
@@ -53,7 +62,7 @@
         </div>
         <div class="ibox-content">
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                     <div class="form-group">
                         @*<label class="font-noraml col-sm-2 control-label">Obra</label>*@
                         <label class="control-label" for="order_id">Remitente</label>
@@ -67,11 +76,14 @@
                                 </option>
                             }
                         </select>
-                        <label class="control-label" for="order_id">¿Pago?</label>
-                        <input type="checkbox" class="i-checks" id="chkClientePagoRemitente" name="input[]">
+                        @*<label class="control-label" for="order_id">¿Pago?</label>*@
+                        @*<input type="checkbox" class="i-checks" id="chkClientePagoRemitente" name="input[]">*@
+                        @*<div class="i-checks"><label> <input type="radio" value="1" name="radioClientePago"> <i></i> Paga </label></div>*@
+                        <input type="radio" value="1" name="radioClientePago">  Paga 
+
                     </div>
                </div>
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                     <div class="form-group">
                         @*<label class="font-noraml col-sm-2 control-label">Obra</label>*@
                         <label class="control-label" for="order_id">Destinatario</label>
@@ -85,8 +97,24 @@
                                 </option>
                             }
                         </select>
-                        <label class="control-label" for="order_id">¿Pago?</label>
-                        <input type="checkbox" class="i-checks" id="chkClientePagoDestinatario" name="input[]">
+                       <input type="radio" value="2" name="radioClientePago">  Paga 
+                        @*<div class=" i-checks"><label> <input type="radio" value="2" name="radioClientePago"> <i></i> Paga </label></div>*@
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        @*<label class="font-noraml col-sm-2 control-label">Obra</label>*@
+                        <label class="control-label" for="order_id">Cliente pago</label>
+                        <select data-placeholder="Elija el Cliente encargado del Pago..." style="width:250px;" tabindex="1" id="cboClientePago">
+                            <option value="">Seleccione</option>
+
+                            @foreach (var item in Model.Clientes)
+                            {
+                                <option value=@Html.DisplayFor(modelItem => item.clienteid)>
+                                    @Html.DisplayFor(modelItem => item.razonSocial)
+                                </option>
+                            }
+                        </select>
                     </div>
                 </div>
                 <div class="col-sm-6">
@@ -129,6 +157,12 @@
                     </div>
                 </div>
 
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label" for="order_id">Resumen</label>
+                        <input type="text" class="form-control" tabindex="3" id="resumen"> <span class="help-block m-b-none">Ingrese aquí en caso desee mostrar el resumen y no el detalle de items</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -201,9 +235,10 @@
                                             <table class="table table-striped table-bordered table-hover dataTables-example" id="tableMaterial">
                                                 <thead>
                                                     <tr>
-                                                        <th>Id</th>
+                                                        <th hidden="hidden">Id</th>
                                                         <th hidden="hidden">Código</th>
                                                         <th>Producto</th>
+                                                        <th>Descripción</th>
                                                         <th>Presentación</th>
                                                         @*<th>Stock</th>*@
                                                         @*<th>Precio 1</th>
@@ -218,9 +253,10 @@
                                                     {
 
                                                         <tr class="gradeX">
-                                                            <td>@Html.DisplayFor(modelItem => item.productoId)</td>
+                                                            <td hidden="hidden">@Html.DisplayFor(modelItem => item.productoId)</td>
                                                             <td hidden="hidden"></td>
                                                             <td>@Html.DisplayFor(modelItem => item.nombre)</td>
+                                                            <td>@Html.DisplayFor(modelItem => item.descripcion)</td>
                                                             <td>@Html.DisplayFor(modelItem => item.UnidadMedida.nombre)</td>
                                                             @*<td>@Html.DisplayFor(modelItem => item.stock)</td>
                                                 <td>@item.precio1 </td>
@@ -321,9 +357,10 @@
                                         <table class="table table-striped table-bordered table-hover dataTables-example" id="tableMaterialTotales">
                                             <thead>
                                                 <tr>
-                                                    <th>Id</th>
+                                                    <th hidden="hidden">Id</th>
                                                     <th hidden="hidden">Código</th>
                                                     <th>Producto</th>
+                                                    <th>Descripción</th>
                                                     <th>Presentación</th>
                                                     <th></th>
                                                 </tr>
@@ -334,9 +371,10 @@
                                                 {
 
                                                     <tr class="gradeX">
-                                                        <td>@Html.DisplayFor(modelItem => item.productoId)</td>
+                                                        <td hidden="hidden">@Html.DisplayFor(modelItem => item.productoId)</td>
                                                         <td hidden="hidden"></td>
                                                         <td>@Html.DisplayFor(modelItem => item.nombre)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.descripcion)</td>
                                                         <td>@Html.DisplayFor(modelItem => item.UnidadMedida.nombre)</td>
                                                         <td> <button type="button" class="btn btn-success btn-sm btn-block" id="btnAgregar"> Agregar!!</button></td>
                                                     </tr>
@@ -347,9 +385,10 @@
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <th>Id</th>
+                                                    <th hidden="hidden">Id</th>
                                                     <th hidden="hidden">Código</th>
                                                     <th>Producto</th>
+                                                    <th>Descripción</th>
                                                     <th>Presentación</th>
                                                     <th></th>
                                                 </tr>
@@ -401,6 +440,7 @@
                                                         <th hidden="hidden">Id</th>
 
                                                         <th>Producto</th>
+                                                        <th>Descripción</th>
                                                         <th>Presentación</th>
                                                         <th>Cantidad</th>
                                                         <th></th>
@@ -531,6 +571,7 @@
     @Styles.Render("~/plugins/select2Styles")
     @Styles.Render("~/plugins/touchSpinStyles")
     @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/laddaStyles")
 }
 
 @section Scripts {
@@ -551,6 +592,7 @@
     @Scripts.Render("~/plugins/dataTables")
     @Scripts.Render("~/plugins/jeditable")
     @Scripts.Render("~/plugins/validate")
+    @Scripts.Render("~/plugins/ladda")
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -628,7 +670,34 @@
 
                 }
             });
+            $("input[name='radioClientePago']").change(function () {
+            //$("input[name='radioClientePago']").change(function () {
+            //$('input[type=radio][name=radioClientePago]').change(function () {
+               
+                var radioClientePagoValue = $("input[name='radioClientePago']:checked").val();
+
+
+                if (radioClientePagoValue == "1") {
+                    $("#cboClientePago").val($("#remitente").val());
+
+                }
+                else if (radioClientePagoValue == "2") {
+                    $("#cboClientePago").val($("#destinatario").val());
+                    //$("#cboClientePago").val($("#destinatario").val());
+                }
+
+            });
+
             //Fin Modal  Jquery
+
+
+            //$("#chkClientePagoRemitente").change(function () {
+            //    alert("checked");
+            //    if ($(this).is(":checked")) {
+            //        alert("checked");
+            //    }
+            //})
+
 
             // Manejo Tables
 
@@ -717,7 +786,8 @@
                 //cloneRow2.append('<td><button type="button" class="btn btn-danger btn-sm btn-block" id="btnEliminar2"> Eliminar!!</button></td>').append('<td><a data-toggle="tab" href="#contact-1" class="client-link">Cantidad</a></td>')
                 var codigo = cloneRow2.find("td:eq(0)").html();
                 var nombre = cloneRow2.find("td:eq(2)").html();
-                var unidadmedida = cloneRow2.find("td:eq(3)").html();
+                var descripcion = cloneRow2.find("td:eq(3)").html();
+                var unidadmedida = cloneRow2.find("td:eq(4)").html();
                 //var precio = cloneRow2.find("td:eq(5)").html();
                 var cantidad = $("#txtCantidadModal").val();
                 var precio = $("#txtPrecioModal").val();
@@ -727,11 +797,11 @@
 
                 if ($('input[type=radio][name=radioInline]:checked').val() == 'valPrecio2')
                     {
-                        precio = cloneRow2.find("td:eq(6)").html();
+                        precio = cloneRow2.find("td:eq(7)").html();
                     }
                 else if ($('input[type=radio][name=radioInline]:checked').val() == 'valPrecio3')
                     {
-                    precio = cloneRow2.find("td:eq(7)").html();
+                    precio = cloneRow2.find("td:eq(8)").html();
                     }
 
 
@@ -756,7 +826,7 @@
                 else {
                     if (precio == "")
                         precio = 0;
-                    $("#editableMaterial2").append('<tr><td hidden="hidden">' + codigo + '</td><td>' + nombre + '</td><td>' + unidadmedida + '</td><td>' + cantidad + '</td><td></td><td>' + precio + '</td><td>' + precio * cantidad + '</td><td>' + comentario + '</td><td><button type="button" class="btn btn-danger btn-sm btn-block" id="btnEliminar2"> Eliminar!!</button></td></tr>');
+                    $("#editableMaterial2").append('<tr><td hidden="hidden">' + codigo + '</td><td>' + nombre + '</td><td>' + descripcion + '</td><td>' + unidadmedida + '</td><td>' + cantidad + '</td><td></td><td>' + precio + '</td><td>' + precio * cantidad + '</td><td>' + comentario + '</td><td><button type="button" class="btn btn-danger btn-sm btn-block" id="btnEliminar2"> Eliminar!!</button></td></tr>');
                     $('#txtCantidadModal').val("");
                     $('#txtPrecioModal').val("");
                     $('#txtComentarioModal').val("");
@@ -807,7 +877,8 @@
                 //cloneRow2.append('<td><button type="button" class="btn btn-danger btn-sm btn-block" id="btnEliminar2"> Eliminar!!</button></td>').append('<td><a data-toggle="tab" href="#contact-1" class="client-link">Cantidad</a></td>')
                 var codigo = cloneRow2.find("td:eq(0)").html();
                 var nombre = cloneRow2.find("td:eq(2)").html();
-                var unidadmedida = cloneRow2.find("td:eq(3)").html();
+                var descripcion = cloneRow2.find("td:eq(3)").html();
+                var unidadmedida = cloneRow2.find("td:eq(4)").html();
                 //var precio = cloneRow2.find("td:eq(5)").html();
                 var cantidad = $("#txtCantidadModalTotales").val();
                 var precio = $("#txtPrecioModal").val();
@@ -841,7 +912,7 @@
 
                     //}
                 else {
-                    $("#editableMaterial2").append('<tr><td hidden="hidden">' + codigo + '</td><td>' + nombre + '</td><td>' + unidadmedida + '</td><td>' + cantidad + '</td><td></td><td>' + precio + '</td><td>' + precio * cantidad + '</td><td>' +  comentario +'</td><td><button type="button" class="btn btn-danger btn-sm btn-block" id="btnEliminar2"> Eliminar!!</button></td></tr>');
+                    $("#editableMaterial2").append('<tr><td hidden="hidden">' + codigo + '</td><td>' + nombre + '</td><td>' + descripcion + '</td><td>' + unidadmedida + '</td><td>' + cantidad + '</td><td></td><td>' + precio + '</td><td>' + precio * cantidad + '</td><td>' + comentario + '</td><td><button type="button" class="btn btn-danger btn-sm btn-block" id="btnEliminar2"> Eliminar!!</button></td></tr>');
                     $('#txtCantidadModal').val("");
                     $('#txtPrecioModal').val("");
                     $('#txtComentarioModal').val("");
@@ -950,24 +1021,54 @@
             });
 
 
+            
+
             // Función que guarda datos de Tabla Materiales Seleccionados
 
 
             $("#BtnGuardar").click(function () {
 
-                var chkClientePagoRemitente = false;
-                var chkClientePagoDestinatario = false;
-                chkClientePagoRemitente = $("#chkClientePagoRemitente").is(":checked");
-                chkClientePagoDestinatario =   $("#chkClientePagoDestinatario").is(":checked");
-                if (chkClientePagoRemitente == true && chkClientePagoDestinatario == true) {
-                    alert("Solo debe seleccionar solo un Cliente a Pagar")
-                    return;
-                }
-                else if (chkClientePagoRemitente == false && chkClientePagoDestinatario == false) {
-                    alert("Debe seleccionar al Cliente a Pagar")
+                ////var chkClientePagoRemitente = false;
+                ////var chkClientePagoDestinatario = false;
+                ////chkClientePagoRemitente = $("#chkClientePagoRemitente").is(":checked");
+                ////chkClientePagoDestinatario =   $("#chkClientePagoDestinatario").is(":checked");
+                ////if (chkClientePagoRemitente == true && chkClientePagoDestinatario == true) {
+                ////    alert("Solo debe seleccionar un Cliente a Pagar")
+                ////    return;
+                ////}
+                ////else if (chkClientePagoRemitente == false && chkClientePagoDestinatario == false) {
+                ////    alert("Debe seleccionar al Cliente a Pagar")
+                ////    return;
+                ////}
+                ////$("#radioClientePago")
+                ////if (!$("#radioClientePago").is(":checked"))
+                //Lo de Abajo Funcionaba OK 20/08/2018
+                //var radioClientePagoValue = $("input[name='radioClientePago']:checked").val();
+                //if (!radioClientePagoValue)
+                //{
+                //    alert("Debe seleccionar el Cliente a Pagar");
+                //    return;
+                //}
+
+
+
+                if ($("#remitente").val() == "")
+                {
+                    alert("Debe seleccionar el Cliente Remitente");
                     return;
                 }
 
+
+                if ($("#destinatario").val() =="")
+                {
+                    alert("Debe seleccionar el Cliente Destinatario");
+                    return;
+                }
+
+                if ($("#cboClientePago").val() == "") {
+                    alert("Debe seleccionar el Cliente a Pagar");
+                    return;
+                }
 
                 var cells = [];
                 var rows = $("#editableMaterial").dataTable().fnGetNodes();
@@ -975,10 +1076,10 @@
 
                 $('#editableMaterial2 tr').each(function () {
                     cells.push({
-                        cantidad: $(this).find("td").eq(3).html(),
+                        cantidad: $(this).find("td").eq(4).html(),
                         productoId: $(this).find("td").eq(0).html(),
-                        precio: $(this).find("td").eq(5).html(),
-                        comentario: $(this).find("td").eq(7).html()
+                        precio: $(this).find("td").eq(6).html(),
+                        comentario: $(this).find("td").eq(8).html()
 
                     });
                 });
@@ -1007,13 +1108,24 @@
                 pedido.clienteDestinatarioId = $("#destinatario").val();
 
                 
-                if ($("#chkClientePagoRemitente").is(":checked")) {
-                    pedido.clientePagoId = $("#remitente").val();
-                }
-                else if ($("#chkClientePagoDestinatario").is(":checked")) {
-                    pedido.clientePagoId = $("#destinatario").val();
-                }
+                ////if ($("#chkClientePagoRemitente").is(":checked")) {
+                ////    pedido.clientePagoId = $("#remitente").val();
+                ////}
+                ////else if ($("#chkClientePagoDestinatario").is(":checked")) {
+                ////    pedido.clientePagoId = $("#destinatario").val();
+                ////}
+                //Funcionaba OK 20/08/2018
+                //if (radioClientePagoValue == "1") {
+                //    pedido.clientePagoId = $("#remitente").val();
+                //}
+                //else if (radioClientePagoValue == "2") {
+                //    pedido.clientePagoId = $("#destinatario").val();
+                //}
+                pedido.clientePagoId = $("#cboClientePago").val();
+
                 pedido.comentario = $("#comentario").val();
+
+                pedido.resumen = $("#resumen").val();
 
                 if ($('#chkModalGlobal').is(':checked'))
                 {
@@ -1058,14 +1170,34 @@
                         window.location = '@Url.Action("Index", "Orden")';
                     },
                     error: function (result) {
-
+                        $('.ladda-button-demo').ladda().ladda('stop');
                         alert('No se pudo insertar. Revise que toda la información esté seleccionada');
+                    //error: function (xhr, status, error) {
+                        
+                    //   // alert('No se pudo insertar. Revise que toda la información esté seleccionada');
+                    //    alert(xhr.responseText);
+                    //    //var err = eval("(" + xhr.responseText + ")");
+                    //    //alert(err.Message);
 
                     }
+                })
+                .done(function (result) {
+                    //alert("pasó");
                 });
 
             });
 
+            //Procesar botón hasta que termine el proceso
+            var l = $('.ladda-button-demo').ladda();
+            l.click(function () {
+                // Start loading
+                l.ladda('start');
+                // Do something in backend and then stop ladda
+                // setTimeout() is only for demo purpose
+
+                context: $(this);
+                //l.ladda('stop');
+            });
 
             //Validación
 
@@ -1105,8 +1237,8 @@
 
                 $('#editableMaterial2 tr').each(function () {
                     cells.push({
-                        cantidad: $(this).find("td").eq(3).html(),
-                        precio: $(this).find("td").eq(5).html(),
+                        cantidad: $(this).find("td").eq(4).html(),
+                        precio: $(this).find("td").eq(6).html(),
 
 
                     });

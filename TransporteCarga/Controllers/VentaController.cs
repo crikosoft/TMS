@@ -22,8 +22,8 @@ namespace KleanKart.Controllers
         {
 
             ViewBag.clienteId = new SelectList(db.Clientes.OrderBy(a => a.razonSocial), "razonSocial", "razonSocial");
-
-            var ventas = db.Ventas.Include(v => v.EstadoVenta).Include(v => v.Orden).Include(v => v.TipoDocumento);
+            //Identificador 1fact >1Guia
+             var ventas = db.Ventas.Include(v => v.EstadoVenta).Include(v => v.Ordenes).Include(v => v.TipoDocumento);
             return View(ventas.ToList());
         }
 
@@ -34,8 +34,8 @@ namespace KleanKart.Controllers
             ViewBag.clienteId = new SelectList(db.Clientes.OrderBy(a => a.razonSocial), "razonSocial", "razonSocial");
             ViewBag.productoId = new SelectList(db.Productos.OrderBy(a => a.nombre), "nombre", "nombre");
             ViewBag.estadoVentaId = new SelectList(db.EstadoVentas, "nombre", "nombre");
-
-            var ventas = db.Ventas.Include(v => v.EstadoVenta).Include(v => v.Orden).Include(v => v.TipoDocumento);
+            //Identificador 1fact >1Guia
+            var ventas = db.Ventas.Include(v => v.EstadoVenta).Include(v => v.Ordenes).Include(v => v.TipoDocumento);
             return View(ventas.ToList());
         }
 
@@ -55,36 +55,71 @@ namespace KleanKart.Controllers
         }
 
         // GET: /Venta/Create
-        public ActionResult Create(int? id)
+        //public ActionResult Create(int? id)
+        //{
+
+        //    Venta Venta = new Venta();
+        //    Orden Pedido = db.Ordenes.Where(a => a.ordenId == id).FirstOrDefault();
+        //    Venta.ordenId = Pedido.ordenId;
+        //    //Identificador 1fact >1Guia
+        //    //Venta.Orden = Pedido;
+        //    //Venta.Ordenes.Add( Pedido);
+
+        //    var tipoDocumentosList = new string[] { "Factura de Venta", "Boleta de Venta" };
+
+
+
+        //    ViewBag.formaPagoId = new SelectList(db.FormaPagos, "formaPagoId", "nombre");
+        //    ViewBag.pedidoId = new SelectList(db.Ordenes, "ordenId", "numero");
+        //    //ViewBag.tipoDocumentoId = new SelectList(db.TipoDocumentos, "tipoDocumentoId", "nombre");
+        //    ViewBag.tipoDocumentoId = new SelectList(db.TipoDocumentos.Where(p => tipoDocumentosList.Contains(p.nombre)), "tipoDocumentoId", "nombre");
+        //    ViewBag.pedidoId = new SelectList(db.Ordenes.Where(a => a.ordenId == id), "ordenId", "ordenId");
+
+        //    return View(Venta);
+        //}
+
+        public ActionResult Create()
         {
 
             Venta Venta = new Venta();
-            Orden Pedido = db.Ordenes.Where(a => a.ordenId == id).FirstOrDefault();
-            Venta.ordenId = Pedido.ordenId;
-            Venta.Orden = Pedido;
-
             var tipoDocumentosList = new string[] { "Factura de Venta", "Boleta de Venta" };
-
-
 
             ViewBag.formaPagoId = new SelectList(db.FormaPagos, "formaPagoId", "nombre");
             ViewBag.pedidoId = new SelectList(db.Ordenes, "ordenId", "numero");
-            //ViewBag.tipoDocumentoId = new SelectList(db.TipoDocumentos, "tipoDocumentoId", "nombre");
             ViewBag.tipoDocumentoId = new SelectList(db.TipoDocumentos.Where(p => tipoDocumentosList.Contains(p.nombre)), "tipoDocumentoId", "nombre");
-            ViewBag.pedidoId = new SelectList(db.Ordenes.Where(a => a.ordenId == id), "ordenId", "ordenId");
+
+            ViewBag.Ordenes = db.Ordenes.Where(a => a.Ventas.Count() == 0 && a.GuiasSalida.Count()>0 &&  a.Envios.Count()>0).Include(e => e.ClientePago).Include(e => e.DireccionOrigen).Include(e => e.DireccionDestino).Include(e => e.GuiasSalida);
+
+            Envio model = new Envio
+            {
+                OrdenIds = new int[0]
+            };
 
             return View(Venta);
         }
+
+
 
         // POST: /Venta/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="ventaId,serie,numero,ordenId,tipoDocumentoId,fecha, formaPagoId")] Venta venta)
+        public ActionResult Create([Bind(Include = "ventaId,serie,numero,tipoDocumentoId,fecha, formaPagoId, spot,OrdenIds")] Venta venta)
         {
             if (ModelState.IsValid)
             {
+
+
+                if (venta.OrdenIds != null)
+                {
+                    venta.Ordenes = db.Ordenes.Where(a => venta.OrdenIds.Contains(a.ordenId)).ToList();
+                }
+
+
+
+
+
                 DateTime timeUtc = DateTime.UtcNow;
                 TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
                 DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
@@ -118,21 +153,33 @@ namespace KleanKart.Controllers
 
                 //Actualiza estados de Ordenes
                 var estadoFactura = db.EstadosOrden.Single(p => p.nombre == "Con Factura");
-                var orden = db.Ordenes.Find(venta.ordenId);
-                orden.estadoOrdenId = estadoFactura.estadoOrdenId;
-                venta.Orden = orden;
 
+                foreach (var item in venta.Ordenes)
+                {
+                    item.estadoOrdenId = estadoFactura.estadoOrdenId;
+                    
+                }
+
+                //var orden = db.Ordenes.Find(venta.ordenId);
+                //orden.estadoOrdenId = estadoFactura.estadoOrdenId;
+                //Identificador 1fact >1Guia
+                //venta.Orden = orden;
+                //venta.Ordenes.Add(orden);
 
 
                 //2. Grabar Estado de Pedido
                 var ordenEstadoOrden = new OrdenEstadoOrden();
 
-                ordenEstadoOrden.ordenId = venta.ordenId;
-                ordenEstadoOrden.estadoOrdenId = estadoFactura.estadoOrdenId;
-                ordenEstadoOrden.usuarioCreacion = User.Identity.Name;
-                ordenEstadoOrden.fechaCreacion = cstTime;
+                foreach (var item in venta.Ordenes)
+                {
+                    ordenEstadoOrden.ordenId = item.ordenId;
+                    ordenEstadoOrden.estadoOrdenId = estadoFactura.estadoOrdenId;
+                    ordenEstadoOrden.usuarioCreacion = User.Identity.Name;
+                    ordenEstadoOrden.fechaCreacion = cstTime;
+                    db.OrdenesEstadoOrden.Add(ordenEstadoOrden);
 
-                db.OrdenesEstadoOrden.Add(ordenEstadoOrden);
+                }
+
 
                 db.SaveChanges();
 
@@ -141,12 +188,19 @@ namespace KleanKart.Controllers
                 db.Ventas.Add(venta);
                 db.SaveChanges();
                 //return RedirectToAction("Index");
-                return RedirectToAction("Index", "Orden");
+                return RedirectToAction("Index", "Venta");
             }
 
             ViewBag.estadoVentaId = new SelectList(db.EstadoVentas, "estadoVentaId", "nombre", venta.estadoVentaId);
             ViewBag.ordenId = new SelectList(db.Ordenes, "ordenId", "numero", venta.ordenId);
             ViewBag.tipoDocumentoId = new SelectList(db.TipoDocumentos, "tipoDocumentoId", "nombre", venta.tipoDocumentoId);
+            ViewBag.formaPagoId = new SelectList(db.FormaPagos, "formaPagoId", "nombre", venta.formaPagoId);
+            ViewBag.Ordenes = db.Ordenes.Where(a => a.Ventas.Count() == 0 && a.GuiasSalida.Count() > 0 && a.Envios.Count() > 0).Include(e => e.ClientePago).Include(e => e.DireccionOrigen).Include(e => e.DireccionDestino).Include(e => e.GuiasSalida);
+
+            Envio model = new Envio
+            {
+                OrdenIds = new int[0]
+            };
 
             return View(venta);
             //return RedirectToAction("Index", "Pedido");
@@ -159,23 +213,38 @@ namespace KleanKart.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Venta venta = db.Ventas.Find(id);
+            Venta venta = db.Ventas.Where(a => a.ventaId == id).Include(a => a.Ordenes).SingleOrDefault();
             if (venta == null)
             {
                 return HttpNotFound();
             }
             ViewBag.formaPagoId = new SelectList(db.FormaPagos, "formaPagoId", "nombre", venta.formaPagoId);
-            ViewBag.ordenId = new SelectList(db.Ordenes, "ordenId", "numero", venta.ordenId);
+            //ViewBag.ordenId = new SelectList(db.Ordenes, "ordenId", "numero", venta.ordenId);
+            //ViewBag.Ordenes = db.Ordenes.Where(a => a.Ventas.Count() == 0 || a.Ventas.Any(b => b.ventaId == id)).Include(e => e.ClientePago).Include(e => e.DireccionOrigen).Include(e => e.DireccionDestino).Include(e => e.GuiasSalida);
+            ViewBag.Ordenes = db.Ordenes.Where(a => (a.Ventas.Count() == 0 && a.GuiasSalida.Count() > 0 && a.Envios.Count() > 0) || a.Ventas.Any(b => b.ventaId == id)).Include(e => e.ClientePago).Include(e => e.DireccionOrigen).Include(e => e.DireccionDestino).Include(e => e.GuiasSalida);
+
+            
             ViewBag.tipoDocumentoId = new SelectList(db.TipoDocumentos, "tipoDocumentoId", "nombre", venta.tipoDocumentoId);
+
+            Venta model = new Venta
+            {
+                OrdenIds = new int[0]
+            };
+            
             return View(venta);
         }
+
+
+       
+
+
 
         // POST: /Venta/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ventaId,serie,numero,tipoDocumentoId,fecha, formaPagoId")] Venta venta)
+        public ActionResult Edit([Bind(Include = "ventaId,serie,numero,tipoDocumentoId,fecha, formaPagoId, spot, OrdenIds")] Venta venta)
         {
             if (ModelState.IsValid)
             {
@@ -201,20 +270,77 @@ namespace KleanKart.Controllers
                         break;
                 }
 
+                var ventaOriginal = db.Ventas.Find(venta.ventaId);
+                ventaOriginal.Ordenes.RemoveAll(a => a.Ventas.SingleOrDefault().ventaId == ventaOriginal.ventaId);
 
-                db.Entry(venta).State = EntityState.Modified;
-                db.Entry(venta).Property(x => x.ordenId).IsModified = false;
-                db.Entry(venta).Property(x => x.estadoVentaId).IsModified = false;
+                if (venta.OrdenIds != null)
+                {
+                    var ordenes = db.Ordenes.Where(a => venta.OrdenIds.Contains(a.ordenId)).ToList();
+                    foreach (var item in ordenes)
+                    {
+                        ventaOriginal.Ordenes.Add(item);
+                    }
+                }
+
+                ventaOriginal.tipoDocumentoId = venta.tipoDocumentoId;
+                ventaOriginal.serie = venta.serie;
+                ventaOriginal.numero = venta.numero;
+                ventaOriginal.fecha = venta.fecha;
+                ventaOriginal.formaPagoId = venta.formaPagoId;
+                ventaOriginal.fechaPagoProgramado = venta.fechaPagoProgramado;
+                ventaOriginal.spot = venta.spot;
+                ventaOriginal.OrdenIds = venta.OrdenIds;
+
+                //db.Entry(ventaOriginal).State = EntityState.Modified;
+                //db.Entry(ventaOriginal).Property(x => x.ordenId).IsModified = false;
+                //db.Entry(ventaOriginal).Property(x => x.estadoVentaId).IsModified = false;
 
 
 
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (System.Data.Entity.Validation.DbEntityValidationException ex)
+                {
+                    System.Text.StringBuilder sb = new System.Text.StringBuilder();
+
+                    foreach (var failure in ex.EntityValidationErrors)
+                    {
+                        sb.AppendFormat("{0} failed validation\n", failure.Entry.Entity.GetType());
+                        foreach (var error in failure.ValidationErrors)
+                        {
+                            sb.AppendFormat("- {0} : {1}", error.PropertyName, error.ErrorMessage);
+                            sb.AppendLine();
+                        }
+                    }
+
+                    throw new System.Data.Entity.Validation.DbEntityValidationException(
+                        "Entity Validation Failed - errors follow:\n" +
+                        sb.ToString(), ex
+                    ); // Add the original exception as the innerException
+                }
+
+
+                
                 //return RedirectToAction("Index");
-                return RedirectToAction("Index", "Orden");
+                return RedirectToAction("Index", "Venta");
             }
             ViewBag.formaPagoId = new SelectList(db.FormaPagos, "formaPagoId", "nombre", venta.formaPagoId);
-            ViewBag.pedidoId = new SelectList(db.Ordenes, "pedidoId", "numero", venta.ordenId);
+            //ViewBag.pedidoId = new SelectList(db.Ordenes, "pedidoId", "numero", venta.ordenId);
             ViewBag.tipoDocumentoId = new SelectList(db.TipoDocumentos, "tipoDocumentoId", "nombre", venta.tipoDocumentoId);
+            ViewBag.Ordenes = db.Ordenes.Where(a => (a.Ventas.Count() == 0 && a.GuiasSalida.Count() > 0 && a.Envios.Count() > 0) || a.Ventas.Any(b => b.ventaId == venta.ventaId)).Include(e => e.ClientePago).Include(e => e.DireccionOrigen).Include(e => e.DireccionDestino).Include(e => e.GuiasSalida);
+
+            Envio model = new Envio
+            {
+                OrdenIds = new int[0]
+            };
+
+            venta = db.Ventas.Where(a => a.ventaId == venta.ventaId).Include(a => a.Ordenes).SingleOrDefault();
+
+
+
+
             return View(venta);
         }
 
@@ -240,7 +366,7 @@ namespace KleanKart.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditPayment([Bind(Include = "ventaId, ordenId, fechaPagoReal")] Venta venta)
+        public ActionResult EditPayment([Bind(Include = "ventaId, fechaPagoReal, ordenIds")] Venta venta)
         {
             if (ModelState.IsValid)
             {
@@ -260,29 +386,41 @@ namespace KleanKart.Controllers
                     TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
                     DateTime cstTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, cstZone);
 
+                    ////1. Actualiza estados de Pedido
+                    //var estadoOrden = db.EstadosOrden.Single(p => p.nombre == "Cobrado");
+                    //var ordenOriginal = db.Ordenes.Find(venta.ordenId);
+                    //ordenOriginal.estadoOrdenId = estadoOrden.estadoOrdenId;
+                    //venta.Ordenes.Add(ordenOriginal);
+
+                    //Get VentaOriginal
+                    var ventaOriginal = db.Ventas.Where(a=>a.ventaId == venta.ventaId).Include(a=>a.Ordenes);
                     //1. Actualiza estados de Pedido
                     var estadoOrden = db.EstadosOrden.Single(p => p.nombre == "Cobrado");
-                    var ordenOriginal = db.Ordenes.Find(venta.ordenId);
-                    ordenOriginal.estadoOrdenId = estadoOrden.estadoOrdenId;
-                    venta.Orden = ordenOriginal;
+                    foreach (var orden in ventaOriginal.FirstOrDefault().Ordenes)
+                    {
+                        //var ordenOriginal = db.Ordenes.Find(orden.ordenId);
+                        orden.estadoOrdenId = estadoOrden.estadoOrdenId;
+                    }
 
                     //2. Grabar Estado de Pedido
                     var ordenEstadoOrden = new OrdenEstadoOrden();
+                    foreach (var orden in ventaOriginal.FirstOrDefault().Ordenes)
+                    {
+                        ordenEstadoOrden.ordenId = orden.ordenId;
+                        ordenEstadoOrden.estadoOrdenId = estadoOrden.estadoOrdenId;
+                        ordenEstadoOrden.usuarioCreacion = User.Identity.Name;
+                        ordenEstadoOrden.fechaCreacion = cstTime;
 
-                    ordenEstadoOrden.ordenId = venta.ordenId;
-                    ordenEstadoOrden.estadoOrdenId = estadoOrden.estadoOrdenId;
-                    ordenEstadoOrden.usuarioCreacion = User.Identity.Name;
-                    ordenEstadoOrden.fechaCreacion = cstTime;
-
-                    db.OrdenesEstadoOrden.Add(ordenEstadoOrden);
-
-
+                        db.OrdenesEstadoOrden.Add(ordenEstadoOrden);
+                    }
 
                     db.SaveChanges();
                 }
                  
-                return RedirectToAction("Index", "Orden");
-            }            
+                return RedirectToAction("Index", "Venta");
+            }
+
+            venta = db.Ventas.Find(venta.ventaId);
             return View(venta);
         }
 
@@ -309,21 +447,29 @@ namespace KleanKart.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Venta venta = db.Ventas.Find(id);
-            db.Ventas.Remove(venta);
             Orden pedido = db.Ordenes.Find(venta.ordenId);
+            db.Ventas.Remove(venta);
+            if (venta.Ordenes != null)
+            {            
+                foreach (var item in venta.Ordenes)
+                {
+                    if (item.Estados.Where(a => a.EstadoOrden.nombre == "Con Guia").Count() > 0)
+                    {
+                        item.estadoOrdenId = db.EstadosOrden.Single(p => p.nombre == "Con Guia").estadoOrdenId;
+                    }
+                    else
+                    {
+                        item.estadoOrdenId = db.EstadosOrden.Single(p => p.nombre == "Creado").estadoOrdenId;
+                    }
 
-            if (pedido.Estados.Where(a => a.EstadoOrden.nombre == "Con Guia").Count() >0)
-            { 
-                pedido.estadoOrdenId = db.EstadosOrden.Single(p => p.nombre == "Con Guia").estadoOrdenId;
-            }
-            else
-            {
-                pedido.estadoOrdenId = db.EstadosOrden.Single(p => p.nombre == "Creado").estadoOrdenId;
+                    OrdenEstadoOrden pedidoEstado = new OrdenEstadoOrden();
+                    pedidoEstado = item.Estados.Where(p => p.EstadoOrden.nombre == "Con Factura").FirstOrDefault();
+                    db.OrdenesEstadoOrden.Remove(pedidoEstado);
+                }
             }
 
-            OrdenEstadoOrden pedidoEstado = new OrdenEstadoOrden();
-            pedidoEstado = pedido.Estados.Where(p => p.EstadoOrden.nombre == "Con Factura").FirstOrDefault();
-            db.OrdenesEstadoOrden.Remove(pedidoEstado);
+
+          
 
 
             db.SaveChanges();
@@ -406,27 +552,27 @@ namespace KleanKart.Controllers
             dt.Columns.Add("PrecioTotal");
             dt.Columns.Add("TotalTexto");
 
-            foreach (var item in venta[0].Orden.Detalles.OrderBy(a => a.Producto.nombre))
+            foreach (var item in venta[0].Ordenes.FirstOrDefault().Detalles.OrderBy(a => a.Producto.nombre))
             { 
                 DataRow _ravi = dt.NewRow();
-                _ravi["Cliente"] = venta[0].Orden.ClienteOrigen.razonSocial;
-                _ravi["Direccion"] = venta[0].Orden.ClienteOrigen.Direcciones[0].Direccion.descripcion;
-                _ravi["RUC"] = venta[0].Orden.ClienteOrigen.ruc;
+                _ravi["Cliente"] = venta[0].Ordenes.FirstOrDefault().ClienteOrigen.razonSocial;
+                _ravi["Direccion"] = venta[0].Ordenes.FirstOrDefault().ClienteOrigen.Direcciones[0].Direccion.descripcion;
+                _ravi["RUC"] = venta[0].Ordenes.FirstOrDefault().ClienteOrigen.ruc;
                 _ravi["SerieF"] = venta[0].serie;
                 _ravi["NumeroF"] = venta[0].numero;
-                _ravi["SubTotal"] = string.Format("{0:0,0.00}", venta[0].Orden.subTotal);
-                _ravi["IGV"] = string.Format("{0:0,0.00}", venta[0].Orden.igv);
+                _ravi["SubTotal"] = string.Format("{0:0,0.00}", venta[0].Ordenes.FirstOrDefault().subTotal);
+                _ravi["IGV"] = string.Format("{0:0,0.00}", venta[0].Ordenes.FirstOrDefault().igv);
 
-                _ravi["Total"] = string.Format("{0:0,0.00}", venta[0].Orden.Total);
+                _ravi["Total"] = string.Format("{0:0,0.00}", venta[0].Ordenes.FirstOrDefault().Total);
                 _ravi["FechaF"] = "Lima, " + venta[0].fecha.Day + " de " + venta[0].fecha.ToString("MMMM").ToUpper() +"  del " + venta[0].fecha.Year;
 
-                if (venta[0].Orden.GuiasSalida.Count >= 1)
+                if (venta[0].Ordenes.FirstOrDefault().GuiasSalida.Count >= 1)
                 {
                     string fechaTraslado = "";
                     //fechaTraslado = "Lima, " + venta[0].Orden.GuiasSalida.SingleOrDefault().fechaTraslado.Day + " de Agosto del" + venta[0].Orden.GuiasSalida.SingleOrDefault().fechaTraslado.Year;
 
-                    _ravi["SerieG"] = venta[0].Orden.GuiasSalida.SingleOrDefault().serie;
-                    _ravi["NumeroG"] = venta[0].Orden.GuiasSalida.SingleOrDefault().numero;
+                    _ravi["SerieG"] = venta[0].Ordenes.FirstOrDefault().GuiasSalida.SingleOrDefault().serie;
+                    _ravi["NumeroG"] = venta[0].Ordenes.FirstOrDefault().GuiasSalida.SingleOrDefault().numero;
                     //_ravi["FechaG"] = venta[0].Orden.GuiasSalida.SingleOrDefault().fechaTraslado;
                 }
                 else
@@ -435,7 +581,7 @@ namespace KleanKart.Controllers
                     _ravi["NumeroG"] = "";
                     _ravi["FechaG"] = ""; 
                 }
-                _ravi["PuntoDestinoG"] = venta[0].Orden.ClienteOrigen.Direcciones[0].Direccion.descripcion;
+                _ravi["PuntoDestinoG"] = venta[0].Ordenes.FirstOrDefault().ClienteOrigen.Direcciones[0].Direccion.descripcion;
                 _ravi["PuntoPartidaG"] = "CALLE AURELIO FERNANDEZ CONCHA 298-MIRAFLORES";
                 _ravi["Cantidad"] = item.cantidad;
                 _ravi["DescripcionP"] = item.Producto.nombre;
@@ -520,30 +666,32 @@ namespace KleanKart.Controllers
             dt.Columns.Add("PrecioUnitario");
             dt.Columns.Add("PrecioTotal");
             dt.Columns.Add("TotalTexto");
-
-            foreach (var item in venta[0].Orden.Detalles.OrderBy(a => a.Producto.nombre))
+            //Identificador 1fact >1Guia
+            //foreach (var item in venta[0].Orden.Detalles.OrderBy(a => a.Producto.nombre))
+            foreach (var item in venta[0].Ordenes.FirstOrDefault().Detalles.OrderBy(a => a.Producto.nombre))
             {
                 DataRow _ravi = dt.NewRow();
-                _ravi["Cliente"] = venta[0].Orden.ClienteOrigen.razonSocial;
-                _ravi["Direccion"] = venta[0].Orden.ClienteOrigen.Direcciones[0].Direccion.descripcion;
-                _ravi["RUC"] = venta[0].Orden.ClienteOrigen.ruc;
+                _ravi["Cliente"] = venta[0].Ordenes.FirstOrDefault().ClienteOrigen.razonSocial;
+                _ravi["Direccion"] = venta[0].Ordenes.FirstOrDefault().ClienteOrigen.Direcciones[0].Direccion.descripcion;
+                _ravi["RUC"] = venta[0].Ordenes.FirstOrDefault().ClienteOrigen.ruc;
                 _ravi["SerieF"] = venta[0].serie;
                 _ravi["NumeroF"] = venta[0].numero;
-                _ravi["SubTotal"] = string.Format("{0:0,0.00}", venta[0].Orden.subTotal);
-                _ravi["IGV"] = string.Format("{0:0,0.00}", venta[0].Orden.igv);
-
-                _ravi["Total"] = string.Format("{0:0,0.00}", venta[0].Orden.Total);
+                _ravi["SubTotal"] = string.Format("{0:0,0.00}", venta[0].Ordenes.FirstOrDefault().subTotal);
+                _ravi["IGV"] = string.Format("{0:0,0.00}", venta[0].Ordenes.FirstOrDefault().igv);
+                //Identificador 1fact >1Guia
+                _ravi["Total"] = string.Format("{0:0,0.00}", venta[0].Ordenes.FirstOrDefault().Total);
 
                 string fullMonthName = venta[0].fecha.ToString("MMMM", CultureInfo.CreateSpecificCulture("es")).ToUpper();
                 _ravi["FechaF"] = "Lima, " + venta[0].fecha.Day + " de " + fullMonthName + "  del " + venta[0].fecha.Year;
-
-                if (venta[0].Orden.GuiasSalida.Count >= 1)
+                //Identificador 1fact >1Guia
+                //if (venta[0].Orden.GuiasSalida.Count >= 1)
+                if (venta[0].Ordenes.FirstOrDefault().GuiasSalida.Count >= 1)
                 {
                     string fechaTraslado = "";
                     //fechaTraslado = "Lima, " + venta[0].Orden.GuiasSalida.SingleOrDefault().fechaTraslado.Day + " de Agosto del" + venta[0].Orden.GuiasSalida.SingleOrDefault().fechaTraslado.Year;
 
-                    _ravi["SerieG"] = venta[0].Orden.GuiasSalida.SingleOrDefault().serie;
-                    _ravi["NumeroG"] = venta[0].Orden.GuiasSalida.SingleOrDefault().numero;
+                    _ravi["SerieG"] = venta[0].Ordenes.FirstOrDefault().GuiasSalida.SingleOrDefault().serie;
+                    _ravi["NumeroG"] = venta[0].Ordenes.FirstOrDefault().GuiasSalida.SingleOrDefault().numero;
                    // _ravi["FechaG"] = venta[0].Orden.GuiasSalida.SingleOrDefault().fechaTraslado;
                 }
                 else
@@ -552,7 +700,7 @@ namespace KleanKart.Controllers
                     _ravi["NumeroG"] = "";
                     _ravi["FechaG"] = "";
                 }
-                _ravi["PuntoDestinoG"] = venta[0].Orden.ClienteOrigen.Direcciones[0].Direccion.descripcion;
+                _ravi["PuntoDestinoG"] = venta[0].Ordenes.FirstOrDefault().ClienteOrigen.Direcciones[0].Direccion.descripcion;
                 _ravi["PuntoPartidaG"] = "CALLE AURELIO FERNANDEZ CONCHA 298-MIRAFLORES";
                 _ravi["Cantidad"] = item.cantidad;
                 _ravi["DescripcionP"] = item.Producto.nombre + " - " + item.Producto.UnidadMedida.nombre;
@@ -560,7 +708,7 @@ namespace KleanKart.Controllers
                 _ravi["PrecioTotal"] = string.Format("{0:0,0.00}", item.precioTotal);
 
                 ConvertirNumero conv = new ConvertirNumero();
-                String numero =venta[0].Orden.Total.ToString();
+                String numero = venta[0].Ordenes.FirstOrDefault().Total.ToString();
                 _ravi["TotalTexto"] = conv.Convertir(numero, true);// "CIENTO OCHENTA Y OCHO y 10/100";
 
                 dt.Rows.Add(_ravi);
@@ -642,29 +790,29 @@ namespace KleanKart.Controllers
             dt.Columns.Add("PrecioTotal");
             dt.Columns.Add("TotalTexto");
 
-            foreach (var item in venta[0].Orden.Detalles.OrderBy(a => a.Producto.nombre))
+            foreach (var item in venta[0].Ordenes.FirstOrDefault().Detalles.OrderBy(a => a.Producto.nombre))
             {
                 DataRow _ravi = dt.NewRow();
-                _ravi["Cliente"] = venta[0].Orden.ClienteOrigen.razonSocial;
-                _ravi["Direccion"] = venta[0].Orden.ClienteOrigen.Direcciones[0].Direccion.descripcion;
-                _ravi["RUC"] = venta[0].Orden.ClienteOrigen.ruc;
+                _ravi["Cliente"] = venta[0].Ordenes.FirstOrDefault().ClienteOrigen.razonSocial;
+                _ravi["Direccion"] = venta[0].Ordenes.FirstOrDefault().ClienteOrigen.Direcciones[0].Direccion.descripcion;
+                _ravi["RUC"] = venta[0].Ordenes.FirstOrDefault().ClienteOrigen.ruc;
                 _ravi["SerieF"] = venta[0].serie;
                 _ravi["NumeroF"] = venta[0].numero;
-                _ravi["SubTotal"] = string.Format("{0:0,0.00}", venta[0].Orden.subTotal);
-                _ravi["IGV"] = string.Format("{0:0,0.00}", venta[0].Orden.igv);
+                _ravi["SubTotal"] = string.Format("{0:0,0.00}", venta[0].Ordenes.FirstOrDefault().subTotal);
+                _ravi["IGV"] = string.Format("{0:0,0.00}", venta[0].Ordenes.FirstOrDefault().igv);
 
-                _ravi["Total"] = string.Format("{0:0,0.00}", venta[0].Orden.Total);
+                _ravi["Total"] = string.Format("{0:0,0.00}", venta[0].Ordenes.FirstOrDefault().Total);
 
                 string fullMonthName = venta[0].fecha.ToString("MMMM", CultureInfo.CreateSpecificCulture("es")).ToUpper();
                 _ravi["FechaF"] = "Lima, " + venta[0].fecha.Day + " de " + fullMonthName + "  del " + venta[0].fecha.Year;
 
-                if (venta[0].Orden.GuiasSalida.Count >= 1)
+                if (venta[0].Ordenes.FirstOrDefault().GuiasSalida.Count >= 1)
                 {
                     string fechaTraslado = "";
                     //fechaTraslado = "Lima, " + venta[0].Orden.GuiasSalida.SingleOrDefault().fechaTraslado.Day + " de Agosto del" + venta[0].Orden.GuiasSalida.SingleOrDefault().fechaTraslado.Year;
 
-                    _ravi["SerieG"] = venta[0].Orden.GuiasSalida.SingleOrDefault().serie;
-                    _ravi["NumeroG"] = venta[0].Orden.GuiasSalida.SingleOrDefault().numero;
+                    _ravi["SerieG"] = venta[0].Ordenes.FirstOrDefault().GuiasSalida.SingleOrDefault().serie;
+                    _ravi["NumeroG"] = venta[0].Ordenes.FirstOrDefault().GuiasSalida.SingleOrDefault().numero;
                     //_ravi["FechaG"] = venta[0].Orden.GuiasSalida.SingleOrDefault().fechaTraslado;
                 }
                 else
@@ -673,7 +821,7 @@ namespace KleanKart.Controllers
                     _ravi["NumeroG"] = "";
                     _ravi["FechaG"] = "";
                 }
-                _ravi["PuntoDestinoG"] = venta[0].Orden.ClienteOrigen.Direcciones[0].Direccion.descripcion;
+                _ravi["PuntoDestinoG"] = venta[0].Ordenes.FirstOrDefault().ClienteOrigen.Direcciones[0].Direccion.descripcion;
                 _ravi["PuntoPartidaG"] = "CALLE AURELIO FERNANDEZ CONCHA 298-MIRAFLORES";
                 _ravi["Cantidad"] = item.cantidad;
                 _ravi["DescripcionP"] = item.Producto.nombre + " - " + item.Producto.UnidadMedida.nombre;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Web;
@@ -53,6 +54,14 @@ namespace TransporteCarga.Models
                     .HasForeignKey(m => m.clientePagoId)
                     .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<Ubigeo>().
+                  HasOptional(e => e.UbigeoParent).
+                  WithMany().
+                  HasForeignKey(m => m.ubigeoParentId);
+
+
+        //.Query<BlogPostsCount>().ToView("View_BlogPostCounts")
+        //.Property(v => v.BlogName).HasColumnName("Name");
 
         }
 
@@ -99,7 +108,12 @@ namespace TransporteCarga.Models
 
         public DbSet<EstadoPago> EstadoPagos { get; set; }
         public DbSet<Pago> Pagos { get; set; }
+        public DbSet<NotaCreditoConcepto> NotaCreditoConcepto { get; set; }
+        public DbSet<NotaCredito> NotaCredito { get; set; }
         //public System.Data.Entity.DbSet<TransporteCarga.ViewModels.PedidoViewModel> PedidoViewModels { get; set; }
+
+        public DbQuery<Point> Points { get; set; }
+
 
     }
 }

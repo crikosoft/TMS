@@ -1,18 +1,18 @@
 ﻿@model TransporteCarga.Models.Chofer
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalles";
 }
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-sm-4">
-        <h2>Details</h2>
+        <h2>Detalles</h2>
         <ol class="breadcrumb">
             <li>
                 @Html.ActionLink("Lista", "Index")
             </li>
             <li class="active">
-                <strong>Details</strong>
+                <strong>Detalles</strong>
             </li>
         </ol>
     </div>
@@ -26,19 +26,13 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Details Chofer</h5>
+                    <h5>Detalles Chofer</h5>
                 </div>
                 <div class="ibox-content">
 
 
 				    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Proveedor.razonSocial)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Proveedor.razonSocial)
-        </dd>
+       
 
         <dt>
             @Html.DisplayNameFor(model => model.nombres)
@@ -57,6 +51,28 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.numeroBrevete)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.numeroBrevete)
+        </dd>
+        <dt>
+           Empresa SubContratada
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Proveedor.razonSocial)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.tipoDocumentoIdentidadId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoDocumentoIdentidad.nombre)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.nroDocumentoIdentidad)
         </dt>
 
@@ -64,13 +80,7 @@
             @Html.DisplayFor(model => model.nroDocumentoIdentidad)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.tipoDocumentoIdentodadId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.tipoDocumentoIdentodadId)
-        </dd>
+       
 
         <dt>
             @Html.DisplayNameFor(model => model.fechaNacimiento)
@@ -80,13 +90,7 @@
             @Html.DisplayFor(model => model.fechaNacimiento)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.numeroBrevete)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.numeroBrevete)
-        </dd>
+        
 
         <dt>
             @Html.DisplayNameFor(model => model.usuarioCreacion)

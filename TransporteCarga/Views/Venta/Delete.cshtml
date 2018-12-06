@@ -1,18 +1,18 @@
 ﻿@model TransporteCarga.Models.Venta
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Eliminar";
 }
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-sm-4">
-        <h2>Delete</h2>
+        <h2>Eliminar</h2>
         <ol class="breadcrumb">
             <li>
                 @Html.ActionLink("Lista", "Index")
             </li>
             <li class="active">
-                <strong>Delete</strong>
+                <strong>Eliminar</strong>
             </li>
         </ol>
     </div>
@@ -35,14 +35,14 @@
                 <div class="ibox-content">
 				<h4 class="text-danger">¿Está seguro que desea anular?</h4>
 				 <dl class="dl-horizontal">
-        
+                 @Html.HiddenFor(model => model.ventaId)
 
         <dt>
-            Pedido
+            Nro Factura
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Pedido.pedidoId)
+            @Html.DisplayFor(model => model.serie) -  @Html.DisplayFor(model => model.numero)
         </dd>
 
         <dt>
@@ -81,7 +81,7 @@
                  </dt>
 
                  <dd>
-                     @Html.DisplayFor(model => model.Pedido.EstadoPedido.nombre)
+                     @Html.DisplayFor(model => model.EstadoVenta.nombre)
                  </dd>
     </dl>
 

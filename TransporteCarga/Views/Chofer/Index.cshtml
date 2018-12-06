@@ -34,9 +34,7 @@
 
                         <thead>
                             <tr>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Proveedor.razonSocial)
-                                </th>
+                               
                                 <th>
                                     @Html.DisplayNameFor(model => model.nombres)
                                 </th>
@@ -44,17 +42,22 @@
                                     @Html.DisplayNameFor(model => model.apellidos)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.nroDocumentoIdentidad)
+                                    @Html.DisplayNameFor(model => model.numeroBrevete)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.tipoDocumentoIdentodadId)
+                                    Empresa SubContratada
                                 </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.tipoDocumentoIdentidadId)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.nroDocumentoIdentidad)
+                                </th>
+
                                 <th>
                                     @Html.DisplayNameFor(model => model.fechaNacimiento)
                                 </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.numeroBrevete)
-                                </th>
+
 
                                 <th></th>
                             </tr>
@@ -64,9 +67,7 @@
                             @foreach (var item in Model)
                             {
                                 <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Proveedor.razonSocial)
-                                    </td>
+                                   
                                     <td>
                                         @Html.DisplayFor(modelItem => item.nombres)
                                     </td>
@@ -74,17 +75,22 @@
                                         @Html.DisplayFor(modelItem => item.apellidos)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.nroDocumentoIdentidad)
+                                        @Html.DisplayFor(modelItem => item.numeroBrevete)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.tipoDocumentoIdentodadId)
+                                        @Html.DisplayFor(modelItem => item.Proveedor.razonSocial)
                                     </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TipoDocumentoIdentidad.nombre)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.nroDocumentoIdentidad)
+                                    </td>
+                                    
                                     <td>
                                         @Html.DisplayFor(modelItem => item.fechaNacimiento)
                                     </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.numeroBrevete)
-                                    </td>
+                                   
 
                                     <td>
                                         @Html.ActionLink("Detalle", "Details", new { id = item.choferId }, new { @class = "btn btn-primary btn-sm" })
@@ -99,9 +105,7 @@
                         <tfoot>
                             <tr>
 
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Proveedor.razonSocial)
-                                </th>
+                                
                                 <th>
                                     @Html.DisplayNameFor(model => model.nombres)
                                 </th>
@@ -109,16 +113,20 @@
                                     @Html.DisplayNameFor(model => model.apellidos)
                                 </th>
                                 <th>
+                                    @Html.DisplayNameFor(model => model.numeroBrevete)
+                                </th>
+                                <th>
+                                    Empresa SubContratada
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.tipoDocumentoIdentidadId)
+                                </th>
+                                <th>
                                     @Html.DisplayNameFor(model => model.nroDocumentoIdentidad)
                                 </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.tipoDocumentoIdentodadId)
-                                </th>
+
                                 <th>
                                     @Html.DisplayNameFor(model => model.fechaNacimiento)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.numeroBrevete)
                                 </th>
 
                                 <th></th>
@@ -175,7 +183,8 @@
                     }
                 ],
                 "order": [[0, "asc"]],
-                "pageLength": 25
+                "pageLength": 25,
+                "scrollX": true
 
             });
 

@@ -61,18 +61,36 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.nroDocumentoIdentidad, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.numeroBrevete, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.nroDocumentoIdentidad)
-                @Html.ValidationMessageFor(model => model.nroDocumentoIdentidad)
+                @Html.EditorFor(model => model.numeroBrevete)
+                @Html.ValidationMessageFor(model => model.numeroBrevete)
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.tipoDocumentoIdentodadId, new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2">Empresa SubContratada</label>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.tipoDocumentoIdentodadId)
-                @Html.ValidationMessageFor(model => model.tipoDocumentoIdentodadId)
+                @Html.DropDownList("proveedorId", String.Empty)
+                @Html.ValidationMessageFor(model => model.proveedorId)
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.tipoDocumentoIdentidadId, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("tipoDocumentoIdentidadId", String.Empty)
+                @Html.ValidationMessageFor(model => model.tipoDocumentoIdentidadId)
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nroDocumentoIdentidad, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.nroDocumentoIdentidad)
+                @Html.ValidationMessageFor(model => model.nroDocumentoIdentidad)
             </div>
         </div>
 
@@ -84,21 +102,7 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.numeroBrevete, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.numeroBrevete)
-                @Html.ValidationMessageFor(model => model.numeroBrevete)
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-2">Proveedor</label>
-            <div class="col-md-10">
-                @Html.DropDownList("proveedorId", String.Empty)
-                @Html.ValidationMessageFor(model => model.proveedorId)
-            </div>
-        </div>
+  
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

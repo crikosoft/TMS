@@ -53,6 +53,14 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.ruc, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ruc)
+                @Html.ValidationMessageFor(model => model.ruc)
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.contacto, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.contacto)
@@ -60,13 +68,7 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ruc, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ruc)
-                @Html.ValidationMessageFor(model => model.ruc)
-            </div>
-        </div>
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.telefono, new { @class = "control-label col-md-2" })
